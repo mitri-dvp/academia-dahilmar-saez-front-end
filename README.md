@@ -1,4 +1,4 @@
-# Academia Dahilmar Saez Website
+# Academia Dahilmar Sáez Website
 
 Project initialized with `create-t3-app` and configured with base requirements.
 

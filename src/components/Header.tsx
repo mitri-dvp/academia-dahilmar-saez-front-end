@@ -1,22 +1,35 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import type { FC } from "react";
 import { useState } from "react";
 
+import useScrollPosition from "@hooks/useScrollPosition";
+import Button from "@components/Button";
 import { navItems } from "@utils/navigation";
 
 const Header: FC = () => {
   // Open / Close Mobile Nav
   const [open, setOpen] = useState(false);
 
+  const router = useRouter();
+
+  const scrollPosition = useScrollPosition();
+
   return (
-    <header className="relative mx-auto w-full max-w-screen-xl bg-white px-8">
-      <div className="mx-auto max-w-screen-xl">
-        <div className="flex items-center justify-between py-6 md:justify-start md:space-x-10">
+    <header
+      className={`fixed z-20 w-full text-dark-500 transition ${
+        open ? "bg-white transition-none" : ""
+      } ${
+        scrollPosition > 0 ? "bg-white shadow-lg" : "bg-transparent text-white"
+      }`}
+    >
+      <div className="mx-auto w-full max-w-screen-xl px-8">
+        <div className="flex items-center justify-between py-5 md:justify-start md:space-x-10">
           <div className="w-0 flex-1">
             <Link href="/" className="flex w-max items-center">
               <Image
-                className="z-50 h-5 w-auto md:h-10"
+                className="z-50 h-10 w-auto md:h-20"
                 src="/logo.png"
                 alt="academia-dahilmar-saez-logo"
                 width={300}
@@ -25,24 +38,34 @@ const Header: FC = () => {
             </Link>
           </div>
 
-          <nav className="hidden space-x-6 md:flex">
+          <nav className="hidden flex-1 space-x-6 md:flex">
             {navItems.map((item, index) => (
               <Link
                 key={index}
                 href={item.href}
-                className="font-display text-xl font-semibold transition focus:outline-none"
+                className={`border-b-1 border border-transparent  font-display font-semibold uppercase tracking-wide underline-offset-8 hover:border-b-dark-500 ${
+                  router.pathname === item.href
+                    ? "text-secondary-500 hover:border-b-secondary-500"
+                    : ""
+                }`}
               >
                 {item.title}
               </Link>
             ))}
           </nav>
 
+          <div className="hidden flex-1 md:block">
+            <Link className="ml-auto block w-max" href="/login">
+              <Button>Ingresar</Button>
+            </Link>
+          </div>
+
           <div className="md:hidden">
             <button
               onClick={() => setOpen(!open)}
               aria-label="Toggle Menu"
               type="button"
-              className="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition ease-in-out hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:text-gray-900 focus:outline-none"
+              className={`inline-flex items-center justify-center p-2 text-gray-400 transition ease-in-out hover:text-gray-900 focus:text-gray-900`}
             >
               <svg
                 className="h-6 w-6 stroke-gray-900"
@@ -60,11 +83,12 @@ const Header: FC = () => {
           </div>
 
           <div
-            className="absolute inset-x-0 top-20 z-20 origin-top-right transform p-0 transition md:hidden"
-            style={{ display: open ? "block" : "none" }}
+            className={`absolute inset-x-0 top-20 z-20 origin-top-right transform p-0 transition md:hidden ${
+              open ? "block" : "hidden"
+            }`}
           >
-            <div className="rounded-lg shadow-lg">
-              <div className="shadow-xs divide-y-2 divide-gray-50 rounded-lg bg-white">
+            <div className="shadow-lg">
+              <div className="divide-y-2 divide-gray-50 bg-white">
                 <div className="space-y-6 px-5 pt-5 pb-6">
                   <div>
                     <nav className="grid gap-y-8">
@@ -74,14 +98,17 @@ const Header: FC = () => {
                             key={`nav-${index}`}
                             href={item.href}
                             onClick={() => setOpen(false)}
-                            className="hover:border-primary-800 hover:text-primary-800 focus:text-primary-800 -m-3 flex items-center space-x-3 rounded-md px-8 py-4 transition hover:bg-gray-50 focus:outline-none"
+                            className="-m-3 flex items-center space-x-3 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide transition hover:bg-gray-50"
                           >
-                            <div className="text-xl font-semibold">
-                              {item.title}
-                            </div>
+                            {item.title}
                           </Link>
                         );
                       })}
+                      <Button className="-m-3 flex items-center  bg-secondary-500 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-white transition hover:bg-secondary-700">
+                        <Link href="/login" onClick={() => setOpen(false)}>
+                          Ingresar
+                        </Link>
+                      </Button>
                     </nav>
                   </div>
                 </div>

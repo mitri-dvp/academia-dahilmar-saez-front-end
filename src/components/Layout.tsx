@@ -7,7 +7,7 @@ const Layout: FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <Header />
 
-      <main className="relative mx-auto flex min-h-screen w-full max-w-screen-xl flex-col bg-white px-8">
+      <main className="relative flex min-h-screen w-full flex-col bg-white">
         {children}
       </main>
 

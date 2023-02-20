@@ -14,8 +14,14 @@
   font: inherit;
 }
 
+*,
+html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 120px;
+}
+
 body {
-  @apply font-serif text-gray-900;
+  @apply font-serif text-dark-500;
 }
 
 img,

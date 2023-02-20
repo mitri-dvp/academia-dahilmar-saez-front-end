@@ -29,7 +29,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
       <MantineProvider>
         <NotificationsProvider>
           <NextNProgress
-            color="#dbe021"
+            color="#f15a25"
             startPosition={0}
             stopDelayMs={0}
             options={{

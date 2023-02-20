@@ -4,7 +4,7 @@ module.exports = {
   content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     fontFamily: {
-      serif: ["Poppins"],
+      serif: ["Roboto", "Poppins"],
       display: ["Oswald"],
     },
     extend: {
@@ -14,7 +14,9 @@ module.exports = {
           700: "#8ec63d",
         },
         secondary: {
+          300: "#f58a65",
           500: "#f15a25",
+          700: "#e5460f",
         },
         dark: {
           500: "#484848",

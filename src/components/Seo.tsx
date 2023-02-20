@@ -19,16 +19,16 @@ type SeoProps = {
 
 const Seo = (props: SeoProps) => {
   const {
-    title = "Academia Dahilmar Saez",
-    titleTemplate = "| Academia Dahilmar Saez",
-    description = "Academia Dahilmar Saez",
+    title = "Academia Dahilmar Sáez",
+    titleTemplate = "| Academia Dahilmar Sáez",
+    description = "Academia Dahilmar Sáez",
     image = `/academia-dahilmar-saez-share-image.png`,
     type = "website",
     locale = "en_US",
   } = props;
 
   const metaTitle =
-    title === "Academia Dahilmar Saez" ? title : `${title} ${titleTemplate}`;
+    title === "Academia Dahilmar Sáez" ? title : `${title} ${titleTemplate}`;
 
   return (
     <Head>
