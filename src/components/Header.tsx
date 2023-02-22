@@ -43,10 +43,10 @@ const Header: FC = () => {
               <Link
                 key={index}
                 href={item.href}
-                className={`border-b-1 border border-transparent  font-display font-semibold uppercase tracking-wide underline-offset-8 hover:border-b-dark-500 ${
+                className={`border border-b-2 border-transparent font-display font-semibold uppercase tracking-wide underline-offset-8 transition ${
                   router.pathname === item.href
                     ? "text-secondary-500 hover:border-b-secondary-500"
-                    : ""
+                    : "hover:border-b-dark-500"
                 }`}
               >
                 {item.title}

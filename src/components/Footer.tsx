@@ -1,10 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import type { FC } from "react";
 
 import { navItems, socialItems } from "@utils/navigation";
 
 const Footer: FC = () => {
+  const router = useRouter();
+
   return (
     <footer className="relative mx-auto w-full bg-dark-500 px-8 py-8 text-white">
       <div className="mx-auto max-w-screen-xl px-0 md:px-8">
@@ -23,7 +26,11 @@ const Footer: FC = () => {
               <div key={index} className="w-full">
                 <Link
                   href={item.href}
-                  className=" font-display font-semibold uppercase tracking-wide underline-offset-8 hover:underline"
+                  className={`border border-b-2 border-transparent  font-display font-semibold uppercase tracking-wide underline-offset-8 transition ${
+                    router.pathname === item.href
+                      ? "text-secondary-500 hover:border-b-secondary-500"
+                      : "hover:border-b-white"
+                  }`}
                 >
                   {item.title}
                 </Link>

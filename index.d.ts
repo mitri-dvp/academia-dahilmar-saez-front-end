@@ -1,9 +1,17 @@
-type Student = {
+type User = {
   id: number;
-  attributes: StudentAttributes;
+  firstName: string;
+  lastName: string;
+  documentID: number;
+  dateOfBirth: string;
+  username: string;
+  email: string;
+  provider: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
-type StudentAttributes = {
+type UserAttributes = {
   name: string;
 };
 
