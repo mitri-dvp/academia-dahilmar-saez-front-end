@@ -6,6 +6,7 @@ import Seo from "@components/Seo";
 import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
+import { USER_ROLES } from "@utils/global";
 
 import { z } from "zod";
 import { useFormik } from "formik";
@@ -79,7 +80,7 @@ const Signup: NextPage = () => {
       },
       email: "",
       password: "",
-      role: "athlete",
+      role: USER_ROLES.ATHLETE,
     },
     validationSchema: validationSchema,
     onSubmit: async (values) => {
@@ -275,55 +276,73 @@ const Signup: NextPage = () => {
 
         <h1 className="text-lg font-bold">Seleccione el tipo de usuario</h1>
         <div className="space-y-2">
-          <div className="flex items-center border border-dark-500 pl-4 dark:border-dark-500">
+          <div
+            className={`flex items-center border border-dark-500 pl-4 transition hover:border-secondary-500 dark:border-dark-500 ${
+              formik.values.role === USER_ROLES.ATHLETE
+                ? "border-secondary-500"
+                : ""
+            }`}
+          >
             <input
               defaultChecked
-              id="role-athlete"
+              id={`role-${USER_ROLES.ATHLETE}`}
               type="radio"
-              value="athlete"
+              value={USER_ROLES.ATHLETE}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               name="role"
-              className="dark:bg-darkborder-dark-500 dark:focus:ring-setext-secondary-500 h-4 w-4 cursor-pointer  border-dark-500 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-dark-500 dark:ring-offset-gray-800"
+              className="dark:bg-darkborder-dark-500 dark:focus:ring-setext-secondary-500 peer h-4 w-4 cursor-pointer border-dark-500  bg-gray-100 text-secondary-500  focus:ring-2 focus:ring-secondary-300 dark:border-dark-500 dark:ring-offset-gray-800"
             />
             <label
-              htmlFor="role-athlete"
-              className="ml-2 w-full cursor-pointer py-4 text-sm font-medium text-gray-900 dark:text-dark-500"
+              htmlFor={`role-${USER_ROLES.ATHLETE}`}
+              className="peer ml-2 w-full cursor-pointer py-4 text-sm font-medium text-gray-900   dark:text-dark-500"
             >
               Atleta
             </label>
           </div>
 
-          <div className="flex items-center border border-dark-500 pl-4 dark:border-dark-500">
+          <div
+            className={`flex items-center border border-dark-500 pl-4 transition hover:border-secondary-500 dark:border-dark-500 ${
+              formik.values.role === USER_ROLES.GUARDIAN
+                ? "border-secondary-500"
+                : ""
+            }`}
+          >
             <input
-              id="role-guardian"
+              id={`role-${USER_ROLES.GUARDIAN}`}
               type="radio"
-              value="guardian"
+              value={USER_ROLES.GUARDIAN}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               name="role"
               className="dark:bg-darkborder-dark-500 dark:focus:ring-setext-secondary-500 h-4 w-4 cursor-pointer border-dark-500 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-dark-500 dark:ring-offset-gray-800"
             />
             <label
-              htmlFor="role-guardian"
+              htmlFor={`role-${USER_ROLES.GUARDIAN}`}
               className="ml-2 w-full cursor-pointer py-4  text-sm font-medium text-gray-900 dark:text-dark-500"
             >
               Representante
             </label>
           </div>
 
-          <div className="flex items-center border border-dark-500 pl-4 dark:border-dark-500">
+          <div
+            className={`flex items-center border border-dark-500 pl-4 transition hover:border-secondary-500 dark:border-dark-500 ${
+              formik.values.role === USER_ROLES.TRAINER
+                ? "border-secondary-500"
+                : ""
+            }`}
+          >
             <input
-              id="role-trainer"
+              id={`role-${USER_ROLES.TRAINER}`}
               type="radio"
-              value="trainer"
+              value={USER_ROLES.TRAINER}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               name="role"
               className="dark:bg-darkborder-dark-500 dark:focus:ring-setext-secondary-500 h-4 w-4 cursor-pointer border-dark-500 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-dark-500 dark:ring-offset-gray-800"
             />
             <label
-              htmlFor="role-trainer"
+              htmlFor={`role-${USER_ROLES.TRAINER}`}
               className="ml-2 w-full cursor-pointer py-4  text-sm font-medium text-gray-900 dark:text-dark-500"
             >
               Entrenador
