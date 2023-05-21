@@ -1,6 +1,12 @@
 import {
+  CalendarSVG,
+  ChatSVG,
+  ClockSVG,
   FacebookSVG,
+  HouseSVG,
   InstagramSVG,
+  LogOutSVG,
+  PersonSVG,
   // LinkedInSVG,
   // TwitterSVG,
 } from "@components/SVG";
@@ -25,6 +31,39 @@ export const navItems = [
   {
     title: "Horarios",
     href: "/schedule",
+  },
+];
+
+export const dashboardNavItems = [
+  {
+    Icon: HouseSVG,
+    title: "Página Principal",
+    href: "/dashboard",
+  },
+  {
+    Icon: CalendarSVG,
+    title: "Calendario",
+    href: "/dashboard/calendar",
+  },
+  {
+    Icon: ClockSVG,
+    title: "Horario",
+    href: "/dashboard/schedule",
+  },
+  {
+    Icon: ChatSVG,
+    title: "Mensajes",
+    href: "/dashboard/messages",
+  },
+  {
+    Icon: PersonSVG,
+    title: "Perfil",
+    href: "/dashboard/profile",
+  },
+  {
+    Icon: LogOutSVG,
+    title: "Cerrar Sesión",
+    href: "/login",
   },
 ];
 
