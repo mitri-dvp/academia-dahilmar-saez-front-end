@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
 
-const Dashboard: NextPage = () => {
+const Schedule: NextPage = () => {
   return (
     <DashboardLayout>
       <Seo
@@ -11,9 +11,9 @@ const Dashboard: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full p-4">Dashboard</section>
+      <section className="min-h-screen w-full p-4">Schedule</section>
     </DashboardLayout>
   );
 };
 
-export default Dashboard;
+export default Schedule;

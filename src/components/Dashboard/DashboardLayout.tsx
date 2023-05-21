@@ -8,7 +8,7 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
     <>
       <DashboardHeader />
 
-      <div className="ml-0 transition-all md:ml-60">
+      <div className="ml-0 transition-all md:ml-64">
         <main className="relative flex min-h-screen w-full flex-col pt-20">
           {children}
         </main>

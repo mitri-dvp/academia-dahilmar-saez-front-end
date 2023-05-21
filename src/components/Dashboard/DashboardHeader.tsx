@@ -5,12 +5,7 @@ import type { FC } from "react";
 import { useState } from "react";
 
 import { dashboardNavItems } from "@utils/navigation";
-import {
-  BurgerSVG,
-  CrossSVG,
-  NotificationSVG,
-  PersonSVG,
-} from "@components/SVG";
+import { BurgerSVG, CrossSVG, BellSVG, PersonSVG } from "@components/SVG";
 
 const DashboardHeader: FC = () => {
   // Open / Close Mobile Nav
@@ -36,10 +31,10 @@ const DashboardHeader: FC = () => {
 
         <div className="flex flex-1 gap-8">
           <div className="ml-auto">
-            <NotificationSVG className="h-6 w-6 cursor-pointer text-dark-500" />
+            <BellSVG className="h-6 w-6 cursor-pointer text-dark-500" />
           </div>
 
-          <Link className="flex w-max gap-2" href="/dashboard/profile">
+          <Link className="flex w-max gap-4" href="/dashboard/profile">
             <PersonSVG className="h-6 w-6 text-dark-500" />
             <span className="font-display font-semibold uppercase tracking-wide">
               Jorge Mitri
@@ -48,7 +43,7 @@ const DashboardHeader: FC = () => {
         </div>
 
         <div
-          className={`absolute top-0 bottom-0  -left-0 z-20 min-h-screen w-60 bg-white shadow-lg transition-all md:-left-10 md:-translate-x-0 ${
+          className={`absolute top-0 bottom-0 -left-0 z-20 min-h-screen w-64 bg-white shadow-lg transition-all md:-left-10 md:-translate-x-0 ${
             open ? "-translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -81,7 +76,7 @@ const DashboardHeader: FC = () => {
                       key={`nav-${index}`}
                       href={item.href}
                       onClick={() => setOpen(false)}
-                      className={`text-md -m-3 flex items-center gap-2 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
+                      className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
                         router.pathname === item.href
                           ? "bg-gray-100 hover:border-b-white"
                           : "hover:border-b-dark-500 hover:bg-gray-50"
