@@ -1,13 +1,13 @@
+import type { NextPage } from "next";
+import Link from "next/link";
+
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
-import type { NextPage } from "next";
-import React from "react";
+import Button from "@components/Button";
 
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import Button from "@components/Button";
-import Link from "next/link";
 
 const validationSchema = toFormikValidationSchema(
   z.object({
@@ -99,7 +99,11 @@ const Login: NextPage = () => {
           </p>
         </div>
 
-        <Button className="w-full">Iniciar sesión</Button>
+        <Button className="w-full">
+          <Link href="/dashboard" className="w-full">
+            Iniciar sesión
+          </Link>
+        </Button>
 
         <hr className="border-dark-500" />
 

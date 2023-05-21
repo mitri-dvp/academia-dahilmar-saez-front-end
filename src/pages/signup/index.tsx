@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import React from "react";
 import Link from "next/link";
 
 import Seo from "@components/Seo";
@@ -7,14 +6,13 @@ import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
 import { USER_ROLES } from "@utils/global";
+import { signup } from "@services/auth";
 
 import { z } from "zod";
 import { useFormik } from "formik";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-
 import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import Datepicker from "react-tailwindcss-datepicker";
-import { signup } from "@services/auth";
 import dayjs from "dayjs";
 
 const validationSchema = toFormikValidationSchema(

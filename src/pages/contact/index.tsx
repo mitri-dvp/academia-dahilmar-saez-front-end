@@ -1,8 +1,8 @@
-import Layout from "@components/Layout";
-import Seo from "@components/Seo";
 import type { NextPage } from "next";
 import Image from "next/image";
-import React from "react";
+
+import Layout from "@components/Layout";
+import Seo from "@components/Seo";
 
 const Contact: NextPage = () => {
   return (
