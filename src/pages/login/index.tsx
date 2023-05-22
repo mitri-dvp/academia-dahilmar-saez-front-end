@@ -130,7 +130,13 @@ const Login: NextPage = () => {
           </p>
         </div>
 
-        <Button className="w-full">Iniciar sesión</Button>
+        <Button
+          className="w-full"
+          loading={formik.isSubmitting}
+          disabled={formik.isSubmitting}
+        >
+          Iniciar sesión
+        </Button>
 
         <hr className="border-dark-500" />
 

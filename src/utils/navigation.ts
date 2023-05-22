@@ -40,14 +40,14 @@ export const dashboardNavItems = [
     href: "/dashboard",
   },
   {
-    Icon: CalendarSVG,
-    title: "Calendario",
-    href: "/dashboard/calendar",
-  },
-  {
     Icon: ClockSVG,
     title: "Horario",
     href: "/dashboard/schedule",
+  },
+  {
+    Icon: CalendarSVG,
+    title: "Calendario",
+    href: "/dashboard/calendar",
   },
   {
     Icon: ChatSVG,

@@ -11,7 +11,7 @@ const Dashboard: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full p-4">Dashboard</section>
+      <section className="min-h-screen w-full md:p-14">Dashboard</section>
     </DashboardLayout>
   );
 };

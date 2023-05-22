@@ -45,7 +45,7 @@ export const useUserStore = create<UserStore>()(
         login: (token, user) => set({ token: token, user: user }),
         signup: (token, user) => set({ token: token, user: user }),
         logout: async () => {
-          await Router.push("login");
+          await Router.push("/login");
           set(initialState);
         },
       }),

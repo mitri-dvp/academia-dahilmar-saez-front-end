@@ -11,7 +11,7 @@ const Schedule: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full p-4">Schedule</section>
+      <section className="min-h-screen w-full md:p-14">Schedule</section>
     </DashboardLayout>
   );
 };

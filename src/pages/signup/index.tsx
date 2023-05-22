@@ -398,7 +398,11 @@ const Signup: NextPage = () => {
           </p>
         </div>
 
-        <Button className="w-full" disabled={formik.isSubmitting}>
+        <Button
+          className="w-full"
+          loading={formik.isSubmitting}
+          disabled={formik.isSubmitting}
+        >
           Crear cuenta
         </Button>
 
