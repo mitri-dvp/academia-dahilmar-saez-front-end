@@ -1,5 +1,6 @@
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
@@ -8,33 +9,63 @@ import Button from "@components/Button";
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-
-const validationSchema = toFormikValidationSchema(
-  z.object({
-    email: z
-      .string({
-        required_error: "Introduzca un email",
-      })
-      .email("Introduzca un email válido"),
-    password: z
-      .string({
-        required_error: "Introduzca una contraseña",
-      })
-      .min(8, "La contraseña debe contener al menos 8 caracteres"),
-  })
-);
+import type { AxiosError } from "axios";
+import axios from "axios";
+import { login } from "@services/auth";
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       email: "",
       password: "",
     },
-    validationSchema: validationSchema,
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
+    validationSchema: toFormikValidationSchema(
+      z.object({
+        email: z
+          .string({
+            required_error: "Introduzca un email",
+          })
+          .email("Introduzca un email válido"),
+        password: z
+          .string({
+            required_error: "Introduzca una contraseña",
+          })
+          .min(8, "La contraseña debe contener al menos 8 caracteres"),
+      })
+    ),
+    onSubmit: async (values) => {
+      try {
+        // Action
+        await login(values);
+        // On Success
+        handleSuccess();
+      } catch (error) {
+        // On Error
+        handleError(error);
+      }
     },
   });
+
+  const handleSuccess = () => {
+    router.push("/dashboard");
+  };
+
+  const handleError = (error: unknown | AxiosError) => {
+    if (axios.isAxiosError(error)) {
+      // Access to config, request, and response
+      if (error.response && error.response.data.error) {
+        formik.setFieldError("password", error.response.data.error.message);
+      }
+
+      if (error.code === "ERR_NETWORK") {
+        formik.setFieldError("role", `Error de conexión`);
+      }
+    } else {
+      formik.setFieldError("role", `Error desconocido`);
+    }
+  };
 
   return (
     <Layout>
@@ -99,11 +130,7 @@ const Login: NextPage = () => {
           </p>
         </div>
 
-        <Button className="w-full">
-          <Link href="/dashboard" className="w-full">
-            Iniciar sesión
-          </Link>
-        </Button>
+        <Button className="w-full">Iniciar sesión</Button>
 
         <hr className="border-dark-500" />
 

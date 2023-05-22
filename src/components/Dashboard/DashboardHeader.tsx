@@ -1,17 +1,27 @@
+import type { FC } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import type { FC } from "react";
-import { useState } from "react";
 
+import {
+  BurgerSVG,
+  CrossSVG,
+  BellSVG,
+  PersonSVG,
+  LogOutSVG,
+} from "@components/SVG";
 import { dashboardNavItems } from "@utils/navigation";
-import { BurgerSVG, CrossSVG, BellSVG, PersonSVG } from "@components/SVG";
+import { useUserStore } from "@store/user";
 
 const DashboardHeader: FC = () => {
   // Open / Close Mobile Nav
   const [open, setOpen] = useState(false);
 
   const router = useRouter();
+
+  const { user } = useUserStore();
+  const { logout } = useUserStore();
 
   return (
     <header
@@ -37,7 +47,7 @@ const DashboardHeader: FC = () => {
           <Link className="flex w-max gap-4" href="/dashboard/profile">
             <PersonSVG className="h-6 w-6 text-dark-500" />
             <span className="font-display font-semibold uppercase tracking-wide">
-              Jorge Mitri
+              {user.firstName} {user.lastName}
             </span>
           </Link>
         </div>
@@ -93,6 +103,16 @@ const DashboardHeader: FC = () => {
                     </Link>
                   );
                 })}
+
+                <div
+                  className={`text-md -m-3 flex cursor-pointer items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition hover:border-b-dark-500 hover:bg-gray-50`}
+                  onClick={() => logout()}
+                >
+                  <LogOutSVG
+                    className={`h-6 w-6 text-dark-500 transition hover:fill-white`}
+                  />
+                  Cerrar Sesión
+                </div>
               </nav>
             </div>
           </div>

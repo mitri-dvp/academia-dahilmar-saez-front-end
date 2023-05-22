@@ -5,7 +5,6 @@ import {
   FacebookSVG,
   HouseSVG,
   InstagramSVG,
-  LogOutSVG,
   PersonSVG,
   // LinkedInSVG,
   // TwitterSVG,
@@ -59,11 +58,6 @@ export const dashboardNavItems = [
     Icon: PersonSVG,
     title: "Perfil",
     href: "/dashboard/profile",
-  },
-  {
-    Icon: LogOutSVG,
-    title: "Cerrar Sesión",
-    href: "/login",
   },
 ];
 

@@ -1,72 +1,27 @@
 import type { NextPage } from "next";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Seo from "@components/Seo";
 import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
-import { USER_ROLES } from "@utils/global";
 import { signup } from "@services/auth";
+import { USER_ROLES } from "@utils/global";
+import { attributeToLabel } from "@utils/i18n";
 
-import { z } from "zod";
 import { useFormik } from "formik";
+import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "dayjs";
-
-const validationSchema = toFormikValidationSchema(
-  z.object({
-    firstName: z.string({
-      required_error: "Introduzca un nombre",
-    }),
-    lastName: z.string({
-      required_error: "Introduzca un apellido",
-    }),
-    documentID: z.coerce
-      .number({
-        required_error: "Introduzca una cédula",
-        invalid_type_error: "Introduzca una cédula válida",
-      })
-      .positive("Introduzca una cédula válida")
-      .int("Introduzca una cédula válida"),
-    dateOfBirth: z.object({
-      startDate: z
-        .string({
-          required_error: "Introduzca una fecha",
-          invalid_type_error: "Introduzca una fecha válida",
-        })
-        .regex(
-          /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
-          "Introduzca una fecha válida"
-        ),
-      endDate: z
-        .string({
-          required_error: "Introduzca una fecha",
-          invalid_type_error: "Introduzca una fecha válida",
-        })
-        .regex(
-          /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
-          "Introduzca una fecha válida"
-        ),
-    }),
-    email: z
-      .string({
-        required_error: "Introduzca un email",
-      })
-      .email("Introduzca un email válido"),
-    password: z
-      .string({
-        required_error: "Introduzca una contraseña",
-      })
-      .min(8, "La contraseña debe contener al menos 8 caracteres"),
-    role: z.string({
-      required_error: "Seleccione un tipo de usuario",
-    }),
-  })
-);
+import type { AxiosError } from "axios";
+import axios from "axios";
 
 const Signup: NextPage = () => {
+  const router = useRouter();
+
   const formik = useFormik({
     initialValues: {
       firstName: "",
@@ -80,16 +35,105 @@ const Signup: NextPage = () => {
       password: "",
       role: USER_ROLES.ATHLETE,
     },
-    validationSchema: validationSchema,
+    validationSchema: toFormikValidationSchema(
+      z.object({
+        firstName: z.string({
+          required_error: "Introduzca un nombre",
+        }),
+        lastName: z.string({
+          required_error: "Introduzca un apellido",
+        }),
+        documentID: z.coerce
+          .number({
+            required_error: "Introduzca una cédula",
+            invalid_type_error: "Introduzca una cédula válida",
+          })
+          .positive("Introduzca una cédula válida")
+          .int("Introduzca una cédula válida"),
+        dateOfBirth: z.object({
+          startDate: z
+            .string({
+              required_error: "Introduzca una fecha",
+              invalid_type_error: "Introduzca una fecha válida",
+            })
+            .regex(
+              /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
+              "Introduzca una fecha válida"
+            ),
+          endDate: z
+            .string({
+              required_error: "Introduzca una fecha",
+              invalid_type_error: "Introduzca una fecha válida",
+            })
+            .regex(
+              /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
+              "Introduzca una fecha válida"
+            ),
+        }),
+        email: z
+          .string({
+            required_error: "Introduzca un email",
+          })
+          .email("Introduzca un email válido"),
+        password: z
+          .string({
+            required_error: "Introduzca una contraseña",
+          })
+          .min(8, "La contraseña debe contener al menos 8 caracteres"),
+        role: z.string({
+          required_error: "Seleccione un tipo de usuario",
+        }),
+      })
+    ),
     onSubmit: async (values) => {
-      const userValues = {
+      const signupValues = {
         ...values,
+        documentID: String(values.documentID),
         dateOfBirth: dayjs(values.dateOfBirth.startDate).format("YYYY-MM-DD"),
       };
 
-      signup(userValues);
+      try {
+        // Action
+        await signup(signupValues);
+        // On Success
+        handleSuccess();
+      } catch (error) {
+        // On Error
+        handleError(error);
+      }
     },
   });
+
+  const handleSuccess = () => {
+    router.push("/dashboard");
+  };
+
+  const handleError = (error: unknown | AxiosError) => {
+    if (axios.isAxiosError(error)) {
+      // Access to config, request, and response
+      if (error.response && error.response.data.error) {
+        for (
+          let i = 0;
+          i < error.response.data.error.details.errors.length;
+          i++
+        ) {
+          const currentError = error.response.data.error.details.errors[i];
+
+          const attribute = currentError.path[0];
+          formik.setFieldError(
+            attribute,
+            `${attributeToLabel(attribute)} ya se encuentra registrado`
+          );
+        }
+      }
+
+      if (error.code === "ERR_NETWORK") {
+        formik.setFieldError("role", `Error de conexión`);
+      }
+    } else {
+      formik.setFieldError("role", `Error desconocido`);
+    }
+  };
 
   return (
     <Layout>
@@ -200,6 +244,7 @@ const Signup: NextPage = () => {
             toggleIcon={() => <DatepickerSVG className="h-5 w-5" />}
             displayFormat="DD/MM/YYYY"
             placeholder=" "
+            i18n="es"
             readOnly
           />
           <label
@@ -353,7 +398,9 @@ const Signup: NextPage = () => {
           </p>
         </div>
 
-        <Button className="w-full">Crear cuenta</Button>
+        <Button className="w-full" disabled={formik.isSubmitting}>
+          Crear cuenta
+        </Button>
 
         <hr className="border-dark-500" />
 

@@ -2,17 +2,21 @@ type User = {
   id: number;
   firstName: string;
   lastName: string;
-  documentID: number;
+  documentID: string;
   dateOfBirth: string;
   username: string;
   email: string;
   provider: string;
   createdAt: string;
   updatedAt: string;
+  role: Role;
 };
 
-type UserAttributes = {
-  name: string;
+type Role = {
+  id: number;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type Media = {
