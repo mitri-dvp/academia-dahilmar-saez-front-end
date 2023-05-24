@@ -11,7 +11,9 @@ const Messages: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full md:p-14">Messages</section>
+      <section className="min-h-screen w-full md:py-14 md:px-10">
+        Messages
+      </section>
     </DashboardLayout>
   );
 };

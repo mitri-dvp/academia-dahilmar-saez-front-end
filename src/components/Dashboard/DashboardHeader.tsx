@@ -51,11 +51,29 @@ const DashboardHeader: FC = () => {
     });
   };
 
+  const getPageTitle = (pathname: string) => {
+    const navItems = dashboardNavItems[user.role.type] || [];
+    const navItem = navItems.find((item) => item.href === pathname);
+
+    if (navItem) {
+      return (
+        <span className="ml-8 flex gap-4 font-display font-semibold uppercase tracking-wide md:ml-56">
+          {navItem.Icon({
+            className: `h-6 w-6 text-dark-500 transition hover:fill-white`,
+          })}
+          {navItem.title}
+        </span>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <header
       className={`fixed z-20 w-full bg-white text-dark-500 shadow-lg transition`}
     >
-      <div className="mx-auto flex h-20 w-full max-w-screen-xl items-center justify-between px-8 md:justify-start md:space-x-10">
+      <div className="mr-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-8 md:justify-start md:space-x-10">
         <div className="md:hidden">
           <button
             onClick={() => setOpen(!open)}
@@ -67,7 +85,9 @@ const DashboardHeader: FC = () => {
           </button>
         </div>
 
-        <div className="flex flex-1 gap-8">
+        <div className="flex flex-1 gap-8 ">
+          {getPageTitle(router.pathname)}
+
           <div className="ml-auto">
             <BellSVG className="h-6 w-6 cursor-pointer text-dark-500" />
           </div>

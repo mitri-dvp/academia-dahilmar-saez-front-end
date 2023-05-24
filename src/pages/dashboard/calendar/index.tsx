@@ -11,7 +11,9 @@ const Calendar: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full md:p-14">Calendar</section>
+      <section className="min-h-screen w-full md:py-14 md:px-10">
+        Calendar
+      </section>
     </DashboardLayout>
   );
 };

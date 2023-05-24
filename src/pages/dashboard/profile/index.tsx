@@ -11,7 +11,9 @@ const Profile: NextPage = () => {
         description="Perfil | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full md:p-14"></section>
+      <section className="min-h-screen w-full md:py-14 md:px-10">
+        Profile
+      </section>
     </DashboardLayout>
   );
 };

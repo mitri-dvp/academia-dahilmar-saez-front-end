@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from "react";
-import { Fragment, useEffect, useCallback } from "react";
+import { useEffect, useCallback } from "react";
 import { useRouter } from "next/router";
 
 import DashboardHeader from "@components/Dashboard/DashboardHeader";
@@ -35,7 +35,7 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
     );
   }
 
-  return <Fragment />;
+  return null;
 };
 
 export default DashboardLayout;
