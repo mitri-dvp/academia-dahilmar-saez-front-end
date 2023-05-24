@@ -23,6 +23,34 @@ const DashboardHeader: FC = () => {
   const { user } = useUserStore();
   const { logout } = useUserStore();
 
+  const displayDashboardNavItems = () => {
+    const navItems = dashboardNavItems[user.role.type] || [];
+
+    return navItems.map((item, index) => {
+      return (
+        <Link
+          key={`nav-${index}`}
+          href={item.href}
+          onClick={() => setOpen(false)}
+          className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
+            router.pathname === item.href
+              ? "bg-gray-100 hover:border-b-white"
+              : "hover:border-b-dark-500 hover:bg-gray-50"
+          }`}
+        >
+          {item.Icon({
+            className: `h-6 w-6 transition hover:fill-white ${
+              router.pathname === item.href
+                ? "text-secondary-500"
+                : "text-dark-500"
+            }`,
+          })}
+          {item.title}
+        </Link>
+      );
+    });
+  };
+
   return (
     <header
       className={`fixed z-20 w-full bg-white text-dark-500 shadow-lg transition`}
@@ -80,29 +108,8 @@ const DashboardHeader: FC = () => {
                     height={40}
                   />
                 </Link>
-                {dashboardNavItems.map((item, index) => {
-                  return (
-                    <Link
-                      key={`nav-${index}`}
-                      href={item.href}
-                      onClick={() => setOpen(false)}
-                      className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
-                        router.pathname === item.href
-                          ? "bg-gray-100 hover:border-b-white"
-                          : "hover:border-b-dark-500 hover:bg-gray-50"
-                      }`}
-                    >
-                      {item.Icon({
-                        className: `h-6 w-6 transition hover:fill-white ${
-                          router.pathname === item.href
-                            ? "text-secondary-500"
-                            : "text-dark-500"
-                        }`,
-                      })}
-                      {item.title}
-                    </Link>
-                  );
-                })}
+
+                {displayDashboardNavItems()}
 
                 <div
                   className={`text-md -m-3 flex cursor-pointer items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition hover:border-b-dark-500 hover:bg-gray-50`}

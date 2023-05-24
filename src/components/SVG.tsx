@@ -37,7 +37,7 @@ export const DatepickerSVG: FC<{ className: string }> = ({ className }) => {
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"
-      stroke-width="1.5"
+      strokeWidth="1.5"
       stroke="currentColor"
     >
       <path
@@ -175,6 +175,28 @@ export const CalendarSVG: FC<{ className: string }> = ({ className }) => {
   );
 };
 
+export const CalendarCheckSVG: FC<{ className: string }> = ({ className }) => {
+  return (
+    <svg
+      className={className}
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21 0H3C1.34315 0 0 1.34315 0 3V21C0 22.6569 1.34315 24 3 24H21C22.6569 24 24 22.6569 24 21V3C24 1.34315 22.6569 0 21 0ZM1.5 5.78571C1.5 5.07563 2.17157 4.5 3 4.5H21C21.8284 4.5 22.5 5.07563 22.5 5.78571V21.2143C22.5 21.9244 21.8284 22.5 21 22.5H3C2.17157 22.5 1.5 21.9244 1.5 21.2143V5.78571Z"
+        fill="currentColor"
+      />
+      <path
+        d="M16.0303 10.2197C16.3232 10.5126 16.3232 10.9874 16.0303 11.2803L11.5303 15.7803C11.3897 15.921 11.1989 16 11 16C10.8011 16 10.6103 15.921 10.4697 15.7803L8.21967 13.5303C7.92678 13.2374 7.92678 12.7626 8.21967 12.4697C8.51256 12.1768 8.98744 12.1768 9.28033 12.4697L11 14.1893L14.9697 10.2197C15.2626 9.92678 15.7374 9.92678 16.0303 10.2197Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
 export const ClockSVG: FC<{ className: string }> = ({ className }) => {
   return (
     <svg
@@ -279,7 +301,7 @@ export const SpinnerSVG: FC<{ className: string }> = ({ className }) => {
         cy="12"
         r="10"
         stroke="currentColor"
-        stroke-width="4"
+        strokeWidth="4"
       />
       <path
         className="opacity-75"
