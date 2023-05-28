@@ -131,7 +131,7 @@ const Login: NextPage = () => {
         </div>
 
         <Button
-          className="w-full"
+          styles="w-full"
           loading={formik.isSubmitting}
           disabled={formik.isSubmitting}
         >

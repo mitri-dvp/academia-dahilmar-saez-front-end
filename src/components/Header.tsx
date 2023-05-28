@@ -104,7 +104,7 @@ const Header: FC = () => {
                           </Link>
                         );
                       })}
-                      <Button className="-m-3 flex items-center  bg-secondary-500 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-white transition hover:bg-secondary-700">
+                      <Button styles="-m-3 flex items-center  bg-secondary-500 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-white transition hover:bg-secondary-700">
                         <Link href="/login" onClick={() => setOpen(false)}>
                           Ingresar
                         </Link>

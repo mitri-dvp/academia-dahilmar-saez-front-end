@@ -30,7 +30,7 @@ const Home: NextPage = () => {
           </h1>
           <p className="mb-4">“Guáramo y Corazón“</p>
           <Link href="/schedule">
-            <Button className="mx-auto ">Consigue tu clase gratuita</Button>
+            <Button styles="mx-auto ">Consigue tu clase gratuita</Button>
           </Link>
         </div>
       </section>

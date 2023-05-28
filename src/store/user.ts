@@ -8,8 +8,10 @@ type UserState = {
 };
 
 type UserActions = {
-  login: (token: string, user: User) => void;
   signup: (token: string, user: User) => void;
+  login: (token: string, user: User) => void;
+  edit: (user: User) => void;
+  editPhoto: (photo: UserPhoto) => void;
   logout: () => void;
 };
 
@@ -43,8 +45,11 @@ export const useUserStore = create<UserStore>()(
     persist(
       (set) => ({
         ...initialState,
-        login: (token, user) => set({ token: token, user: user }),
         signup: (token, user) => set({ token: token, user: user }),
+        login: (token, user) => set({ token: token, user: user }),
+        edit: (user) => set((state) => ({ user: user })),
+        editPhoto: (photo) =>
+          set((state) => ({ user: { ...state.user, photo } })),
         logout: async () => {
           await Router.push("/login");
           set(initialState);

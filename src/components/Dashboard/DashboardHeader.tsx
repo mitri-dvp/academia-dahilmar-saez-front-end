@@ -27,6 +27,15 @@ const DashboardHeader: FC = () => {
   const displayDashboardNavItems = () => {
     const navItems = dashboardNavItems[user.role.type] || [];
 
+    const isActive = (href: string) => {
+      if (href === "/dashboard") {
+        return router.pathname === href;
+      }
+      if (href !== "/dashboard") {
+        return router.pathname.includes(href);
+      }
+    };
+
     return navItems.map((item, index) => {
       return (
         <Link
@@ -34,16 +43,14 @@ const DashboardHeader: FC = () => {
           href={item.href}
           onClick={() => setOpen(false)}
           className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
-            router.pathname === item.href
+            isActive(item.href)
               ? "bg-gray-100 hover:border-b-white"
               : "hover:border-b-dark-500 hover:bg-gray-50"
           }`}
         >
           {item.Icon({
             className: `h-6 w-6 transition hover:fill-white ${
-              router.pathname === item.href
-                ? "text-secondary-500"
-                : "text-dark-500"
+              isActive(item.href) ? "text-secondary-500" : "text-dark-500"
             }`,
           })}
           {item.title}
@@ -54,7 +61,14 @@ const DashboardHeader: FC = () => {
 
   const getPageTitle = (pathname: string) => {
     const navItems = dashboardNavItems[user.role.type] || [];
-    const navItem = navItems.find((item) => item.href === pathname);
+    const navItem = navItems.find((item) => {
+      if (item.href === "/dashboard") {
+        return pathname === item.href;
+      }
+      if (item.href !== "/dashboard") {
+        return pathname.includes(item.href);
+      }
+    });
 
     if (navItem) {
       return (

@@ -148,7 +148,7 @@ const Signup: NextPage = () => {
       >
         <h1 className="text-lg font-bold">Crea tu cuenta</h1>
 
-        <div className="flex cursor-pointer gap-4">
+        <div className="flex gap-4">
           <div className="w-1/2">
             <div className="relative z-0">
               <input
@@ -399,7 +399,7 @@ const Signup: NextPage = () => {
         </div>
 
         <Button
-          className="w-full"
+          styles="w-full"
           loading={formik.isSubmitting}
           disabled={formik.isSubmitting}
         >
