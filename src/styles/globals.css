@@ -40,3 +40,16 @@ a {
 i {
   font-style: italic;
 }
+
+button[class~="line-through"] {
+  background-image: repeating-linear-gradient(
+    135deg,
+    transparent,
+    rgb(229 70 15) 2px,
+    transparent 0,
+    transparent 4px
+  ) !important;
+  text-decoration: none;
+  color: rgb(107 114 128);
+  @apply m-auto rounded-full bg-secondary-300;
+}

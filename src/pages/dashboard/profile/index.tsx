@@ -22,7 +22,7 @@ const Profile: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="flex w-max gap-16 bg-white   p-16 shadow-lg">
+        <div className="flex w-max gap-16 bg-white p-16 shadow-lg">
           <div className="relative my-auto aspect-square h-80 w-80">
             {user.photo ? (
               <Image

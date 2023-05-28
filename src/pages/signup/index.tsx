@@ -240,6 +240,7 @@ const Signup: NextPage = () => {
               formik.setFieldValue("dateOfBirth", newDate);
             }}
             asSingle={true}
+            maxDate={new Date()}
             useRange={false}
             toggleIcon={() => <DatepickerSVG className="h-5 w-5" />}
             displayFormat="DD/MM/YYYY"
