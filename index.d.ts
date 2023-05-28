@@ -9,10 +9,19 @@ type User = {
   provider: string;
   createdAt: string;
   updatedAt: string;
-  role: Role;
+  role: UserRole;
+  photo: UserPhoto | null;
 };
 
-type Role = {
+type UserPhoto = {
+  id: number;
+  name: string;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type UserRole = {
   id: number;
   type: string;
   createdAt: string;
@@ -27,6 +36,8 @@ type Media = {
 type MediaAttributes = {
   name: string;
   url: string;
+  createdAt: string;
+  updatedAt: string;
 };
 
 type ResourceMeta = {

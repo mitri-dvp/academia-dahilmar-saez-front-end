@@ -33,6 +33,7 @@ const initialState = {
       createdAt: "",
       updatedAt: "",
     },
+    photo: null,
   },
   token: "",
 };

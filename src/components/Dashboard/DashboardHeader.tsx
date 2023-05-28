@@ -13,6 +13,7 @@ import {
 } from "@components/SVG";
 import { dashboardNavItems } from "@utils/navigation";
 import { useUserStore } from "@store/user";
+import { getImageURL } from "@utils/media";
 
 const DashboardHeader: FC = () => {
   // Open / Close Mobile Nav
@@ -93,7 +94,21 @@ const DashboardHeader: FC = () => {
           </div>
 
           <Link className="flex w-max gap-4" href="/dashboard/profile">
-            <PersonSVG className="h-6 w-6 text-dark-500" />
+            {user.photo ? (
+              <div className="relative my-auto h-6 w-11">
+                <Image
+                  className="aspect-square h-11 w-11 -translate-y-2 rounded-full object-cover"
+                  src={getImageURL(user.photo)}
+                  alt={user.photo.name}
+                  width={40}
+                  height={40}
+                />
+              </div>
+            ) : (
+              <div className="relative my-auto h-6 w-6">
+                <PersonSVG className="aspect-square h-6 w-6" />
+              </div>
+            )}
             <span className="font-display font-semibold uppercase tracking-wide">
               {user.firstName} {user.lastName}
             </span>
