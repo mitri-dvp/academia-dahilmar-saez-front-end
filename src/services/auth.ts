@@ -1,5 +1,6 @@
 import { publicApi } from "@utils/http";
 import { useUserStore } from "@store/user";
+import { useAttendanceStore } from "@store/attendance";
 
 type SignupValues = {
   firstName: string;
@@ -17,27 +18,31 @@ type LoginValues = {
 };
 
 export const signup = async (signupValues: SignupValues) => {
-  const signupResponse = await publicApi.post<{ token: string; user: User }>(
-    `/auth/signup`,
-    {
-      data: signupValues,
-    }
-  );
+  const signupResponse = await publicApi.post<{
+    token: string;
+    user: User;
+    attendances: Attendance[];
+  }>(`/auth/signup`, {
+    data: signupValues,
+  });
 
-  const { token, user } = signupResponse.data;
+  const { token, user, attendances } = signupResponse.data;
 
   useUserStore.getState().signup(token, user);
+  useAttendanceStore.getState().set(attendances);
 };
 
 export const login = async (loginValues: LoginValues) => {
-  const loginResponse = await publicApi.post<{ token: string; user: User }>(
-    `/auth/login`,
-    {
-      data: loginValues,
-    }
-  );
+  const loginResponse = await publicApi.post<{
+    token: string;
+    user: User;
+    attendances: Attendance[];
+  }>(`/auth/login`, {
+    data: loginValues,
+  });
 
-  const { token, user } = loginResponse.data;
+  const { token, user, attendances } = loginResponse.data;
 
   useUserStore.getState().login(token, user);
+  useAttendanceStore.getState().set(attendances);
 };

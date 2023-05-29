@@ -29,7 +29,7 @@ const DashboardHeader: FC = () => {
 
     const isActive = (type: string) => {
       if (type === "dashboard") {
-        return router.pathname === type;
+        return router.pathname === "/" + type;
       }
       if (type !== "dashboard") {
         return router.pathname.includes(type);
@@ -63,7 +63,7 @@ const DashboardHeader: FC = () => {
     const navItems = dashboardNavItems[user.role.type] || [];
     const navItem = navItems.find((item) => {
       if (item.type === "dashboard") {
-        return pathname === item.type;
+        return pathname === "/" + item.type;
       }
       if (item.type !== "dashboard") {
         return pathname.includes(item.type);

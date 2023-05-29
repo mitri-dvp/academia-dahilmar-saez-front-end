@@ -65,6 +65,45 @@ export const BurgerSVG: FC<{ className: string }> = ({ className }) => {
     </svg>
   );
 };
+
+export const CheckCircleSVG: FC<{ className: string }> = ({ className }) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"
+        fill="currentColor"
+      />
+      <path
+        d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const CrossCircleSVG: FC<{ className: string }> = ({ className }) => {
+  return (
+    <svg
+      className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      width="16"
+      height="16"
+      fill="currentColor"
+      viewBox="0 0 16 16"
+    >
+      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+      <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+    </svg>
+  );
+};
+
 export const CrossSVG: FC<{ className: string }> = ({ className }) => {
   return (
     <svg
@@ -307,6 +346,42 @@ export const SpinnerSVG: FC<{ className: string }> = ({ className }) => {
         className="opacity-75"
         fill="currentColor"
         d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      />
+    </svg>
+  );
+};
+
+export const ChevronLeftSVG: FC<{ className: string }> = ({ className }) => {
+  return (
+    <svg
+      className={className}
+      width="26"
+      height="44"
+      viewBox="0 0 26 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M21.2 43.2L0 22L21.2 0.800049L25.2 4.85005L8.05 22L25.2 39.15L21.2 43.2Z"
+        fill="currentColor"
+      />
+    </svg>
+  );
+};
+
+export const ChevronRightSVG: FC<{ className: string }> = ({ className }) => {
+  return (
+    <svg
+      className={className}
+      width="26"
+      height="44"
+      viewBox="0 0 26 44"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M4.20001 43.1L0.200012 39.05L17.35 21.9L0.200012 4.74995L4.20001 0.699951L25.4 21.9L4.20001 43.1Z"
+        fill="currentColor"
       />
     </svg>
   );

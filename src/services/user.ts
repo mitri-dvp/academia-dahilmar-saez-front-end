@@ -11,7 +11,7 @@ type EditValues = {
 
 export const edit = async (editValues: EditValues) => {
   const editResponse = await publicApi.put<{ token: string; user: User }>(
-    `/user/edit`,
+    `/users/edit`,
     {
       data: editValues,
     },
@@ -34,7 +34,7 @@ export const photoUpload = async (photo: File) => {
 
   const photoUploadResponse = await publicApi.post<{
     photo: UserPhoto;
-  }>(`/user/photo/upload`, formData, {
+  }>(`/users/photo/upload`, formData, {
     headers: {
       Authorization: "Bearer " + useUserStore.getState().token,
     },
@@ -48,7 +48,7 @@ export const photoDelete = async () => {
 
   const photoUploadResponse = await publicApi.delete<{
     photo: UserPhoto;
-  }>(`/user/photo/upload`, {
+  }>(`/users/photo/upload`, {
     headers: {
       Authorization: "Bearer " + useUserStore.getState().token,
     },

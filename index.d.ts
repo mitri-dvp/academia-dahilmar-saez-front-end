@@ -28,6 +28,14 @@ type UserRole = {
   updatedAt: string;
 };
 
+type Attendance = {
+  id: number;
+  date: string;
+  status: boolean;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type Media = {
   id: number;
   attributes: MediaAttributes;

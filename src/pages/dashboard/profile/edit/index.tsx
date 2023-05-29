@@ -19,7 +19,7 @@ import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import Datepicker from "react-tailwindcss-datepicker";
-import dayjs from "dayjs";
+import dayjs from "@utils/dayjs";
 import type { AxiosError } from "axios";
 import axios from "axios";
 
