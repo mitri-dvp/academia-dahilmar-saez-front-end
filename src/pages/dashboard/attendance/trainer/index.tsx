@@ -15,7 +15,7 @@ import {
 import { useAttendanceStore } from "@store/attendance";
 import { get } from "@services/attendance";
 
-const AttendanceAthlete: NextPage = () => {
+const AttendanceTrainer: NextPage = () => {
   const { attendances } = useAttendanceStore();
 
   const [isLoading, setIsLoading] = useState(false);
@@ -168,4 +168,4 @@ const AttendanceAthlete: NextPage = () => {
   );
 };
 
-export default AttendanceAthlete;
+export default AttendanceTrainer;
