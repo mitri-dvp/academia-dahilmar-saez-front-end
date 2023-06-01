@@ -12,6 +12,7 @@ import {
   CrossCircleSVG,
   SpinnerSVG,
 } from "@components/SVG";
+
 import { useAttendanceStore } from "@store/attendance";
 import { get } from "@services/attendance";
 
@@ -48,7 +49,7 @@ const AttendanceAthlete: NextPage = () => {
 
   const renderTableBody = () => {
     let currentDate = startDate;
-    const month: JSX.Element[] = [];
+    const weeks: JSX.Element[] = [];
     for (let i = 0; i < 6; i++) {
       const week: JSX.Element[] = [];
       for (let j = 0; j < 7; j++) {
@@ -77,7 +78,10 @@ const AttendanceAthlete: NextPage = () => {
         };
 
         const day = (
-          <td className="relative rounded-md border border-gray-300 p-12">
+          <td
+            key={currentDate.format("DD-MM-YYYY")}
+            className="relative rounded-md border border-gray-300 p-12"
+          >
             <div
               className={`absolute top-2 right-2 flex h-8 w-8 select-none items-center justify-center text-xs font-bold ${
                 isToday
@@ -96,9 +100,9 @@ const AttendanceAthlete: NextPage = () => {
         week.push(day);
         currentDate = currentDate.add(1, "day");
       }
-      month.push(<tr>{week}</tr>);
+      weeks.push(<tr key={currentDate.format("DD/MM/YYYY")}>{week}</tr>);
     }
-    return month;
+    return <tbody>{weeks}</tbody>;
   };
 
   return (
@@ -109,60 +113,74 @@ const AttendanceAthlete: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        {isLoading ? (
-          <div className="w-max bg-white p-16 shadow-lg">
-            <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
-          </div>
-        ) : (
-          <div className="w-max bg-white p-16 shadow-lg">
-            <div className="flex">
-              <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
-                {initialDate.format("MMMM YYYY")}
-              </h1>
-              <div className="ml-auto flex items-center justify-center gap-2">
-                <div onClick={handleDateDecrement}>
-                  <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
-                </div>
-                <div onClick={handleDateReset}>
-                  <span className="cursor-pointer font-display text-4xl font-semibold uppercase">
-                    Hoy
-                  </span>
-                </div>
-                <div onClick={handleDateIncrement}>
-                  <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
-                </div>
+        <div className="w-max bg-white p-16 shadow-lg">
+          <div className="flex">
+            <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
+              {initialDate.format("MMMM YYYY")}
+            </h1>
+            <div className="ml-auto flex items-center justify-center gap-2">
+              <div onClick={handleDateDecrement}>
+                <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
+              </div>
+              <div onClick={handleDateReset}>
+                <span className="cursor-pointer font-display text-4xl font-semibold uppercase">
+                  Hoy
+                </span>
+              </div>
+              <div onClick={handleDateIncrement}>
+                <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
               </div>
             </div>
+          </div>
+          {isLoading ? (
+            <div className="w-full bg-white pt-16">
+              <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+            </div>
+          ) : (
             <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
-              <thead className="rounded-full  text-white">
+              <thead className="rounded-full text-white">
                 <tr>
-                  <th className="rounded-md border-secondary-300 bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Domingo</span>
+                  <th className="rounded-md bg-secondary-500 p-4">
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Domingo
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Lunes</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Lunes
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Martes</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Martes
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Miercoles</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Miercoles
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Jueves</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Jueves
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Viernes</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Viernes
+                    </span>
                   </th>
                   <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold">Sabado</span>
+                    <span className="select-none font-bold uppercase tracking-wide">
+                      Sabado
+                    </span>
                   </th>
                 </tr>
               </thead>
-              <tbody>{renderTableBody()}</tbody>
+              {renderTableBody()}
             </table>
-          </div>
-        )}
+          )}
+        </div>
       </section>
     </DashboardLayout>
   );

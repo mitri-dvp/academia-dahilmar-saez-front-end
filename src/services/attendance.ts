@@ -3,12 +3,12 @@ import { useUserStore } from "@store/user";
 import { useAttendanceStore } from "@store/attendance";
 
 export const get = async () => {
-  const editResponse = await publicApi.get<{ attendances: Attendance[] }>(
+  const getResponse = await publicApi.get<{ attendances: Attendance[] }>(
     `/attendances`,
     { headers: { Authorization: "Bearer " + useUserStore.getState().token } }
   );
 
-  const { attendances } = editResponse.data;
+  const { attendances } = getResponse.data;
 
   useAttendanceStore.getState().set(attendances);
 };

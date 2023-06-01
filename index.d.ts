@@ -36,6 +36,33 @@ type Attendance = {
   updatedAt: string;
 };
 
+type Group = {
+  id: number;
+  name: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+  class: Class;
+  schedules: Schedule[];
+  users: User[];
+};
+
+type Class = {
+  id: number;
+  name: string;
+  description: string;
+  type: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Schedule = {
+  id: number;
+  datetime: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type Media = {
   id: number;
   attributes: MediaAttributes;

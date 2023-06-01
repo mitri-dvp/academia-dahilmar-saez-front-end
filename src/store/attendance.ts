@@ -21,7 +21,7 @@ export const useAttendanceStore = create<AttendanceStore>()(
     persist(
       (set) => ({
         ...initialState,
-        set: (attendances) => set((state) => ({ attendances: attendances })),
+        set: (attendances) => set(() => ({ attendances: attendances })),
       }),
       {
         name: "attendance-store",

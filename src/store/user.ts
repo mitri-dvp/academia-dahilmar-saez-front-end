@@ -47,7 +47,7 @@ export const useUserStore = create<UserStore>()(
         ...initialState,
         signup: (token, user) => set({ token: token, user: user }),
         login: (token, user) => set({ token: token, user: user }),
-        edit: (user) => set((state) => ({ user: user })),
+        edit: (user) => set(() => ({ user: user })),
         editPhoto: (photo) =>
           set((state) => ({ user: { ...state.user, photo } })),
         logout: async () => {
