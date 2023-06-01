@@ -140,41 +140,21 @@ const AttendanceAthlete: NextPage = () => {
             <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
               <thead className="rounded-full text-white">
                 <tr>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Domingo
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Lunes
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Martes
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Miercoles
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Jueves
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Viernes
-                    </span>
-                  </th>
-                  <th className="rounded-md bg-secondary-500 p-4">
-                    <span className="select-none font-bold uppercase tracking-wide">
-                      Sabado
-                    </span>
-                  </th>
+                  {[
+                    "Domingo",
+                    "Lunes",
+                    "Martes",
+                    "Miercoles",
+                    "Jueves",
+                    "Viernes",
+                    "Sabado",
+                  ].map((day) => (
+                    <th key={day} className="rounded-md bg-secondary-500 p-4">
+                      <span className="select-none font-bold uppercase tracking-wide">
+                        {day}
+                      </span>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               {renderTableBody()}
