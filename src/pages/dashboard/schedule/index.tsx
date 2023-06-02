@@ -5,10 +5,11 @@ import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
 import dayjs from "@utils/dayjs";
 
-import { SpinnerSVG } from "@components/SVG";
+import { SpinnerSVG, TennisBallSVG, TennisRaquetSVG } from "@components/SVG";
 
 import { useGroupStore } from "@store/group";
 import { get } from "@services/group";
+import { USER_ROLES } from "@utils/global";
 
 type DerivedSchedule = {
   schedule: {
@@ -21,6 +22,9 @@ type DerivedSchedule = {
   class: {
     name: string;
     type: string;
+  };
+  trainer: {
+    fullName: string;
   };
 };
 
@@ -91,6 +95,10 @@ const Schedule: NextPage = () => {
       const group = groups[index];
       if (!group) break;
 
+      const trainer = group.users.filter(
+        (user) => user.role.type === USER_ROLES.TRAINER
+      );
+
       const derivedSchedule = {
         group: {
           name: group.name,
@@ -98,6 +106,11 @@ const Schedule: NextPage = () => {
         class: {
           name: group.class.name,
           type: group.class.type,
+        },
+        trainer: {
+          fullName: trainer[0]
+            ? `${trainer[0].firstName} ${trainer[0].lastName}`
+            : "",
         },
       };
 
@@ -156,11 +169,31 @@ const Schedule: NextPage = () => {
         week[dayIndex + 1] = (
           <td
             key={i}
-            className="rounded-md border border-gray-300 p-2 text-center"
+            className={`rounded-md border border-gray-300 p-2 align-top ${
+              derivedSchedule ? "" : ""
+            }`}
           >
-            <span className="text-xs tracking-wide">
-              {derivedSchedule ? derivedSchedule.class.type : ""}
-            </span>
+            {derivedSchedule ? (
+              <div className="max-w-[130px] text-sm font-bold uppercase tracking-tight">
+                <div className="flex items-center gap-1">
+                  <TennisBallSVG className="w-4 text-primary-700" />
+                  <span className="line-clamp-2">
+                    {derivedSchedule.class.name}
+                  </span>
+                </div>
+                <div className="ml-5 ">
+                  <span className="line-clamp-2">
+                    {derivedSchedule.class.type}
+                  </span>
+                </div>
+                <div className="mt-2 flex gap-1">
+                  <TennisRaquetSVG className="mt-1 w-4 text-secondary-500" />
+                  <span className=" line-clamp-2">
+                    {derivedSchedule.trainer.fullName}
+                  </span>
+                </div>
+              </div>
+            ) : null}
           </td>
         );
       }
