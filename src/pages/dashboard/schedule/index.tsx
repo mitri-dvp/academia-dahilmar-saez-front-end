@@ -134,7 +134,21 @@ const Schedule: NextPage = () => {
     const firstDerivedSchedule = derivedSchedules[0];
     const lastDerivedSchedule = derivedSchedules[derivedSchedules.length - 1];
 
-    if (!firstDerivedSchedule || !lastDerivedSchedule) return;
+    if (!firstDerivedSchedule || !lastDerivedSchedule) {
+      // User has no schedules
+      return (
+        <tbody>
+          <tr>
+            <td
+              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-2xl font-semibold uppercase"
+              colSpan={8}
+            >
+              Horarios no encontrados
+            </td>
+          </tr>
+        </tbody>
+      );
+    }
 
     const hourRows =
       lastDerivedSchedule.schedule.hour - firstDerivedSchedule.schedule.hour;
@@ -200,14 +214,17 @@ const Schedule: NextPage = () => {
 
       weeks.push(<tr key={hourIndex}>{week}</tr>);
     }
+
+    console.log("HELLO");
+    console.log(weeks.length);
     return <tbody>{weeks}</tbody>;
   };
 
   return (
     <DashboardLayout>
       <Seo
-        title="Panel | Academia Dahilmar Sáez"
-        description="Panel | Academia Dahilmar Sáez"
+        title="Horario | Academia Dahilmar Sáez"
+        description="Horario | Academia Dahilmar Sáez"
       />
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">

@@ -104,8 +104,8 @@ const AttendanceTrainer: NextPage = () => {
   return (
     <DashboardLayout>
       <Seo
-        title="Panel | Academia Dahilmar Sáez"
-        description="Panel | Academia Dahilmar Sáez"
+        title="Asistencias | Academia Dahilmar Sáez"
+        description="Asistencias | Academia Dahilmar Sáez"
       />
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">

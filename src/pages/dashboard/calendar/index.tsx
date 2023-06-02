@@ -7,8 +7,8 @@ const Calendar: NextPage = () => {
   return (
     <DashboardLayout>
       <Seo
-        title="Panel | Academia Dahilmar Sáez"
-        description="Panel | Academia Dahilmar Sáez"
+        title="Calendario | Academia Dahilmar Sáez"
+        description="Calendario | Academia Dahilmar Sáez"
       />
 
       <section className="min-h-screen w-full md:py-14 md:px-10">
