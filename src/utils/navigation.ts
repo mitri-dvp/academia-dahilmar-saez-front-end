@@ -64,9 +64,9 @@ export const dashboardNavItems = {
     },
     {
       Icon: ChatSVG,
-      title: "Mensajes",
-      href: "/dashboard/messages",
-      type: "messages",
+      title: "Chats",
+      href: "/dashboard/chats",
+      type: "chats",
     },
     {
       Icon: PersonSVG,
@@ -90,9 +90,9 @@ export const dashboardNavItems = {
     },
     {
       Icon: ChatSVG,
-      title: "Mensajes",
-      href: "/dashboard/messages",
-      type: "messages",
+      title: "Chats",
+      href: "/dashboard/chats",
+      type: "chats",
     },
     {
       Icon: PersonSVG,
@@ -128,9 +128,9 @@ export const dashboardNavItems = {
     },
     {
       Icon: ChatSVG,
-      title: "Mensajes",
-      href: "/dashboard/messages",
-      type: "messages",
+      title: "Chats",
+      href: "/dashboard/chats",
+      type: "chats",
     },
     {
       Icon: PersonSVG,

@@ -13,17 +13,17 @@ type User = {
   photo: UserPhoto | null;
 };
 
-type UserPhoto = {
+type UserRole = {
   id: number;
-  name: string;
-  url: string;
+  type: string;
   createdAt: string;
   updatedAt: string;
 };
 
-type UserRole = {
+type UserPhoto = {
   id: number;
-  type: string;
+  name: string;
+  url: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -34,6 +34,25 @@ type Attendance = {
   status: boolean;
   createdAt: string;
   updatedAt: string;
+};
+
+type Chat = {
+  id: number;
+  users: User[];
+  createdAt: string;
+  updatedAt: string;
+};
+
+type Message = {
+  id: number;
+  message: string;
+  user: UserMessage;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type UserMessage = {
+  id: number;
 };
 
 type Group = {

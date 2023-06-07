@@ -50,7 +50,9 @@ const Schedule: NextPage = () => {
         <span className="mr-4 font-display text-6xl font-semibold uppercase">
           Semana
         </span>
-        {initialDate.format("DD/MM/YYYY")} - {finalDate.format("DD/MM/YYYY")}
+        <span>
+          {initialDate.format("DD/MM/YYYY")} - {finalDate.format("DD/MM/YYYY")}
+        </span>
       </h1>
     );
   };
@@ -215,8 +217,6 @@ const Schedule: NextPage = () => {
       weeks.push(<tr key={hourIndex}>{week}</tr>);
     }
 
-    console.log("HELLO");
-    console.log(weeks.length);
     return <tbody>{weeks}</tbody>;
   };
 
