@@ -1,3 +1,4 @@
+import { socket } from "@lib/socket";
 import Router from "next/router";
 import { create } from "zustand";
 import { devtools, persist, createJSONStorage } from "zustand/middleware";
@@ -51,6 +52,7 @@ export const useUserStore = create<UserStore>()(
         editPhoto: (photo) =>
           set((state) => ({ user: { ...state.user, photo } })),
         logout: async () => {
+          socket.disconnect();
           await Router.push("/login");
           set(initialState);
         },

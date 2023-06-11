@@ -20,6 +20,7 @@ import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import ChatList from "@components/Chat/ChatList";
 import ChatView from "@components/Chat/ChatView";
+import ChatViewEmpty from "@components/Chat/ChatViewEmpty";
 
 const Chats: NextPage = () => {
   const { chats } = useChatStore();
@@ -77,7 +78,7 @@ const Chats: NextPage = () => {
               </>
             )}
           </div>
-          <ChatView chat={chat} />
+          {chat ? <ChatView chat={chat} /> : <ChatViewEmpty />}
         </div>
         <ChatContactModal
           showModal={showModal}

@@ -1,20 +1,61 @@
-import { PersonSVG, SendSVG } from "@components/SVG";
+import { PersonSVG, SendSVG, SpinnerSVG } from "@components/SVG";
 import { useChatStore } from "@store/chat";
 import { useUserStore } from "@store/user";
 import { getImageURL } from "@utils/media";
 import Image from "next/image";
-import React from "react";
+import type { LegacyRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import { send } from "@services/message";
+import { send, get } from "@services/message";
+import { socket } from "@lib/socket";
+import { useMessageStore } from "@store/message";
 
-const ChatView: ({ chat }: { chat?: Chat }) => JSX.Element = ({ chat }) => {
-  const { chats } = useChatStore();
+import dayjs from "@utils/dayjs";
+
+const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
+  const { messages, set } = useMessageStore();
   const { user } = useUserStore();
 
-  const contact = chat?.users.filter((contact) => contact.id != user.id)[0];
+  const contact = chat.users.filter((contact) => contact.id != user.id)[0];
+
+  const divRef = useRef<HTMLDivElement>(null);
+  const messagesRef = useRef<HTMLDivElement>(null);
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const onMessages = (messages: Message[]) => {
+      set(messages);
+      scrollDownChat();
+    };
+
+    const msgEvent = `CHAT::${chat.id}::MESSAGES`;
+    socket.on(msgEvent, onMessages);
+    return () => {
+      socket.off(msgEvent, onMessages);
+    };
+  }, [chat.id]);
+
+  useEffect(() => {
+    setIsLoading(true);
+    const abortController = new AbortController();
+
+    get(chat.id, {
+      signal: abortController.signal,
+    })
+      .then(() => {
+        setIsLoading(false);
+        scrollDownChat();
+      })
+      .catch(() => setIsLoading(false));
+
+    return () => {
+      abortController.abort();
+    };
+  }, [chat.id]);
 
   const formik = useFormik({
     initialValues: {
@@ -28,21 +69,41 @@ const ChatView: ({ chat }: { chat?: Chat }) => JSX.Element = ({ chat }) => {
       })
     ),
     onSubmit: async (values) => {
-      if (!chat) return;
-
       const { text } = values;
 
+      if (isLoading) return;
+      setIsLoading(true);
       try {
         // Action
         await send(chat.id, text);
         // On Success
-        // handleSuccess();
+        handleSuccess();
       } catch (error) {
         // On Error
-        // handleError(error);
+        handleError(error);
       }
+      setIsLoading(false);
     },
   });
+
+  const handleSuccess = () => {
+    formik.resetForm();
+    if (divRef.current) {
+      divRef.current.innerHTML = "";
+    }
+  };
+
+  const scrollDownChat = () => {
+    setTimeout(() => {
+      if (messagesRef.current) {
+        messagesRef.current.scrollTo(0, messagesRef.current.scrollHeight);
+      }
+    }, 0);
+  };
+
+  const handleError = (error: unknown) => {
+    console.log(error);
+  };
 
   const handleInputChange = (e: React.FormEvent<HTMLDivElement>) => {
     const target = e.target as HTMLDivElement;
@@ -72,42 +133,7 @@ const ChatView: ({ chat }: { chat?: Chat }) => JSX.Element = ({ chat }) => {
     previousElementSibling.focus();
   };
 
-  if (!chat || !contact)
-    return (
-      <div className="flex w-full flex-1 flex-col bg-gray-50">
-        <div
-          className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100"
-          // onClick={() => handleChatSelect(contact)}
-        >
-          <div className="relative my-auto aspect-square h-10 w-10">
-            <PersonSVG className="aspect-square h-10 w-10" />
-          </div>
-          <div className="flex items-center">
-            <h1 className="text-base font-bold text-dark-500">
-              Seleccione un chat
-            </h1>
-          </div>
-        </div>
-        <div className="relative flex-1 bg-white">
-          <Image
-            className="absolute top-1/2 left-1/2 z-50 h-32 w-auto -translate-x-1/2 -translate-y-1/2 opacity-50"
-            src="/logo.png"
-            alt="academia-dahilmar-saez-logo"
-            width={300}
-            height={40}
-          />
-        </div>
-        <div className="relative flex w-full items-center gap-4 p-4">
-          <div className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500" />
-          <div className="absolute top-8 left-8 cursor-text select-none">
-            Escribe un mensaje
-          </div>
-          <div className="flex h-14 w-14 cursor-pointer items-center justify-center bg-secondary-500  p-2 text-white transition-all hover:bg-secondary-700">
-            <SendSVG className="h-8 w-8" />
-          </div>
-        </div>
-      </div>
-    );
+  if (!contact) return <></>;
 
   return (
     <div className="flex w-full flex-1 flex-col bg-gray-50">
@@ -134,21 +160,36 @@ const ChatView: ({ chat }: { chat?: Chat }) => JSX.Element = ({ chat }) => {
           </h1>
         </div>
       </div>
-      <div className="relative flex-1 bg-white">
-        <Image
-          className="absolute top-1/2 left-1/2 z-50 h-32 w-auto -translate-x-1/2 -translate-y-1/2 opacity-50"
-          src="/logo.png"
-          alt="academia-dahilmar-saez-logo"
-          width={300}
-          height={40}
-        />
+      <div
+        ref={messagesRef}
+        className="relative max-h-[calc(100vh-22rem)] flex-1 overflow-y-auto bg-gray-100"
+      >
+        {messages.map((message) => {
+          const isOwnMessage = message.user.id === user.id;
+          return (
+            <div
+              key={message.id}
+              className={`relative m-4 w-max max-w-sm break-all py-6 px-8 font-display text-base font-semibold uppercase ${
+                isOwnMessage
+                  ? "ml-auto bg-secondary-500 text-right text-white"
+                  : "bg-white text-secondary-500"
+              }`}
+            >
+              <span>{message.message}</span>
+              <span className="absolute bottom-1 right-1 text-xs">
+                {dayjs(message.createdAt).format("hh:mm a")}
+              </span>
+            </div>
+          );
+        })}
       </div>
       <div className="relative flex w-full items-center gap-4 p-4">
         <div
-          contentEditable
+          ref={divRef}
           className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500"
           onInput={handleInputChange}
           onKeyDown={handleKeyDown}
+          contentEditable
         />
         {formik.values.text ? null : (
           <div
@@ -158,8 +199,15 @@ const ChatView: ({ chat }: { chat?: Chat }) => JSX.Element = ({ chat }) => {
             Escribe un mensaje
           </div>
         )}
-        <div className="flex h-14 w-14 cursor-pointer items-center justify-center bg-secondary-500  p-2 text-white transition-all hover:bg-secondary-700">
-          <SendSVG className="h-8 w-8" />
+        <div
+          className="flex h-14 w-14 cursor-pointer items-center justify-center bg-secondary-500  p-2 text-white transition-all hover:bg-secondary-700"
+          onClick={() => formik.handleSubmit()}
+        >
+          {isLoading ? (
+            <SpinnerSVG className="mx-auto h-6 w-6 animate-spin" />
+          ) : (
+            <SendSVG className="h-8 w-8" />
+          )}
         </div>
       </div>
     </div>

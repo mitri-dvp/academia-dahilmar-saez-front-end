@@ -2,21 +2,28 @@ import { publicApi } from "@utils/http";
 import { useUserStore } from "@store/user";
 import { useMessageStore } from "@store/message";
 
-export const get = async (chatID: number) => {
+type RequestOptions = {
+  signal: AbortSignal;
+};
+
+export const get = async (chatID: number, options: RequestOptions) => {
   const getResponse = await publicApi.get<{ messages: Message[] }>(
     `/chats/${chatID}/messages`,
     {
       headers: { Authorization: "Bearer " + useUserStore.getState().token },
+      signal: options.signal,
     }
   );
 
   const { messages } = getResponse.data;
 
+  console.log(messages);
+
   useMessageStore.getState().set(messages);
 };
 
 export const send = async (chatID: number, text: string) => {
-  const postResponse = await publicApi.post<{ message: Message }>(
+  await publicApi.post<{ message: Message }>(
     `/chats/${chatID}/messages`,
     {
       data: { text: text },
@@ -25,12 +32,4 @@ export const send = async (chatID: number, text: string) => {
       headers: { Authorization: "Bearer " + useUserStore.getState().token },
     }
   );
-
-  const { message } = postResponse.data;
-
-  // Use Socket
-
-  console.log(message);
-
-  useMessageStore.getState().add(message);
 };

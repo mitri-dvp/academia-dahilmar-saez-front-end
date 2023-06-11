@@ -1,6 +1,7 @@
 import { publicApi } from "@utils/http";
 import { useUserStore } from "@store/user";
 import { useAttendanceStore } from "@store/attendance";
+import { socket } from "@lib/socket";
 
 type SignupValues = {
   firstName: string;
@@ -45,4 +46,6 @@ export const login = async (loginValues: LoginValues) => {
 
   useUserStore.getState().login(token, user);
   useAttendanceStore.getState().set(attendances);
+
+  socket.connect();
 };
