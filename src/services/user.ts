@@ -56,3 +56,16 @@ export const photoDelete = async () => {
 
   userStore.editPhoto(photoUploadResponse.data.photo);
 };
+
+export const getAthletes = async () => {
+  const getResponse = await publicApi.get<{ athletes: User[] }>(
+    `/users/athletes`,
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  const { athletes } = getResponse.data;
+
+  return athletes;
+};

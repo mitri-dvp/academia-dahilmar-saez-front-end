@@ -19,10 +19,6 @@ type DerivedSchedule = {
   group: {
     name: string;
   };
-  class: {
-    name: string;
-    type: string;
-  };
   trainer: {
     fullName: string;
   };
@@ -104,10 +100,6 @@ const Schedule: NextPage = () => {
       const derivedSchedule = {
         group: {
           name: group.name,
-        },
-        class: {
-          name: group.class.name,
-          type: group.class.type,
         },
         trainer: {
           fullName: trainer[0]
@@ -194,12 +186,7 @@ const Schedule: NextPage = () => {
                 <div className="flex items-center gap-1">
                   <TennisBallSVG className="w-4 text-primary-700" />
                   <span className="line-clamp-2">
-                    {derivedSchedule.class.name}
-                  </span>
-                </div>
-                <div className="ml-5 ">
-                  <span className="line-clamp-2">
-                    {derivedSchedule.class.type}
+                    {derivedSchedule.group.name}
                   </span>
                 </div>
                 <div className="mt-2 flex gap-1">

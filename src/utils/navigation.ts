@@ -4,6 +4,7 @@ import {
   ChatSVG,
   ClockSVG,
   FacebookSVG,
+  GroupSVG,
   HouseSVG,
   InstagramSVG,
   PersonSVG,
@@ -45,16 +46,16 @@ export const dashboardNavItems = {
       type: "dashboard",
     },
     {
+      Icon: ClockSVG,
+      title: "Horario",
+      href: "/dashboard/schedule/athlete/",
+      type: "schedule",
+    },
+    {
       Icon: CalendarCheckSVG,
       title: "Asistencias",
       href: "/dashboard/attendance/athlete/",
       type: "attendance",
-    },
-    {
-      Icon: ClockSVG,
-      title: "Horario",
-      href: "/dashboard/schedule",
-      type: "schedule",
     },
     {
       Icon: CalendarSVG,
@@ -109,16 +110,22 @@ export const dashboardNavItems = {
       type: "dashboard",
     },
     {
+      Icon: GroupSVG,
+      title: "Grupos",
+      href: "/dashboard/group/",
+      type: "group",
+    },
+    {
+      Icon: ClockSVG,
+      title: "Horarios",
+      href: "/dashboard/schedule/trainer/",
+      type: "schedule",
+    },
+    {
       Icon: CalendarCheckSVG,
       title: "Asistencias",
       href: "/dashboard/attendance/trainer/",
       type: "attendance",
-    },
-    {
-      Icon: ClockSVG,
-      title: "Horario",
-      href: "/dashboard/schedule",
-      type: "schedule",
     },
     {
       Icon: CalendarSVG,

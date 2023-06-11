@@ -28,10 +28,6 @@ const Profile: NextPage = () => {
 
   const { user } = useUserStore();
 
-  // TO-DO
-  // CREAR COMPONENTE DE EDICION DE FOTO DE PERFIL EN PROD
-  // const [photoPreview, setPhotoPreview] = useState("");
-  // const [photo, setPhoto] = useState<File | null>(null);
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
 

@@ -8,6 +8,7 @@ type GroupState = {
 
 type GroupActions = {
   set: (groups: Group[]) => void;
+  add: (group: Group) => void;
 };
 
 type GroupStore = GroupState & GroupActions;
@@ -22,6 +23,7 @@ export const useGroupStore = create<GroupStore>()(
       (set) => ({
         ...initialState,
         set: (groups) => set(() => ({ groups: groups })),
+        add: (group) => set((state) => ({ groups: [...state.groups, group] })),
       }),
       {
         name: "group-store",

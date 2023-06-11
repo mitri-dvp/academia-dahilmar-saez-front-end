@@ -46,12 +46,12 @@ type Chat = {
 type Message = {
   id: number;
   message: string;
-  user: UserMessage;
+  user: UserID;
   createdAt: string;
   updatedAt: string;
 };
 
-type UserMessage = {
+type UserID = {
   id: number;
 };
 
