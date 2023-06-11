@@ -133,6 +133,51 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
     previousElementSibling.focus();
   };
 
+  const renderMessages = () => {
+    const messagesList = [];
+    let prevDate = dayjs().add(1, "day").format("DD/MM/YYYY");
+    for (let i = 0; i < messages.length; i++) {
+      const message = messages[i];
+
+      if (!message) break;
+
+      const currentDate = dayjs(message.createdAt).format("DD/MM/YYYY");
+      if (prevDate !== currentDate) {
+        messagesList.push(
+          <div
+            key={currentDate}
+            className={`relative m-4 mx-auto w-max max-w-sm break-all bg-white py-6 px-8 font-display text-base font-semibold
+            uppercase text-secondary-500
+          `}
+          >
+            <span>{currentDate}</span>
+          </div>
+        );
+        prevDate = currentDate;
+      }
+
+      const isOwnMessage = message.user.id === user.id;
+
+      messagesList.push(
+        <div
+          key={message.id}
+          className={`relative m-4 w-max max-w-sm break-all py-6 px-8 font-display text-base font-semibold uppercase ${
+            isOwnMessage
+              ? "ml-auto bg-secondary-500 text-right text-white"
+              : "bg-white text-secondary-500"
+          }`}
+        >
+          <span>{message.message}</span>
+          <span className="absolute bottom-1 right-1 text-xs">
+            {dayjs(message.createdAt).format("hh:mm a")}
+          </span>
+        </div>
+      );
+    }
+
+    return messagesList;
+  };
+
   if (!contact) return <></>;
 
   return (
@@ -164,24 +209,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
         ref={messagesRef}
         className="relative max-h-[calc(100vh-22rem)] flex-1 overflow-y-auto bg-gray-100"
       >
-        {messages.map((message) => {
-          const isOwnMessage = message.user.id === user.id;
-          return (
-            <div
-              key={message.id}
-              className={`relative m-4 w-max max-w-sm break-all py-6 px-8 font-display text-base font-semibold uppercase ${
-                isOwnMessage
-                  ? "ml-auto bg-secondary-500 text-right text-white"
-                  : "bg-white text-secondary-500"
-              }`}
-            >
-              <span>{message.message}</span>
-              <span className="absolute bottom-1 right-1 text-xs">
-                {dayjs(message.createdAt).format("hh:mm a")}
-              </span>
-            </div>
-          );
-        })}
+        {renderMessages()}
       </div>
       <div className="relative flex w-full items-center gap-4 p-4">
         <div

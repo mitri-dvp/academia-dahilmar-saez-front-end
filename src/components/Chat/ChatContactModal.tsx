@@ -8,15 +8,21 @@ import { USER_ROLES } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import { create } from "@services/chat";
+import { useUserStore } from "@store/user";
+import { useChatStore } from "@store/chat";
 
 const ChatContactModal: ({
   showModal,
   onClose,
+  onSelect,
 }: {
   showModal: boolean;
   onClose: () => void;
-}) => JSX.Element = ({ showModal, onClose }) => {
+  onSelect: (chat: Chat) => void;
+}) => JSX.Element = ({ showModal, onClose, onSelect }) => {
   const { groups } = useGroupStore();
+  const { user } = useUserStore();
+  const { chats } = useChatStore();
 
   const [contacts, setContacts] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -30,7 +36,7 @@ const ChatContactModal: ({
   }, []);
 
   useEffect(() => {
-    const teachers: User[] = [];
+    const contactList: User[] = [];
 
     for (let i = 0; i < groups.length; i++) {
       const group = groups[i];
@@ -38,17 +44,35 @@ const ChatContactModal: ({
       if (!group) break;
 
       for (let j = 0; j < group.users.length; j++) {
-        const user = group.users[j];
+        const groupUser = group.users[j];
 
-        if (!user) break;
+        if (!groupUser) break;
 
-        if (user.role.type === USER_ROLES.TRAINER) teachers.push(user);
+        // Athlete handling
+        if (user.role.type === USER_ROLES.ATHLETE) {
+          if (groupUser.role.type === USER_ROLES.TRAINER)
+            contactList.push(groupUser);
+        }
+
+        // Tariner handling
+        if (user.role.type === USER_ROLES.TRAINER) {
+          if (groupUser.id !== user.id) contactList.push(groupUser);
+        }
       }
     }
-    setContacts(teachers);
+    setContacts(contactList);
   }, [groups]);
 
   const handleSelectContact = async (contact: User) => {
+    const chat = chats.find((chat) =>
+      chat.users.find((user) => user.id === contact.id)
+    );
+    if (chat) {
+      onSelect(chat);
+      onClose();
+      return;
+    }
+
     if (isLoading) return;
 
     setIsLoading(true);

@@ -83,6 +83,7 @@ const Chats: NextPage = () => {
         <ChatContactModal
           showModal={showModal}
           onClose={() => setShowModal(false)}
+          onSelect={handleChatSelect}
         />
       </section>
     </DashboardLayout>

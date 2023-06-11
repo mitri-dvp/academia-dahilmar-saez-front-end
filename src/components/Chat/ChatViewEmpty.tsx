@@ -25,12 +25,10 @@ const ChatViewEmpty: FC = () => {
           height={40}
         />
       </div>
-      <div className="relative flex w-full items-center gap-4 p-4">
+      <div className="relative flex w-full items-center gap-4 p-4  opacity-80">
         <div className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500" />
-        <div className="absolute top-8 left-8 cursor-text select-none">
-          Escribe un mensaje
-        </div>
-        <div className="flex h-14 w-14 cursor-pointer items-center justify-center bg-secondary-500  p-2 text-white transition-all hover:bg-secondary-700">
+        <div className="absolute top-8 left-8 cursor-text select-none"></div>
+        <div className="flex h-14 w-14 items-center justify-center bg-secondary-500  p-2 text-white">
           <SendSVG className="h-8 w-8" />
         </div>
       </div>
