@@ -82,6 +82,15 @@ type Schedule = {
   updatedAt: string;
 };
 
+type CalendarEvent = {
+  id: number;
+  name: string;
+  date: string;
+  description: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type Media = {
   id: number;
   attributes: MediaAttributes;

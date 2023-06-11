@@ -23,11 +23,10 @@ import ChatView from "@components/Chat/ChatView";
 
 const Chats: NextPage = () => {
   const { chats } = useChatStore();
-  const { user } = useUserStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
-  const [contact, setContact] = useState<User>();
+  const [chat, setChat] = useState<Chat>();
 
   useEffect(() => {
     setIsLoading(true);
@@ -36,49 +35,8 @@ const Chats: NextPage = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  const renderChat = () => {
-    if (!contact) return;
-
-    return (
-      <div className="flex w-full flex-1 flex-col bg-gray-50">
-        <div
-          className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100"
-          // onClick={() => handleChatSelect(contact)}
-        >
-          <div className="relative my-auto aspect-square h-10 w-10">
-            {contact.photo ? (
-              <Image
-                className="h-10 w-10 rounded-full object-cover"
-                src={getImageURL(contact.photo)}
-                alt={contact.photo.name}
-                width={320}
-                height={320}
-              />
-            ) : (
-              <PersonSVG className="aspect-square h-10 w-10" />
-            )}
-          </div>
-          <div className="flex items-center">
-            <h1 className="text-base font-bold text-dark-500">
-              {contact.firstName} {contact.lastName}
-            </h1>
-          </div>
-        </div>
-        <div className="flex-1 bg-white">Body</div>
-        <div className="flex w-full gap-4 p-4">
-          <div
-            contentEditable
-            className="w-full bg-white p-4 outline-none focus:outline-secondary-500"
-          >
-            <div className="cursor-text select-none">Escribe un mensaje</div>
-          </div>
-        </div>
-      </div>
-    );
-  };
-
-  const handleChatSelect = (contact: User) => {
-    setContact(contact);
+  const handleChatSelect = async (chat: Chat) => {
+    setChat(chat);
   };
 
   return (
@@ -119,7 +77,7 @@ const Chats: NextPage = () => {
               </>
             )}
           </div>
-          {contact ? <ChatView contact={contact} /> : null}
+          <ChatView chat={chat} />
         </div>
         <ChatContactModal
           showModal={showModal}

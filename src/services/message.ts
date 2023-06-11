@@ -15,11 +15,11 @@ export const get = async (chatID: number) => {
   useMessageStore.getState().set(messages);
 };
 
-export const send = async (chatID: number, string: string) => {
+export const send = async (chatID: number, text: string) => {
   const postResponse = await publicApi.post<{ message: Message }>(
     `/chats/${chatID}/messages`,
     {
-      data: { message: string },
+      data: { text: text },
     },
     {
       headers: { Authorization: "Bearer " + useUserStore.getState().token },
@@ -27,6 +27,10 @@ export const send = async (chatID: number, string: string) => {
   );
 
   const { message } = postResponse.data;
+
+  // Use Socket
+
+  console.log(message);
 
   useMessageStore.getState().add(message);
 };

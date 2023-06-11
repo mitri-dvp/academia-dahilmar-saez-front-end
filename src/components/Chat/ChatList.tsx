@@ -8,7 +8,7 @@ import React from "react";
 const ChatList: ({
   onSelect,
 }: {
-  onSelect: (contact: User) => void;
+  onSelect: (chat: Chat) => void;
 }) => JSX.Element = ({ onSelect }) => {
   const { chats } = useChatStore();
   const { user } = useUserStore();
@@ -28,7 +28,7 @@ const ChatList: ({
       <div
         key={contact.id}
         className="flex w-full cursor-pointer select-none gap-8 bg-white py-8 px-16 transition-all hover:bg-gray-100"
-        onClick={() => onSelect(contact)}
+        onClick={() => onSelect(chat)}
       >
         <div className="relative my-auto aspect-square h-16 w-16">
           {contact.photo ? (

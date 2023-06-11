@@ -16,9 +16,8 @@ const Button: FC<PropsWithChildren & ButtonProps> = ({
   color = "primary",
   type = "submit",
 }) => {
-  // @tw
   styles +=
-    "block border-2 border-secondary-500 px-10 py-2 font-display font-semibold uppercase tracking-wider transition";
+    " block border-2 border-secondary-500 px-10 py-2 font-display font-semibold uppercase tracking-wider transition";
 
   switch (color) {
     case "primary":
