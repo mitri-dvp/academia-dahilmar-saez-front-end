@@ -120,6 +120,7 @@ const GroupAddModal: ({
           </div>
           <div className="mx-auto w-96 space-y-8">
             <div className="text-base">{group.description}</div>
+            <div className="text-base">Integrantes</div>
             <div className="flex flex-wrap gap-2">
               {group.users.map((user) => (
                 <div
@@ -148,12 +149,31 @@ const GroupAddModal: ({
               ))}
             </div>
 
+            <div className="text-base">Horarios</div>
             {group.schedules.length ? (
-              <></>
+              group.schedules.map((schedule) => (
+                <React.Fragment key={schedule.id}>
+                  <div className="flex gap-4">
+                    <div className="w-1/2">
+                      <h1 className="text-sm font-bold text-dark-500">Día</h1>
+                      <div className="mb-2 w-full capitalize text-dark-500">
+                        {dayjs(schedule.datetime).format("dddd")}
+                      </div>
+                    </div>
+
+                    <div className="w-1/2">
+                      <h1 className="text-sm font-bold text-dark-500">Hora</h1>
+                      <div className="mb-2 w-full text-dark-500">
+                        {dayjs(schedule.datetime).format("hh:mm a")}
+                      </div>
+                    </div>
+                  </div>
+                </React.Fragment>
+              ))
             ) : (
-              <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+              <h1 className="text-sm font-bold text-dark-500">
                 Horarios no encontrados
-              </div>
+              </h1>
             )}
 
             <div className="flex justify-between">

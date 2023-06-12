@@ -16,12 +16,14 @@ import { useGroupStore } from "@store/group";
 import { get } from "@services/group";
 import { USER_ROLES } from "@utils/global";
 import ScheduleAddModal from "@components/Schedule/ScheduleAddModal";
+import GroupScheduleModal from "@components/Group/GroupScheduleModal";
 
 const Schedule: NextPage = () => {
   const { groups } = useGroupStore();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -56,21 +58,30 @@ const Schedule: NextPage = () => {
             </div>
           ) : (
             <>
-              <div
-                className="flex h-96 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 bg-secondary-500 px-12 py-5 text-center font-display text-2xl font-semibold uppercase text-white"
-                onClick={() => setShowModal(true)}
-              >
-                <PlusCircleDottedSVG className="h-12 w-12" />
-                <span>Añadir</span>
+              <h1 className="ml-2 mb-8 font-display text-6xl font-semibold uppercase">
+                Horarios
+              </h1>
+              <div className="grid grid-cols-4 gap-6">
+                {groups.map((group) => (
+                  <div
+                    key={group.id}
+                    className="flex h-96 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
+                    onClick={() => setSelectedGroup(group)}
+                  >
+                    <span>{group.name}</span>
+                  </div>
+                ))}
               </div>
-              <div className="grid grid-cols-4 gap-6">{renderGroups()}</div>
-              <ScheduleAddModal
-                showModal={showModal}
-                onClose={() => setShowModal(false)}
-              />
             </>
           )}
         </div>
+        {selectedGroup ? (
+          <GroupScheduleModal
+            showModal={Boolean(selectedGroup)}
+            onClose={() => setSelectedGroup(null)}
+            groupID={selectedGroup.id}
+          />
+        ) : null}
       </section>
     </DashboardLayout>
   );

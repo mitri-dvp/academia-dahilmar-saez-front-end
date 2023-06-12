@@ -50,12 +50,12 @@ const GroupAddModal: ({
       })
     ),
     onSubmit: async (values) => {
-      console.log(values);
       const createValues = {
         name: values.name,
         description: values.description,
         users: [...values.users.map((user) => user.id), user.user.id],
       };
+
       try {
         // Action
         await create(createValues);
@@ -172,7 +172,7 @@ const GroupAddModal: ({
               </div>
             </div>
 
-            <div className="text-base">Selecciona Usuarios</div>
+            <div className="text-base">Selecciona Integrantes</div>
 
             <div className="relative z-0">
               <input
