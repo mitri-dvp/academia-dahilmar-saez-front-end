@@ -174,7 +174,8 @@ const GroupScheduleModal: ({
                       onFocus={() => {
                         setShowDayInput(true);
                       }}
-                      onBlur={() => {
+                      onBlur={(e) => {
+                        formik.handleBlur(e);
                         setShowDayInput(false);
                       }}
                       readOnly
@@ -224,7 +225,8 @@ const GroupScheduleModal: ({
                       onFocus={() => {
                         setShowTimeInput(true);
                       }}
-                      onBlur={() => {
+                      onBlur={(e) => {
+                        formik.handleBlur(e);
                         setShowTimeInput(false);
                       }}
                       readOnly

@@ -196,12 +196,9 @@ const GroupAttendanceModal: ({
         <div className="cursor-pointer" onClick={goToPrevSchedule}>
           <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
         </div>
-        <div className="flex items-center">
-          <div className="mr-4 text-xl font-semibold">Horario</div>
-          <div className="capitalize">
-            {selectedDate.format("dddd DD/MM/YY")}
-          </div>
-        </div>
+        <h1 className="tex/t-dark-500 text-xl font-bold capitalize">
+          {selectedDate.format("dddd DD/MM/YY")}
+        </h1>
         <div className="cursor-pointer" onClick={goToNextSchedule}>
           <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
         </div>

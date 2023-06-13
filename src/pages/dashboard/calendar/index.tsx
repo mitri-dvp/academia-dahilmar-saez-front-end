@@ -10,16 +10,23 @@ import {
   ChevronLeftSVG,
   ChevronRightSVG,
   CrossCircleSVG,
+  PlusCircleDottedSVG,
   SpinnerSVG,
 } from "@components/SVG";
 
 import { useEventStore } from "@store/event";
 import { get } from "@services/event";
+import Button from "@components/Button";
+import { useUserStore } from "@store/user";
+import { USER_ROLES } from "@utils/global";
+import CalendarEventModal from "@components/Calendar/CalendarEventModal";
 
 const Calendar: NextPage = () => {
   const { events } = useEventStore();
+  const { user } = useUserStore();
 
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -57,7 +64,7 @@ const Calendar: NextPage = () => {
           (event) =>
             dayjs(event.datetime).format("DD-MM-YYYY") ===
             dayjs(currentDate).format("DD-MM-YYYY")
-        )[0];
+        );
 
         const isToday =
           dayjs().format("DD-MM-YYYY") ===
@@ -66,12 +73,21 @@ const Calendar: NextPage = () => {
         const isDateInMonth =
           dayjs(currentDate).get("month") === initialDate.get("month");
 
-        const renderEvent = (event: CalendarEvent) => {
-          return (
-            <div className="mx-1 rounded-md bg-secondary-500 p-1 text-xs font-bold text-white line-clamp-1">
-              {event.name}
-            </div>
-          );
+        const renderEvents = (events: CalendarEvent[]) => {
+          const eventList: JSX.Element[] = [];
+          for (let k = 0; k < eventMatch.length; k++) {
+            const event = eventMatch[k];
+            if (!event || k === 3) break;
+            eventList.push(
+              <div
+                key={event.id}
+                className="mx-1 mt-0.5 rounded-md bg-secondary-500 px-1 text-xs font-bold text-white line-clamp-1"
+              >
+                {event.name}
+              </div>
+            );
+          }
+          return eventList;
         };
 
         const day = (
@@ -80,7 +96,7 @@ const Calendar: NextPage = () => {
             className="relative rounded-md border border-gray-300 py-12 px-16"
           >
             <div
-              className={`absolute top-2 right-2 flex h-8 w-8 select-none items-center justify-center text-xs font-bold ${
+              className={`absolute top-2 right-2 flex h-7 w-7 select-none items-center justify-center text-xs font-bold ${
                 isToday
                   ? "block aspect-square rounded-full bg-secondary-500 text-white"
                   : ""
@@ -88,8 +104,8 @@ const Calendar: NextPage = () => {
             >
               {currentDate.format("D")}
             </div>
-            <div className="absolute top-12 left-0">
-              {eventMatch ? renderEvent(eventMatch) : "\xA0"}
+            <div className="absolute top-9 left-0">
+              {eventMatch ? renderEvents(eventMatch) : "\xA0"}
             </div>
           </td>
         );
@@ -157,7 +173,22 @@ const Calendar: NextPage = () => {
               {renderTableBody()}
             </table>
           )}
+          {user.role.type === USER_ROLES.TRAINER ? (
+            <div
+              className="mt-8 w-full px-2"
+              onClick={() => setShowModal(true)}
+            >
+              <Button styles="flex items-center justify-center gap-4 w-full py-6 text-2xl">
+                <PlusCircleDottedSVG className="h-8 w-8" />
+                Crear nuevo Evento
+              </Button>
+            </div>
+          ) : null}
         </div>
+        <CalendarEventModal
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
       </section>
     </DashboardLayout>
   );

@@ -52,7 +52,7 @@ const Attendance: NextPage = () => {
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
         <div className="w-max bg-white p-16 shadow-lg">
-          <h1 className="ml-2 mb-8 font-display text-6xl font-semibold uppercase">
+          <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
             Asistencias
           </h1>
           {isLoading ? (

@@ -119,6 +119,10 @@ const GroupAddModal: ({
             onSubmit={formik.handleSubmit}
             className="mx-auto w-96 space-y-8"
           >
+            <div className="text-base font-semibold">
+              Introduzca la Información
+            </div>
+
             <div className="flex flex-wrap gap-4">
               <div className="w-full">
                 <div className="relative z-0">
@@ -172,7 +176,9 @@ const GroupAddModal: ({
               </div>
             </div>
 
-            <div className="text-base">Selecciona Integrantes</div>
+            <div className="text-base font-semibold">
+              Selecciona los Integrantes
+            </div>
 
             <div className="relative z-0">
               <input
@@ -186,7 +192,7 @@ const GroupAddModal: ({
               />
             </div>
 
-            <div className="max-h-96 overflow-y-auto">
+            <div className="max-h-48 overflow-y-auto">
               {athletes
                 .filter((athlete) =>
                   Boolean(
@@ -201,20 +207,20 @@ const GroupAddModal: ({
                   return (
                     <div
                       key={athlete.id}
-                      className="flex w-full cursor-pointer select-none gap-8 bg-white p-4 transition-all hover:bg-gray-100"
+                      className="flex w-full cursor-pointer select-none gap-4 bg-white p-3 transition-all hover:bg-gray-100"
                       onClick={() => handleSelectAthlete(athlete, isSelected)}
                     >
-                      <div className="relative my-auto aspect-square h-8 w-8">
+                      <div className="relative my-auto aspect-square h-12 w-12">
                         {athlete.photo ? (
                           <Image
-                            className="h-8 w-8 rounded-full object-cover"
+                            className="h-12 w-12 rounded-full object-cover"
                             src={getImageURL(athlete.photo)}
                             alt={athlete.photo.name}
-                            width={320}
-                            height={320}
+                            width={48}
+                            height={48}
                           />
                         ) : (
-                          <PersonSVG className="aspect-square h-8 w-8" />
+                          <PersonSVG className="aspect-square h-12 w-12" />
                         )}
                       </div>
                       <div className="flex items-center">
@@ -244,8 +250,8 @@ const GroupAddModal: ({
                         className="h-4 w-4 rounded-full object-cover"
                         src={getImageURL(user.photo)}
                         alt={user.photo.name}
-                        width={320}
-                        height={320}
+                        width={16}
+                        height={16}
                       />
                     ) : (
                       <PersonSVG className="aspect-square h-4 w-4" />
@@ -258,12 +264,12 @@ const GroupAddModal: ({
                   </div>
                 </div>
               ))}
+              <p className="text-xs text-red-500">
+                {formik.touched.users && Boolean(formik.errors.users)
+                  ? "Seleccione un usuario"
+                  : "\xA0"}
+              </p>
             </div>
-            <p className="text-xs text-red-500">
-              {formik.touched.users && Boolean(formik.errors.users)
-                ? "Seleccione un usuario"
-                : "\xA0"}
-            </p>
 
             <div className="flex justify-center gap-4">
               <Button
