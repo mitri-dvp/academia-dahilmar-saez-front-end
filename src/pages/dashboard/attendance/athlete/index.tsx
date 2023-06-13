@@ -55,9 +55,11 @@ const AttendanceAthlete: NextPage = () => {
       for (let j = 0; j < 7; j++) {
         const dateMatch = attendances.filter(
           (attendance) =>
-            dayjs(attendance.date).format("DD-MM-YYYY") ===
+            dayjs(attendance.datetime).format("DD-MM-YYYY") ===
             dayjs(currentDate).format("DD-MM-YYYY")
         )[0];
+
+        console.log(attendances[0]?.datetime);
 
         const isToday =
           dayjs().format("DD-MM-YYYY") ===
@@ -144,10 +146,10 @@ const AttendanceAthlete: NextPage = () => {
                     "Domingo",
                     "Lunes",
                     "Martes",
-                    "Miercoles",
+                    "Miércoles",
                     "Jueves",
                     "Viernes",
-                    "Sabado",
+                    "Sábado",
                   ].map((day) => (
                     <th key={day} className="rounded-md bg-secondary-500 p-4">
                       <span className="select-none font-bold uppercase tracking-wide">

@@ -125,7 +125,7 @@ const GroupAddModal: ({
               {group.users.map((user) => (
                 <div
                   key={user.id}
-                  className="flex w-max animate-jump-in select-none gap-2 rounded-full border border-secondary-500 bg-white p-2 transition-all animate-duration-200 animate-ease-in-out"
+                  className="flex w-max select-none gap-2 rounded-full border border-secondary-500 bg-white p-2 transition-all animate-duration-200 animate-ease-in-out"
                 >
                   <div className="relative my-auto aspect-square h-4 w-4">
                     {user.photo ? (

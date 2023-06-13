@@ -6,19 +6,24 @@ import Seo from "@components/Seo";
 import dayjs from "@utils/dayjs";
 
 import {
-  CheckCircleSVG,
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  CrossCircleSVG,
+  PlusCircleDottedSVG,
   SpinnerSVG,
+  TennisBallSVG,
+  TennisRaquetSVG,
 } from "@components/SVG";
-import { useAttendanceStore } from "@store/attendance";
-import { get } from "@services/attendance";
 
-const AttendanceTrainer: NextPage = () => {
-  const { attendances } = useAttendanceStore();
+import { useGroupStore } from "@store/group";
+import { get } from "@services/group";
+import { USER_ROLES } from "@utils/global";
+import GroupScheduleModal from "@components/Group/GroupScheduleModal";
+import GroupAttendanceModal from "@components/Group/GroupAttendanceModal";
 
-  const [isLoading, setIsLoading] = useState(false);
+const Attendance: NextPage = () => {
+  const { groups } = useGroupStore();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [showModal, setShowModal] = useState(false);
+  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -28,77 +33,14 @@ const AttendanceTrainer: NextPage = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  const [initialDate, setInitialDate] = useState(dayjs());
+  const renderGroups = () => {
+    const groupCardsList: JSX.Element[] = [];
 
-  const startDayOfMonth = initialDate.startOf("month").get("day");
-  const startDate = initialDate
-    .startOf("month")
-    .subtract(startDayOfMonth, "day");
-
-  const handleDateReset = () => {
-    setInitialDate(dayjs());
-  };
-
-  const handleDateIncrement = () => {
-    setInitialDate(initialDate.add(1, "month"));
-  };
-  const handleDateDecrement = () => {
-    setInitialDate(initialDate.subtract(1, "month"));
-  };
-
-  const renderTableBody = () => {
-    let currentDate = startDate;
-    const weeks: JSX.Element[] = [];
-    for (let i = 0; i < 6; i++) {
-      const week: JSX.Element[] = [];
-      for (let j = 0; j < 7; j++) {
-        const dateMatch = attendances.filter(
-          (attendance) =>
-            dayjs(attendance.date).format("DD-MM-YYYY") ===
-            dayjs(currentDate).format("DD-MM-YYYY")
-        )[0];
-
-        const isToday =
-          dayjs().format("DD-MM-YYYY") ===
-          dayjs(currentDate).format("DD-MM-YYYY");
-
-        const isDateInMonth =
-          dayjs(currentDate).get("month") === initialDate.get("month");
-
-        const renderStatus = (status: boolean) => {
-          if (status === true) {
-            return <CheckCircleSVG className="h-8 w-8 text-secondary-500" />;
-          }
-
-          if (status === false) {
-            return <CrossCircleSVG className="h-8 w-8 text-secondary-500" />;
-          }
-          return "\xA0";
-        };
-
-        const day = (
-          <td className="relative rounded-md border border-gray-300 p-12">
-            <div
-              className={`absolute top-2 right-2 flex h-8 w-8 select-none items-center justify-center text-xs font-bold ${
-                isToday
-                  ? "block aspect-square rounded-full bg-secondary-500 text-white"
-                  : ""
-              } ${!isDateInMonth && !isToday ? "text-gray-300" : ""}`}
-            >
-              {currentDate.format("D")}
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              {dateMatch ? renderStatus(dateMatch.status) : "\xA0"}
-            </div>
-          </td>
-        );
-
-        week.push(day);
-        currentDate = currentDate.add(1, "day");
-      }
-      weeks.push(<tr>{week}</tr>);
+    for (let i = 0; i < groups.length; i++) {
+      const group = groups[i];
     }
-    return <tbody>{weeks}</tbody>;
+
+    return groupCardsList;
   };
 
   return (
@@ -110,56 +52,37 @@ const AttendanceTrainer: NextPage = () => {
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
         <div className="w-max bg-white p-16 shadow-lg">
-          <div className="flex">
-            <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
-              {initialDate.format("MMMM YYYY")}
-            </h1>
-            <div className="ml-auto flex items-center justify-center gap-2">
-              <div onClick={handleDateDecrement}>
-                <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
-              </div>
-              <div onClick={handleDateReset}>
-                <span className="cursor-pointer font-display text-4xl font-semibold uppercase">
-                  Hoy
-                </span>
-              </div>
-              <div onClick={handleDateIncrement}>
-                <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
-              </div>
-            </div>
-          </div>
+          <h1 className="ml-2 mb-8 font-display text-6xl font-semibold uppercase">
+            Asistencias
+          </h1>
           {isLoading ? (
-            <div className="w-max bg-white pt-16">
+            <div className="w-full bg-white pt-16">
               <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
             </div>
           ) : (
-            <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
-              <thead className="rounded-full text-white">
-                <tr>
-                  {[
-                    "Domingo",
-                    "Lunes",
-                    "Martes",
-                    "Miercoles",
-                    "Jueves",
-                    "Viernes",
-                    "Sabado",
-                  ].map((day) => (
-                    <th key={day} className="rounded-md bg-secondary-500 p-4">
-                      <span className="select-none font-bold uppercase tracking-wide">
-                        {day}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              {renderTableBody()}
-            </table>
+            <div className="grid grid-cols-4 gap-6">
+              {groups.map((group) => (
+                <div
+                  key={group.id}
+                  className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
+                  onClick={() => setSelectedGroup(group)}
+                >
+                  <span>{group.name}</span>
+                </div>
+              ))}
+            </div>
           )}
         </div>
+        {selectedGroup ? (
+          <GroupAttendanceModal
+            showModal={Boolean(selectedGroup)}
+            onClose={() => setSelectedGroup(null)}
+            groupID={selectedGroup.id}
+          />
+        ) : null}
       </section>
     </DashboardLayout>
   );
 };
 
-export default AttendanceTrainer;
+export default Attendance;

@@ -11,7 +11,7 @@ import {
 } from "../SVG";
 import { useGroupStore } from "@store/group";
 import { getAthletes } from "@services/user";
-import { USER_ROLES } from "@utils/global";
+import { USER_ROLES, removeFocus } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import { create } from "@services/schedule";
@@ -194,7 +194,10 @@ const GroupScheduleModal: ({
                     <div onMouseDown={(e) => e.preventDefault()}>
                       {showDayInput ? (
                         <DayInput
-                          onChange={(day) => formik.setFieldValue("day", day)}
+                          onChange={(day) => {
+                            removeFocus();
+                            formik.setFieldValue("day", day);
+                          }}
                         />
                       ) : null}
                     </div>
@@ -242,9 +245,10 @@ const GroupScheduleModal: ({
                     <div onMouseDown={(e) => e.preventDefault()}>
                       {showTimeInput ? (
                         <TimeInput
-                          onChange={(time) =>
-                            formik.setFieldValue("time", time)
-                          }
+                          onChange={(time) => {
+                            removeFocus();
+                            formik.setFieldValue("time", time);
+                          }}
                         />
                       ) : null}
                     </div>

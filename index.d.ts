@@ -30,10 +30,19 @@ type UserPhoto = {
 
 type Attendance = {
   id: number;
-  date: string;
+  datetime: string;
   status: boolean;
+  remarks: string;
+  user: UserID;
   createdAt: string;
   updatedAt: string;
+};
+
+type DraftAttendance = {
+  id: number | null;
+  status: boolean;
+  remarks: string;
+  userID: number;
 };
 
 type Chat = {
@@ -63,6 +72,7 @@ type Group = {
   updatedAt: string;
   class: Class;
   schedules: Schedule[];
+  attendances: Attendance[];
   users: User[];
 };
 
@@ -85,7 +95,7 @@ type Schedule = {
 type CalendarEvent = {
   id: number;
   name: string;
-  date: string;
+  datetime: string;
   description: string;
   createdAt: string;
   updatedAt: string;

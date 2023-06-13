@@ -8,6 +8,10 @@ type CreateGroup = {
   users: number[];
 };
 
+type RequestOptions = {
+  signal: AbortSignal;
+};
+
 export const get = async () => {
   const getResponse = await publicApi.get<{ groups: Group[] }>(`/groups`, {
     headers: { Authorization: "Bearer " + useUserStore.getState().token },
@@ -32,4 +36,42 @@ export const create = async (groupData: CreateGroup) => {
   const { group } = postResponse.data;
 
   useGroupStore.getState().add(group);
+};
+
+export const getAttendances = async (
+  groupID: number,
+  date: string,
+  options: RequestOptions
+) => {
+  const getResponse = await publicApi.get<{ attendances: Attendance[] }>(
+    `/group/${groupID}/attendances/${date}`,
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+      signal: options.signal,
+    }
+  );
+
+  const { attendances } = getResponse.data;
+
+  return attendances;
+};
+
+export const postAttendances = async (
+  groupID: number,
+  date: string,
+  draftAttendances: DraftAttendance[]
+) => {
+  const getResponse = await publicApi.post<{ attendances: Attendance[] }>(
+    `/group/${groupID}/attendances/${date}`,
+    {
+      data: { draftAttendances },
+    },
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  const { attendances } = getResponse.data;
+
+  return attendances;
 };

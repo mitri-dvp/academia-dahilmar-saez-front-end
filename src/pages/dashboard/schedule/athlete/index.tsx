@@ -123,6 +123,7 @@ const Schedule: NextPage = () => {
         });
       }
     }
+
     derivedSchedules.sort((a, b) => a.schedule.hour - b.schedule.hour);
 
     const firstDerivedSchedule = derivedSchedules[0];

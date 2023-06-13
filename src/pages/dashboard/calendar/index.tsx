@@ -55,7 +55,7 @@ const Calendar: NextPage = () => {
       for (let j = 0; j < 7; j++) {
         const eventMatch = events.filter(
           (event) =>
-            dayjs(event.date).format("DD-MM-YYYY") ===
+            dayjs(event.datetime).format("DD-MM-YYYY") ===
             dayjs(currentDate).format("DD-MM-YYYY")
         )[0];
 
