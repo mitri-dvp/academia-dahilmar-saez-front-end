@@ -37,7 +37,7 @@ import { get } from "@services/attendance";
 import { postAttendances } from "@services/group";
 import GroupAttendanceFormItem from "./GroupAttendanceModalFormItem";
 
-const GroupAttendanceFormModal: ({
+const GroupAttendanceModalForm: ({
   group,
   attendances,
   selectedDate,
@@ -45,7 +45,9 @@ const GroupAttendanceFormModal: ({
   group: Group;
   attendances: Attendance[];
   selectedDate: string;
-}) => JSX.Element = ({ group, attendances, selectedDate }) => {
+  onSubmit: (attendances: Attendance[]) => void;
+}) => JSX.Element = ({ group, attendances, selectedDate, onSubmit }) => {
+  const userStore = useUserStore();
   const draftAttendances: DraftAttendance[] = [];
 
   const formik = useFormik({
@@ -56,8 +58,14 @@ const GroupAttendanceFormModal: ({
       if (values.draftAttendances.length === 0) return;
       try {
         // Action
-        await postAttendances(group.id, selectedDate, values.draftAttendances);
+        const attendances = await postAttendances(
+          group.id,
+          selectedDate,
+          values.draftAttendances
+        );
         // On Success
+        onSubmit(attendances);
+        formik.resetForm();
         // handleSuccess();
         // onClose();
       } catch (error) {
@@ -89,17 +97,22 @@ const GroupAttendanceFormModal: ({
   };
 
   return (
-    <div className="space-y-8">
+    <div className="flex min-h-[24rem] flex-col justify-between space-y-8">
       <div className="max-h-96 overflow-y-auto">
-        {group.users.map((user) => (
-          <GroupAttendanceFormItem
-            key={user.id}
-            user={user}
-            attendances={attendances}
-            onChange={handleChange}
-          />
-        ))}
+        {group.users.map((user) => {
+          if (user.id === userStore.user.id) return null;
+          return (
+            <GroupAttendanceFormItem
+              key={user.id}
+              user={user}
+              attendances={attendances}
+              selectedDate={selectedDate}
+              onChange={handleChange}
+            />
+          );
+        })}
       </div>
+
       <form onClick={formik.handleSubmit} className="mx-auto w-1/2">
         <Button
           loading={formik.isSubmitting}
@@ -113,4 +126,4 @@ const GroupAttendanceFormModal: ({
   );
 };
 
-export default GroupAttendanceFormModal;
+export default GroupAttendanceModalForm;

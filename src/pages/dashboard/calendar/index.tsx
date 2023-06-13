@@ -185,10 +185,13 @@ const Calendar: NextPage = () => {
             </div>
           ) : null}
         </div>
-        <CalendarEventModal
-          showModal={showModal}
-          onClose={() => setShowModal(false)}
-        />
+        {/* Works in Prod */}
+        {showModal ? (
+          <CalendarEventModal
+            showModal={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        ) : null}
       </section>
     </DashboardLayout>
   );

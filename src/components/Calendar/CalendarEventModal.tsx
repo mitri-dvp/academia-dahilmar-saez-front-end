@@ -35,7 +35,6 @@ import Link from "next/link";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";
 import { get } from "@services/attendance";
-import { getAttendances } from "@services/group";
 
 const CalendarEventModal: ({
   showModal,
@@ -112,7 +111,7 @@ const CalendarEventModal: ({
       onClose={handleClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -120,7 +119,7 @@ const CalendarEventModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             Crear Evento
           </div>

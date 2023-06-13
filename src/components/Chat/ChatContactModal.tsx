@@ -21,11 +21,16 @@ const ChatContactModal: ({
   onSelect: (chat: Chat) => void;
 }) => JSX.Element = ({ showModal, onClose, onSelect }) => {
   const { groups } = useGroupStore();
-  const { user } = useUserStore();
+  const userStore = useUserStore();
   const { chats } = useChatStore();
 
   const [contacts, setContacts] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    document.body.classList.add("overflow-hidden");
+    return () => document.body.classList.remove("overflow-hidden");
+  }, []);
 
   useEffect(() => {
     setIsLoading(true);
@@ -48,15 +53,23 @@ const ChatContactModal: ({
 
         if (!groupUser) break;
 
+        // Duplicate Handling
+        if (
+          contactList.find((contactUser) => contactUser.id === groupUser.id)
+        ) {
+          continue;
+        }
+
         // Athlete handling
-        if (user.role.type === USER_ROLES.ATHLETE) {
-          if (groupUser.role.type === USER_ROLES.TRAINER)
+        if (userStore.user.role.type === USER_ROLES.ATHLETE) {
+          if (groupUser.role.type === USER_ROLES.TRAINER) {
             contactList.push(groupUser);
+          }
         }
 
         // Tariner handling
-        if (user.role.type === USER_ROLES.TRAINER) {
-          if (groupUser.id !== user.id) contactList.push(groupUser);
+        if (userStore.user.role.type === USER_ROLES.TRAINER) {
+          if (groupUser.id !== userStore.user.id) contactList.push(groupUser);
         }
       }
     }
@@ -93,7 +106,7 @@ const ChatContactModal: ({
       onClose={onClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -101,11 +114,16 @@ const ChatContactModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             Selecciona Contacto
           </div>
           <div className="max-h-[36rem] overflow-y-auto">
+            {contacts.length === 0 ? (
+              <div className="mx-auto my-16 w-56 px-8 text-center font-display text-base font-semibold uppercase  text-dark-500">
+                contactos no encontrados
+              </div>
+            ) : null}
             {contacts.map((contact) => (
               <div
                 key={contact.id}

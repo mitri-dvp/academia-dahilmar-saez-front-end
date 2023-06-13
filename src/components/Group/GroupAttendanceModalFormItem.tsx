@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
 import React from "react";
 import {
   CalendarSVG,
@@ -34,20 +33,36 @@ import Link from "next/link";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";
 import { get } from "@services/attendance";
-import { getAttendances } from "@services/group";
 
 const GroupAttendanceFormItem: ({
   user,
   attendances,
+  selectedDate,
   onChange,
 }: {
   user: User;
   attendances: Attendance[];
+  selectedDate: string;
   onChange: (draftAttendance: DraftAttendance) => void;
-}) => JSX.Element = ({ user, attendances, onChange }) => {
-  const attendance: Attendance | undefined = attendances.find(
-    (attendance) => attendance.user.id === user.id
-  );
+}) => JSX.Element = ({ user, attendances, selectedDate, onChange }) => {
+  const attendance: Attendance | undefined = attendances.find((attendance) => {
+    const userMatch = attendance.user.id === user.id;
+    const dateMatch =
+      dayjs(attendance.datetime).format("YYYY-MM-DD") ===
+      dayjs(selectedDate).format("YYYY-MM-DD");
+
+    return userMatch && dateMatch;
+  });
+
+  useEffect(() => {
+    // Not rerendering this?
+    formik.setValues({
+      id: attendance ? attendance.id : null,
+      status: attendance ? attendance.status : false,
+      remarks: attendance ? attendance.remarks : "",
+      userID: user.id,
+    });
+  }, [attendance]);
 
   const formik = useFormik({
     initialValues: {

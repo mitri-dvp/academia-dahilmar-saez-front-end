@@ -104,12 +104,7 @@ const GroupAttendanceModal: ({
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
   const [attendances, setAttendances] = useState<Attendance[]>([]);
-  const [draftAttendances, setDraftAttendances] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [query, setQuery] = useState("");
-
-  const [showDayInput, setShowDayInput] = useState(false);
-  const [showTimeInput, setShowTimeInput] = useState(false);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -143,6 +138,32 @@ const GroupAttendanceModal: ({
         );
         i++;
         if (i > 7) break;
+      }
+
+      if (dayjs().diff(dayjs().add(i - 1, "day"), "milliseconds") < 0) {
+        let prevSchedule = undefined;
+
+        let j = 0;
+        while (!prevSchedule) {
+          j++;
+          prevSchedule = orderedSchedules.find(
+            (schedule) =>
+              dayjs(schedule.datetime).format("dddd") ===
+              dayjs()
+                .add(i - 1, "day")
+                .subtract(j, "day")
+                .format("dddd")
+          );
+          if (j > 7) break;
+        }
+
+        setIsLoading(false);
+        setSelectedDate(
+          dayjs()
+            .add(i - 1, "day")
+            .subtract(j, "day")
+        );
+        return;
       }
 
       setIsLoading(false);
@@ -188,6 +209,12 @@ const GroupAttendanceModal: ({
         if (i > 7) break;
       }
 
+      if (dayjs().diff(selectedDate.add(i, "day"), "milliseconds") < 0) {
+        // TO-DO Add better feedback
+        // Restriction Can't access a future date
+        return;
+      }
+
       setSelectedDate(selectedDate.add(i, "day"));
     };
 
@@ -214,7 +241,7 @@ const GroupAttendanceModal: ({
       onClose={onClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -222,7 +249,7 @@ const GroupAttendanceModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             Asistencias {group.name}
           </div>
@@ -231,12 +258,15 @@ const GroupAttendanceModal: ({
             <div className="mx-auto w-96">{renderHeader()}</div>
 
             {isLoading ? (
-              <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+              <div className="flex h-96 items-center justify-center">
+                <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+              </div>
             ) : (
               <GroupAttendanceModalForm
                 group={group}
                 attendances={attendances}
                 selectedDate={selectedDate.format()}
+                onSubmit={(attendances) => setAttendances(attendances)}
               />
             )}
           </div>

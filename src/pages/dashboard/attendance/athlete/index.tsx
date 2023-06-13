@@ -59,8 +59,6 @@ const AttendanceAthlete: NextPage = () => {
             dayjs(currentDate).format("DD-MM-YYYY")
         )[0];
 
-        console.log(attendances[0]?.datetime);
-
         const isToday =
           dayjs().format("DD-MM-YYYY") ===
           dayjs(currentDate).format("DD-MM-YYYY");

@@ -61,6 +61,11 @@ const Schedule: NextPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-6">
+              {groups.length === 0 ? (
+                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
+                  Grupos no encontrados
+                </div>
+              ) : null}
               {groups.map((group) => (
                 <div
                   key={group.id}

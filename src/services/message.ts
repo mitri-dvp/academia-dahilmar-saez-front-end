@@ -17,8 +17,6 @@ export const get = async (chatID: number, options: RequestOptions) => {
 
   const { messages } = getResponse.data;
 
-  console.log(messages);
-
   useMessageStore.getState().set(messages);
 };
 

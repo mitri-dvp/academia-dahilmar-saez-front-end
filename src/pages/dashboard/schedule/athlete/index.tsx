@@ -178,9 +178,7 @@ const Schedule: NextPage = () => {
         week[dayIndex + 1] = (
           <td
             key={i}
-            className={`rounded-md border border-gray-300 p-2 align-top ${
-              derivedSchedule ? "" : ""
-            }`}
+            className={`rounded-md border border-gray-300 p-2 align-top`}
           >
             {derivedSchedule ? (
               <div className="max-w-[130px] text-sm font-bold uppercase tracking-tight">

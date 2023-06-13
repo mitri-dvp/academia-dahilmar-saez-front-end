@@ -15,8 +15,8 @@ import {
 import { useGroupStore } from "@store/group";
 import { get } from "@services/group";
 import { USER_ROLES } from "@utils/global";
-import GroupScheduleModal from "@components/Group/GroupScheduleModal";
 import GroupAttendanceModal from "@components/Group/GroupAttendanceModal";
+import Link from "next/link";
 
 const Attendance: NextPage = () => {
   const { groups } = useGroupStore();
@@ -61,15 +61,35 @@ const Attendance: NextPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-6">
-              {groups.map((group) => (
-                <div
-                  key={group.id}
-                  className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
-                  onClick={() => setSelectedGroup(group)}
-                >
-                  <span>{group.name}</span>
+              {groups.length === 0 ? (
+                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
+                  Grupos no encontrados
                 </div>
-              ))}
+              ) : null}
+              {groups.map((group) => {
+                if (group.schedules.length === 0)
+                  return (
+                    <Link
+                      key={group.id}
+                      className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase opacity-50"
+                      href={"/dashboard/schedule/trainer"}
+                    >
+                      <span>{group.name}</span>
+                      <span className="text-sm font-semibold text-dark-500">
+                        Horarios no encontrados
+                      </span>
+                    </Link>
+                  );
+                return (
+                  <div
+                    key={group.id}
+                    className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
+                    onClick={() => setSelectedGroup(group)}
+                  >
+                    <span>{group.name}</span>
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

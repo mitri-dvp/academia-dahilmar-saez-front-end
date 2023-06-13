@@ -80,6 +80,7 @@ const GroupScheduleModal: ({
           groupID: group.id,
         });
         // On Success
+        formik.resetForm();
         // handleSuccess();
         // onClose();
       } catch (error) {
@@ -115,7 +116,7 @@ const GroupScheduleModal: ({
       onClose={onClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -123,13 +124,13 @@ const GroupScheduleModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             Horarios {group.name}
           </div>
 
           <div className="mx-auto w-96 space-y-8">
-            <div className="text-base">Horarios</div>
+            <div className="text-base font-semibold">Horarios</div>
             {group.schedules.length ? (
               group.schedules.map((schedule) => (
                 <React.Fragment key={schedule.id}>
@@ -151,12 +152,14 @@ const GroupScheduleModal: ({
                 </React.Fragment>
               ))
             ) : (
-              <h1 className="text-sm font-bold text-dark-500">
+              <h1 className="text-sm font-semibold text-dark-500">
                 Horarios no encontrados
               </h1>
             )}
             <form className="space-y-8" onSubmit={formik.handleSubmit}>
-              <div className="text-base">Selecciona Día y Hora</div>
+              <div className="text-base font-semibold">
+                Selecciona Día y Hora
+              </div>
 
               <div className="flex gap-4">
                 <div className="w-1/2">

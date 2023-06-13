@@ -63,14 +63,14 @@ const Chats: NextPage = () => {
                   {chats.length ? (
                     <ChatList onSelect={handleChatSelect} />
                   ) : (
-                    <div className="mt-16 mb-16 px-8 text-center font-display text-2xl font-semibold uppercase">
+                    <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
                       Chats no encontrados
                     </div>
                   )}
                 </div>
                 <div
                   className="mt-auto flex cursor-pointer items-center justify-center gap-4 bg-secondary-500 py-6 px-8 text-center font-display text-2xl font-semibold uppercase text-white transition-all hover:bg-secondary-700"
-                  onClick={() => setShowModal(!showModal)}
+                  onClick={() => setShowModal(true)}
                 >
                   <PlusCircleDottedSVG className="h-8 w-8" />
                   Nuevo Chat
@@ -80,11 +80,13 @@ const Chats: NextPage = () => {
           </div>
           {chat ? <ChatView chat={chat} /> : <ChatViewEmpty />}
         </div>
-        <ChatContactModal
-          showModal={showModal}
-          onClose={() => setShowModal(false)}
-          onSelect={handleChatSelect}
-        />
+        {showModal ? (
+          <ChatContactModal
+            showModal={showModal}
+            onClose={() => setShowModal(false)}
+            onSelect={handleChatSelect}
+          />
+        ) : null}
       </section>
     </DashboardLayout>
   );

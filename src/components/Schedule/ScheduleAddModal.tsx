@@ -24,7 +24,7 @@ const ScheduleAddModal: ({
       onClose={onClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -32,7 +32,7 @@ const ScheduleAddModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             Crear Grupo
           </div>

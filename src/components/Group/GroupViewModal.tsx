@@ -31,7 +31,7 @@ const GroupAddModal: ({
   onClose: () => void;
   group: Group;
 }) => JSX.Element = ({ showModal, onClose, group }) => {
-  const user = useUserStore();
+  const userStore = useUserStore();
 
   const users: User[] = [];
 
@@ -53,11 +53,10 @@ const GroupAddModal: ({
       })
     ),
     onSubmit: async (values) => {
-      console.log(values);
       const createValues = {
         name: values.name,
         description: values.description,
-        users: [...values.users.map((user) => user.id), user.user.id],
+        users: [...values.users.map((user) => user.id), userStore.user.id],
       };
       try {
         // Action
@@ -106,7 +105,7 @@ const GroupAddModal: ({
       onClose={onClose}
       dismissible={true}
       className="animate-fade animate-duration-200 animate-ease-out"
-      position="top-center"
+      position="center"
     >
       <Modal.Body>
         <div className="flex justify-end">
@@ -114,7 +113,7 @@ const GroupAddModal: ({
             <CrossSVG className="h-6 w-6 stroke-gray-900" />
           </button>
         </div>
-        <div className="py-6">
+        <div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
             {group.name}
           </div>
@@ -122,31 +121,34 @@ const GroupAddModal: ({
             <div className="text-base">{group.description}</div>
             <div className="text-base font-semibold">Integrantes</div>
             <div className="flex flex-wrap gap-2">
-              {group.users.map((user) => (
-                <div
-                  key={user.id}
-                  className="flex w-max select-none gap-2 rounded-full border border-secondary-500 bg-white p-2 transition-all animate-duration-200 animate-ease-in-out"
-                >
-                  <div className="relative my-auto aspect-square h-4 w-4">
-                    {user.photo ? (
-                      <Image
-                        className="h-4 w-4 rounded-full object-cover"
-                        src={getImageURL(user.photo)}
-                        alt={user.photo.name}
-                        width={320}
-                        height={320}
-                      />
-                    ) : (
-                      <PersonSVG className="aspect-square h-4 w-4" />
-                    )}
+              {group.users.map((user) => {
+                if (user.id === userStore.user.id) return null;
+                return (
+                  <div
+                    key={user.id}
+                    className="flex w-max select-none gap-3 rounded-full border border-secondary-500 bg-white p-4 py-3 transition-all animate-duration-200 animate-ease-in-out"
+                  >
+                    <div className="relative my-auto aspect-square h-12 w-12">
+                      {user.photo ? (
+                        <Image
+                          className="h-12 w-12 rounded-full object-cover"
+                          src={getImageURL(user.photo)}
+                          alt={user.photo.name}
+                          width={320}
+                          height={320}
+                        />
+                      ) : (
+                        <PersonSVG className="aspect-square h-12 w-12" />
+                      )}
+                    </div>
+                    <div className="flex items-center">
+                      <h1 className="text-base font-bold text-dark-500">
+                        {user.firstName} {user.lastName}
+                      </h1>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <h1 className="text-xs font-bold text-dark-500">
-                      {user.firstName} {user.lastName}
-                    </h1>
-                  </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
 
             <div className="flex justify-between">
