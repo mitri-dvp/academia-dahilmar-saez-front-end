@@ -6,24 +6,21 @@ import Seo from "@components/Seo";
 import dayjs from "@utils/dayjs";
 
 import {
-  CheckCircleSVG,
   ChevronLeftSVG,
   ChevronRightSVG,
-  CrossCircleSVG,
   PlusCircleDottedSVG,
   SpinnerSVG,
 } from "@components/SVG";
 
-import { useEventStore } from "@store/event";
 import { get } from "@services/event";
 import Button from "@components/Button";
 import { useUserStore } from "@store/user";
 import { USER_ROLES } from "@utils/global";
-import CalendarEventModal from "@components/Calendar/CalendarEventModal";
+import CalendarEventAddModal from "@components/Calendar/CalendarEventAddModal";
+import CalendarTableBody from "@components/Calendar/CalendarTableBody";
 
 const Calendar: NextPage = () => {
-  const { events } = useEventStore();
-  const { user } = useUserStore();
+  const userStore = useUserStore();
 
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -38,11 +35,6 @@ const Calendar: NextPage = () => {
 
   const [initialDate, setInitialDate] = useState(dayjs());
 
-  const startDayOfMonth = initialDate.startOf("month").get("day");
-  const startDate = initialDate
-    .startOf("month")
-    .subtract(startDayOfMonth, "day");
-
   const handleDateReset = () => {
     setInitialDate(dayjs());
   };
@@ -52,70 +44,6 @@ const Calendar: NextPage = () => {
   };
   const handleDateDecrement = () => {
     setInitialDate(initialDate.subtract(1, "month"));
-  };
-
-  const renderTableBody = () => {
-    let currentDate = startDate;
-    const weeks: JSX.Element[] = [];
-    for (let i = 0; i < 6; i++) {
-      const week: JSX.Element[] = [];
-      for (let j = 0; j < 7; j++) {
-        const eventMatch = events.filter(
-          (event) =>
-            dayjs(event.datetime).format("DD-MM-YYYY") ===
-            dayjs(currentDate).format("DD-MM-YYYY")
-        );
-
-        const isToday =
-          dayjs().format("DD-MM-YYYY") ===
-          dayjs(currentDate).format("DD-MM-YYYY");
-
-        const isDateInMonth =
-          dayjs(currentDate).get("month") === initialDate.get("month");
-
-        const renderEvents = (events: CalendarEvent[]) => {
-          const eventList: JSX.Element[] = [];
-          for (let k = 0; k < eventMatch.length; k++) {
-            const event = eventMatch[k];
-            if (!event || k === 3) break;
-            eventList.push(
-              <div
-                key={event.id}
-                className="mx-1 mt-0.5 rounded-md bg-secondary-500 px-1 text-xs font-bold text-white line-clamp-1"
-              >
-                {event.name}
-              </div>
-            );
-          }
-          return eventList;
-        };
-
-        const day = (
-          <td
-            key={currentDate.format("DD-MM-YYYY")}
-            className="relative rounded-md border border-gray-300 py-12 px-16"
-          >
-            <div
-              className={`absolute top-2 right-2 flex h-7 w-7 select-none items-center justify-center text-xs font-bold ${
-                isToday
-                  ? "block aspect-square rounded-full bg-secondary-500 text-white"
-                  : ""
-              } ${!isDateInMonth && !isToday ? "text-gray-300" : ""}`}
-            >
-              {currentDate.format("D")}
-            </div>
-            <div className="absolute top-9 left-0">
-              {eventMatch ? renderEvents(eventMatch) : "\xA0"}
-            </div>
-          </td>
-        );
-
-        week.push(day);
-        currentDate = currentDate.add(1, "day");
-      }
-      weeks.push(<tr key={currentDate.format("DD/MM/YYYY")}>{week}</tr>);
-    }
-    return <tbody>{weeks}</tbody>;
   };
 
   return (
@@ -170,10 +98,10 @@ const Calendar: NextPage = () => {
                   ))}
                 </tr>
               </thead>
-              {renderTableBody()}
+              <CalendarTableBody initialDate={initialDate} />
             </table>
           )}
-          {user.role.type === USER_ROLES.TRAINER ? (
+          {userStore.user.role.type === USER_ROLES.TRAINER ? (
             <div
               className="mt-8 w-full px-2"
               onClick={() => setShowModal(true)}
@@ -186,12 +114,12 @@ const Calendar: NextPage = () => {
           ) : null}
         </div>
         {/* Works in Prod */}
-        {showModal ? (
-          <CalendarEventModal
-            showModal={showModal}
-            onClose={() => setShowModal(false)}
-          />
-        ) : null}
+        {/* {showModal ? ( */}
+        <CalendarEventAddModal
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
+        {/* ) : null} */}
       </section>
     </DashboardLayout>
   );

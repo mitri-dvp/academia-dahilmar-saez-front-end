@@ -9,6 +9,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.4",
     "@tailwindcss/line-clamp": "^0.4.2",
     "axios": "^1.2.2",
     "dayjs": "^1.11.7",
@@ -20,6 +21,7 @@
     "qs": "^6.11.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-modal": "^3.16.1",
     "react-tailwindcss-datepicker": "^1.4.2",
     "socket.io-client": "^4.6.2",
     "tailwindcss-animated": "^1.0.1",

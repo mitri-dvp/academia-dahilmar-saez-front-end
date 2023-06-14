@@ -1,42 +1,18 @@
-import { useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
-import React from "react";
+import React, { useEffect } from "react";
 
-import {
-  CalendarSVG,
-  CheckCircleSVG,
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  ClockSVG,
-  DatepickerSVG,
-  SpinnerSVG,
-  CrossSVG,
-  PersonSVG,
-} from "../SVG";
-import { useGroupStore } from "@store/group";
-import { getAthletes } from "@services/user";
-import { USER_ROLES, removeFocus } from "@utils/global";
-import Image from "next/image";
-import { getImageURL } from "@utils/media";
+import { DatepickerSVG, CrossSVG } from "../SVG";
 import { create } from "@services/event";
-import { useUserStore } from "@store/user";
-import { useChatStore } from "@store/chat";
 
 import { useFormik } from "formik";
-import { date, z } from "zod";
+import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
 import Button from "@components/Button";
-import Link from "next/link";
-import DayInput from "@components/DayInput";
-import TimeInput from "@components/TimeInput";
-import { get } from "@services/attendance";
 
-const CalendarEventModal: ({
+const CalendarEventAddModal: ({
   showModal,
   onClose,
 }: {
@@ -234,4 +210,4 @@ const CalendarEventModal: ({
   );
 };
 
-export default CalendarEventModal;
+export default CalendarEventAddModal;

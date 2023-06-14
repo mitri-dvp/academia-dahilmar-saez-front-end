@@ -2,23 +2,15 @@ import { useEffect, useState } from "react";
 import { Modal } from "flowbite-react";
 import React from "react";
 import { CheckCircleSVG, CrossSVG, PersonSVG } from "../SVG";
-import { useGroupStore } from "@store/group";
 import { getAthletes } from "@services/user";
-import { USER_ROLES } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import { create } from "@services/group";
 import { useUserStore } from "@store/user";
-import { useChatStore } from "@store/chat";
 
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import Datepicker from "react-tailwindcss-datepicker";
-import dayjs from "@utils/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
 import Button from "@components/Button";
 
 const GroupAddModal: ({
