@@ -1,6 +1,7 @@
-import { CrossSVG } from "@components/SVG";
+import { CalendarSVG, CrossSVG } from "@components/SVG";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
+import dayjs from "@utils/dayjs";
 
 const CalendarTableBodyEventsModal: ({
   showModal,
@@ -21,17 +22,18 @@ const CalendarTableBodyEventsModal: ({
               <CrossSVG className="h-6 w-6 stroke-gray-900" />
             </button>
           </div>
-          {events.map((event, index) => {
-            if (index === 3) return null;
-            return (
-              <div
-                key={event.id}
-                className="mx-1 mt-0.5 rounded-md bg-secondary-500 px-1 text-xs font-bold text-white line-clamp-1"
-              >
-                {event.name}
+          {events.map((event) => (
+            <div key={event.id} className="flex gap-4 rounded-md  p-4  ">
+              <CalendarSVG className="" />
+              <div>
+                <div className="font-semibold">{event.name}</div>
+                <div>{event.description}</div>
+                <div className="mt-1 text-sm capitalize text-gray-400">
+                  {dayjs(event.datetime).format("dddd DD [de] MMMM")}
+                </div>
               </div>
-            );
-          })}
+            </div>
+          ))}
         </Content>
       </Portal>
     </Root>
