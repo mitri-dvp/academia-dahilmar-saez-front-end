@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
+import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
 import { CrossSVG, PersonSVG } from "../SVG";
 import { useGroupStore } from "@store/group";
@@ -101,59 +101,56 @@ const ChatContactModal: ({
   };
 
   return (
-    <Modal
-      show={showModal}
-      onClose={onClose}
-      dismissible={true}
-      className="animate-fade animate-duration-200 animate-ease-out"
-      position="center"
-    >
-      <Modal.Body>
-        <div className="flex justify-end">
-          <button onClick={onClose} type="button">
-            <CrossSVG className="h-6 w-6 stroke-gray-900" />
-          </button>
-        </div>
-        <div>
-          <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
-            Selecciona Contacto
+    <Root open={showModal} onOpenChange={onClose}>
+      <Portal>
+        <Overlay className="modal-overlay" />
+        <Content className="modal-content w-full max-w-xl">
+          <div className="flex justify-end">
+            <button onClick={onClose} type="button">
+              <CrossSVG className="h-6 w-6 stroke-gray-900" />
+            </button>
           </div>
-          <div className="max-h-[36rem] overflow-y-auto">
-            {contacts.length === 0 ? (
-              <div className="mx-auto my-16 w-56 px-8 text-center font-display text-base font-semibold uppercase  text-dark-500">
-                contactos no encontrados
-              </div>
-            ) : null}
-            {contacts.map((contact) => (
-              <div
-                key={contact.id}
-                className="flex w-full cursor-pointer select-none gap-8 bg-white p-8 transition-all hover:bg-gray-100"
-                onClick={() => handleSelectContact(contact)}
-              >
-                <div className="relative my-auto aspect-square h-16 w-16">
-                  {contact.photo ? (
-                    <Image
-                      className="h-16 w-16 rounded-full object-cover"
-                      src={getImageURL(contact.photo)}
-                      alt={contact.photo.name}
-                      width={320}
-                      height={320}
-                    />
-                  ) : (
-                    <PersonSVG className="aspect-square h-16 w-16" />
-                  )}
+          <div>
+            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+              Selecciona Contacto
+            </div>
+            <div className="max-h-[36rem] overflow-y-auto">
+              {contacts.length === 0 ? (
+                <div className="mx-auto my-16 w-56 px-8 text-center font-display text-base font-semibold uppercase  text-dark-500">
+                  contactos no encontrados
                 </div>
-                <div className="flex items-center">
-                  <h1 className="text-xl font-bold text-dark-500">
-                    {contact.firstName} {contact.lastName}
-                  </h1>
+              ) : null}
+              {contacts.map((contact) => (
+                <div
+                  key={contact.id}
+                  className="flex w-full cursor-pointer select-none gap-8 bg-white p-8 transition-all hover:bg-gray-100"
+                  onClick={() => handleSelectContact(contact)}
+                >
+                  <div className="relative my-auto aspect-square h-16 w-16">
+                    {contact.photo ? (
+                      <Image
+                        className="h-16 w-16 rounded-full object-cover"
+                        src={getImageURL(contact.photo)}
+                        alt={contact.photo.name}
+                        width={320}
+                        height={320}
+                      />
+                    ) : (
+                      <PersonSVG className="aspect-square h-16 w-16" />
+                    )}
+                  </div>
+                  <div className="flex items-center">
+                    <h1 className="text-xl font-bold text-dark-500">
+                      {contact.firstName} {contact.lastName}
+                    </h1>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      </Modal.Body>
-    </Modal>
+        </Content>
+      </Portal>
+    </Root>
   );
 };
 

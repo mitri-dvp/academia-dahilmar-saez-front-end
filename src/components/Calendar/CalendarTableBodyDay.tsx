@@ -30,28 +30,30 @@ const CalendarTableBodyDay: ({
     dayjs(currentDate).get("month") === initialDate.get("month");
 
   return (
-    <td
-      className={`relative rounded-md border border-gray-300 py-12 px-16 transition-all ${
-        eventsMatch.length ? "cursor-pointer hover:bg-gray-100" : ""
-      }`}
-      onClick={eventsMatch.length ? () => setShowModal(true) : undefined}
-    >
-      <div
-        className={`absolute top-2 right-2 flex h-7 w-7 select-none items-center justify-center text-xs font-bold ${
-          isToday
-            ? "block aspect-square rounded-full bg-secondary-500 text-white"
-            : ""
-        } ${!isDateInMonth && !isToday ? "text-gray-300" : ""}`}
+    <>
+      <td
+        className={`relative rounded-md border border-gray-300 py-12 px-16 transition-all ${
+          eventsMatch.length ? "cursor-pointer hover:bg-gray-100" : ""
+        }`}
+        onClick={eventsMatch.length ? () => setShowModal(true) : undefined}
       >
-        {currentDate.format("D")}
-      </div>
-      <div className="absolute top-9 left-0">
-        {eventsMatch.length ? (
-          <CalendarTableBodyEvents events={eventsMatch} />
-        ) : (
-          "\xA0"
-        )}
-      </div>
+        <div
+          className={`absolute top-2 right-2 flex h-7 w-7 select-none items-center justify-center text-xs font-bold ${
+            isToday
+              ? "block aspect-square rounded-full bg-secondary-500 text-white"
+              : ""
+          } ${!isDateInMonth && !isToday ? "text-gray-300" : ""}`}
+        >
+          {currentDate.format("D")}
+        </div>
+        <div className="absolute top-9 left-0">
+          {eventsMatch.length ? (
+            <CalendarTableBodyEvents events={eventsMatch} />
+          ) : (
+            "\xA0"
+          )}
+        </div>
+      </td>
       {showModal ? (
         <CalendarTableBodyEventsModal
           showModal={showModal}
@@ -59,7 +61,7 @@ const CalendarTableBodyDay: ({
           events={eventsMatch}
         />
       ) : null}
-    </td>
+    </>
   );
 };
 

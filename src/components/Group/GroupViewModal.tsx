@@ -1,24 +1,17 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
+import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
+
 import React from "react";
-import { CheckCircleSVG, CrossSVG, PersonSVG } from "../SVG";
-import { useGroupStore } from "@store/group";
+import { CrossSVG, PersonSVG } from "../SVG";
 import { getAthletes } from "@services/user";
-import { USER_ROLES } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import { create } from "@services/group";
 import { useUserStore } from "@store/user";
-import { useChatStore } from "@store/chat";
 
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import Datepicker from "react-tailwindcss-datepicker";
-import dayjs from "@utils/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
 import Button from "@components/Button";
 import Link from "next/link";
 
@@ -100,69 +93,66 @@ const GroupAddModal: ({
   };
 
   return (
-    <Modal
-      show={showModal}
-      onClose={onClose}
-      dismissible={true}
-      className="animate-fade animate-duration-200 animate-ease-out"
-      position="center"
-    >
-      <Modal.Body>
-        <div className="flex justify-end">
-          <button onClick={onClose} type="button">
-            <CrossSVG className="h-6 w-6 stroke-gray-900" />
-          </button>
-        </div>
-        <div>
-          <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
-            {group.name}
+    <Root open={showModal} onOpenChange={onClose}>
+      <Portal>
+        <Overlay className="modal-overlay" />
+        <Content className="modal-content w-full max-w-xl">
+          <div className="flex justify-end">
+            <button onClick={onClose} type="button">
+              <CrossSVG className="h-6 w-6 stroke-gray-900" />
+            </button>
           </div>
-          <div className="mx-auto w-96 space-y-8">
-            <div className="text-base">{group.description}</div>
-            <div className="text-base font-semibold">Integrantes</div>
-            <div className="flex flex-wrap gap-2">
-              {group.users.map((user) => {
-                if (user.id === userStore.user.id) return null;
-                return (
-                  <div
-                    key={user.id}
-                    className="flex w-max select-none gap-3 rounded-full border border-secondary-500 bg-white p-4 py-3 transition-all animate-duration-200 animate-ease-in-out"
-                  >
-                    <div className="relative my-auto aspect-square h-12 w-12">
-                      {user.photo ? (
-                        <Image
-                          className="h-12 w-12 rounded-full object-cover"
-                          src={getImageURL(user.photo)}
-                          alt={user.photo.name}
-                          width={320}
-                          height={320}
-                        />
-                      ) : (
-                        <PersonSVG className="aspect-square h-12 w-12" />
-                      )}
-                    </div>
-                    <div className="flex items-center">
-                      <h1 className="text-base font-bold text-dark-500">
-                        {user.firstName} {user.lastName}
-                      </h1>
-                    </div>
-                  </div>
-                );
-              })}
+          <div>
+            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+              {group.name}
             </div>
+            <div className="mx-auto w-96 space-y-8">
+              <div className="text-base">{group.description}</div>
+              <div className="text-base font-semibold">Integrantes</div>
+              <div className="flex flex-wrap gap-2">
+                {group.users.map((user) => {
+                  if (user.id === userStore.user.id) return null;
+                  return (
+                    <div
+                      key={user.id}
+                      className="flex w-max select-none gap-3 rounded-full border border-secondary-500 bg-white p-4 py-3 transition-all animate-duration-200 animate-ease-in-out"
+                    >
+                      <div className="relative my-auto aspect-square h-12 w-12">
+                        {user.photo ? (
+                          <Image
+                            className="h-12 w-12 rounded-full object-cover"
+                            src={getImageURL(user.photo)}
+                            alt={user.photo.name}
+                            width={320}
+                            height={320}
+                          />
+                        ) : (
+                          <PersonSVG className="aspect-square h-12 w-12" />
+                        )}
+                      </div>
+                      <div className="flex items-center">
+                        <h1 className="text-base font-bold text-dark-500">
+                          {user.firstName} {user.lastName}
+                        </h1>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
 
-            <div className="flex justify-between">
-              <Link className="block" href="/dashboard/schedule/trainer">
-                <Button styles="w-full">Ir A Horarios</Button>
-              </Link>
-              <Link className="block" href="/dashboard/attendance/trainer">
-                <Button styles="w-full">Ir A Asistencias</Button>
-              </Link>
+              <div className="flex justify-between">
+                <Link className="block" href="/dashboard/schedule/trainer">
+                  <Button styles="w-full">Ir A Horarios</Button>
+                </Link>
+                <Link className="block" href="/dashboard/attendance/trainer">
+                  <Button styles="w-full">Ir A Asistencias</Button>
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </Modal.Body>
-    </Modal>
+        </Content>
+      </Portal>
+    </Root>
   );
 };
 

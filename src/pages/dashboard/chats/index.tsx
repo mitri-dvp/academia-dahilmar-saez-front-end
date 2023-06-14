@@ -13,7 +13,6 @@ import {
   PlusCircleDottedSVG,
   SpinnerSVG,
 } from "@components/SVG";
-import { Modal } from "flowbite-react";
 import ChatContactModal from "@components/Chat/ChatContactModal";
 import { useUserStore } from "@store/user";
 import Image from "next/image";

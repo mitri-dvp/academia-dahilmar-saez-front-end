@@ -114,12 +114,12 @@ const Calendar: NextPage = () => {
           ) : null}
         </div>
         {/* Works in Prod */}
-        {/* {showModal ? ( */}
-        <CalendarEventAddModal
-          showModal={showModal}
-          onClose={() => setShowModal(false)}
-        />
-        {/* ) : null} */}
+        {showModal ? (
+          <CalendarEventAddModal
+            showModal={showModal}
+            onClose={() => setShowModal(false)}
+          />
+        ) : null}
       </section>
     </DashboardLayout>
   );

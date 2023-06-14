@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
 import React from "react";
 import {
   CalendarSVG,

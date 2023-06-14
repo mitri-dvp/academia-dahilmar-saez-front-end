@@ -18,7 +18,7 @@ const ChatViewEmpty: FC = () => {
       </div>
       <div className="relative flex-1 bg-white">
         <Image
-          className="absolute top-1/2 left-1/2 z-50 h-32 w-auto -translate-x-1/2 -translate-y-1/2 opacity-50"
+          className="absolute top-1/2 left-1/2 h-32 w-auto -translate-x-1/2 -translate-y-1/2 opacity-50"
           src="/logo.png"
           alt="academia-dahilmar-saez-logo"
           width={300}

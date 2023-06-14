@@ -3,19 +3,11 @@ import type { NextPage } from "next";
 
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
-import dayjs from "@utils/dayjs";
 
-import {
-  PlusCircleDottedSVG,
-  SpinnerSVG,
-  TennisBallSVG,
-  TennisRaquetSVG,
-} from "@components/SVG";
+import { SpinnerSVG } from "@components/SVG";
 
 import { useGroupStore } from "@store/group";
 import { get } from "@services/group";
-import { USER_ROLES } from "@utils/global";
-import ScheduleAddModal from "@components/Schedule/ScheduleAddModal";
 import GroupScheduleModal from "@components/Group/GroupScheduleModal";
 
 const Schedule: NextPage = () => {
@@ -32,16 +24,6 @@ const Schedule: NextPage = () => {
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
   }, []);
-
-  const renderGroups = () => {
-    const groupCardsList: JSX.Element[] = [];
-
-    for (let i = 0; i < groups.length; i++) {
-      const group = groups[i];
-    }
-
-    return groupCardsList;
-  };
 
   return (
     <DashboardLayout>

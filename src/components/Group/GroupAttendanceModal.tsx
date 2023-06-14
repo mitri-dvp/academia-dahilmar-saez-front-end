@@ -1,39 +1,14 @@
 import { useEffect, useState } from "react";
-import { Modal } from "flowbite-react";
+import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
-import {
-  CalendarSVG,
-  CheckCircleSVG,
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  ClockSVG,
-  CrossSVG,
-  DatepickerSVG,
-  PersonSVG,
-  SpinnerSVG,
-} from "../SVG";
+import { ChevronLeftSVG, ChevronRightSVG, CrossSVG, SpinnerSVG } from "../SVG";
 import { useGroupStore } from "@store/group";
-import { getAthletes } from "@services/user";
-import { USER_ROLES } from "@utils/global";
-import Image from "next/image";
-import { getImageURL } from "@utils/media";
 import { create } from "@services/schedule";
-import { useUserStore } from "@store/user";
-import { useChatStore } from "@store/chat";
 
 import { useFormik } from "formik";
-import { date, z } from "zod";
+import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
-import Button from "@components/Button";
-import Link from "next/link";
-import DayInput from "@components/DayInput";
-import TimeInput from "@components/TimeInput";
-import { get } from "@services/attendance";
 import { getAttendances } from "@services/group";
 import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
 
@@ -236,43 +211,40 @@ const GroupAttendanceModal: ({
   if (!group) return <React.Fragment />;
 
   return (
-    <Modal
-      show={showModal}
-      onClose={onClose}
-      dismissible={true}
-      className="animate-fade animate-duration-200 animate-ease-out"
-      position="center"
-    >
-      <Modal.Body>
-        <div className="flex justify-end">
-          <button onClick={onClose} type="button">
-            <CrossSVG className="h-6 w-6 stroke-gray-900" />
-          </button>
-        </div>
-        <div>
-          <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
-            Asistencias {group.name}
+    <Root open={showModal} onOpenChange={onClose}>
+      <Portal>
+        <Overlay className="modal-overlay" />
+        <Content className="modal-content w-full max-w-xl">
+          <div className="flex justify-end">
+            <button onClick={onClose} type="button">
+              <CrossSVG className="h-6 w-6 stroke-gray-900" />
+            </button>
           </div>
+          <div>
+            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+              Asistencias {group.name}
+            </div>
 
-          <div className="space-y-8">
-            <div className="mx-auto w-96">{renderHeader()}</div>
+            <div className="space-y-8">
+              <div className="mx-auto w-96">{renderHeader()}</div>
 
-            {isLoading ? (
-              <div className="flex h-96 items-center justify-center">
-                <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
-              </div>
-            ) : (
-              <GroupAttendanceModalForm
-                group={group}
-                attendances={attendances}
-                selectedDate={selectedDate.format()}
-                onSubmit={(attendances) => setAttendances(attendances)}
-              />
-            )}
+              {isLoading ? (
+                <div className="flex h-96 items-center justify-center">
+                  <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+                </div>
+              ) : (
+                <GroupAttendanceModalForm
+                  group={group}
+                  attendances={attendances}
+                  selectedDate={selectedDate.format()}
+                  onSubmit={(attendances) => setAttendances(attendances)}
+                />
+              )}
+            </div>
           </div>
-        </div>
-      </Modal.Body>
-    </Modal>
+        </Content>
+      </Portal>
+    </Root>
   );
 };
 
