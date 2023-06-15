@@ -15,60 +15,13 @@ import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
 const GroupAttendanceModal: ({
   showModal,
   onClose,
-  groupID,
 }: {
   showModal: boolean;
   onClose: () => void;
-  groupID: number;
-}) => JSX.Element = ({ showModal, onClose, groupID }) => {
-  const { groups } = useGroupStore();
+}) => JSX.Element = ({ showModal, onClose }) => {
+  const { selectedGroup } = useGroupStore();
 
-  const group = groups.find((group) => group.id === groupID);
-
-  const formik = useFormik({
-    initialValues: {
-      day: null,
-      time: null,
-    },
-    validationSchema: toFormikValidationSchema(
-      z.object({
-        day: z.date({
-          required_error: "Introduzca el dia",
-          invalid_type_error: "Introduzca el dia",
-        }),
-        time: z.date({
-          required_error: "Introduzca la hora",
-          invalid_type_error: "Introduzca la hora",
-        }),
-      })
-    ),
-    onSubmit: async (values) => {
-      if (!group) return;
-      let datetime = dayjs();
-
-      const dayDate = dayjs(values.day);
-      const timeDate = dayjs(values.time);
-
-      datetime = datetime.set("day", dayDate.get("day"));
-
-      datetime = datetime.set("hour", timeDate.get("hour"));
-      datetime = datetime.set("minutes", timeDate.get("minutes"));
-
-      try {
-        // Action
-        await create({
-          datetime: datetime.toDate(),
-          groupID: group.id,
-        });
-        // On Success
-        // handleSuccess();
-        // onClose();
-      } catch (error) {
-        // On Error
-        // handleError(error);
-      }
-    },
-  });
+  const group = selectedGroup as Group;
 
   const orderedSchedules = group
     ? [...group.schedules].sort(
@@ -78,20 +31,16 @@ const GroupAttendanceModal: ({
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
 
-  const [attendances, setAttendances] = useState<Attendance[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const abortController = new AbortController();
     if (!isLoading) {
       setIsLoading(true);
-      getAttendances(groupID, selectedDate.format("YYYY-MM-DD"), {
+      getAttendances(group.id, selectedDate.format("YYYY-MM-DD"), {
         signal: abortController.signal,
       })
-        .then((attendances) => {
-          setAttendances(attendances);
-          setIsLoading(false);
-        })
+        .then(() => setIsLoading(false))
         .catch(() => setIsLoading(false));
     }
 
@@ -101,55 +50,52 @@ const GroupAttendanceModal: ({
   }, [selectedDate]);
 
   useEffect(() => {
-    if (group) {
-      let nextSchedule = undefined;
+    let nextSchedule = undefined;
 
-      let i = 0;
-      while (!nextSchedule) {
-        nextSchedule = orderedSchedules.find(
+    let i = 0;
+    while (!nextSchedule) {
+      nextSchedule = orderedSchedules.find(
+        (schedule) =>
+          dayjs(schedule.datetime).format("dddd") ===
+          dayjs().add(i, "day").format("dddd")
+      );
+      i++;
+      if (i > 7) break;
+    }
+
+    if (dayjs().diff(dayjs().add(i - 1, "day"), "milliseconds") < 0) {
+      let prevSchedule = undefined;
+
+      let j = 0;
+      while (!prevSchedule) {
+        j++;
+        prevSchedule = orderedSchedules.find(
           (schedule) =>
             dayjs(schedule.datetime).format("dddd") ===
-            dayjs().add(i, "day").format("dddd")
+            dayjs()
+              .add(i - 1, "day")
+              .subtract(j, "day")
+              .format("dddd")
         );
-        i++;
-        if (i > 7) break;
-      }
-
-      if (dayjs().diff(dayjs().add(i - 1, "day"), "milliseconds") < 0) {
-        let prevSchedule = undefined;
-
-        let j = 0;
-        while (!prevSchedule) {
-          j++;
-          prevSchedule = orderedSchedules.find(
-            (schedule) =>
-              dayjs(schedule.datetime).format("dddd") ===
-              dayjs()
-                .add(i - 1, "day")
-                .subtract(j, "day")
-                .format("dddd")
-          );
-          if (j > 7) break;
-        }
-
-        setIsLoading(false);
-        setSelectedDate(
-          dayjs()
-            .add(i - 1, "day")
-            .subtract(j, "day")
-        );
-        return;
+        if (j > 7) break;
       }
 
       setIsLoading(false);
-      setSelectedDate(dayjs().add(i - 1, "day"));
+      setSelectedDate(
+        dayjs()
+          .add(i - 1, "day")
+          .subtract(j, "day")
+      );
+      return;
     }
+
+    setIsLoading(false);
+    setSelectedDate(dayjs().add(i - 1, "day"));
   }, []);
 
   const renderHeader = () => {
     const goToPrevSchedule = () => {
       if (isLoading) return;
-      if (!group) return;
 
       let prevSchedule = undefined;
 
@@ -169,7 +115,6 @@ const GroupAttendanceModal: ({
 
     const goToNextSchedule = () => {
       if (isLoading) return;
-      if (!group) return;
 
       let nextSchedule = undefined;
 
@@ -194,21 +139,19 @@ const GroupAttendanceModal: ({
     };
 
     return (
-      <h1 className="flex items-center justify-between text-base font-semibold">
+      <div className="flex items-center justify-between text-base font-semibold">
         <div className="cursor-pointer" onClick={goToPrevSchedule}>
           <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
         </div>
-        <h1 className="tex/t-dark-500 text-xl font-bold capitalize">
+        <div className="tex/t-dark-500 text-xl font-bold capitalize">
           {selectedDate.format("dddd DD/MM/YY")}
-        </h1>
+        </div>
         <div className="cursor-pointer" onClick={goToNextSchedule}>
           <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
         </div>
-      </h1>
+      </div>
     );
   };
-
-  if (!group) return <React.Fragment />;
 
   return (
     <Root open={showModal} onOpenChange={onClose}>
@@ -234,10 +177,7 @@ const GroupAttendanceModal: ({
                 </div>
               ) : (
                 <GroupAttendanceModalForm
-                  group={group}
-                  attendances={attendances}
                   selectedDate={selectedDate.format()}
-                  onSubmit={(attendances) => setAttendances(attendances)}
                 />
               )}
             </div>

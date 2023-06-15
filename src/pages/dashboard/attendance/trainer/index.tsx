@@ -14,16 +14,14 @@ import {
 
 import { useGroupStore } from "@store/group";
 import { get } from "@services/group";
-import { USER_ROLES } from "@utils/global";
-import GroupAttendanceModal from "@components/Group/GroupAttendanceModal";
 import Link from "next/link";
+import GroupAttendanceModal from "@components/Group/GroupAttendanceModal";
 
 const Attendance: NextPage = () => {
-  const { groups } = useGroupStore();
+  const groupStore = useGroupStore();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -33,14 +31,8 @@ const Attendance: NextPage = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  const renderGroups = () => {
-    const groupCardsList: JSX.Element[] = [];
-
-    for (let i = 0; i < groups.length; i++) {
-      const group = groups[i];
-    }
-
-    return groupCardsList;
+  const handleSelectGroup = (group: Group | null) => {
+    groupStore.setSelected(group);
   };
 
   return (
@@ -61,12 +53,12 @@ const Attendance: NextPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-6">
-              {groups.length === 0 ? (
+              {groupStore.groups.length === 0 ? (
                 <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
                   Grupos no encontrados
                 </div>
               ) : null}
-              {groups.map((group) => {
+              {groupStore.groups.map((group) => {
                 if (group.schedules.length === 0)
                   return (
                     <Link
@@ -84,7 +76,7 @@ const Attendance: NextPage = () => {
                   <div
                     key={group.id}
                     className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
-                    onClick={() => setSelectedGroup(group)}
+                    onClick={() => handleSelectGroup(group)}
                   >
                     <span>{group.name}</span>
                   </div>
@@ -93,11 +85,10 @@ const Attendance: NextPage = () => {
             </div>
           )}
         </div>
-        {selectedGroup ? (
+        {groupStore.selectedGroup ? (
           <GroupAttendanceModal
-            showModal={Boolean(selectedGroup)}
-            onClose={() => setSelectedGroup(null)}
-            groupID={selectedGroup.id}
+            showModal={Boolean(groupStore.selectedGroup)}
+            onClose={() => handleSelectGroup(null)}
           />
         ) : null}
       </section>

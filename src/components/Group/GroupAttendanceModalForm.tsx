@@ -12,7 +12,6 @@ import {
   SpinnerSVG,
 } from "../SVG";
 import { useGroupStore } from "@store/group";
-import { getAthletes } from "@services/user";
 import { USER_ROLES } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
@@ -35,18 +34,22 @@ import TimeInput from "@components/TimeInput";
 import { get } from "@services/attendance";
 import { postAttendances } from "@services/group";
 import GroupAttendanceFormItem from "./GroupAttendanceModalFormItem";
+import { useAttendanceStore } from "@store/attendance";
 
 const GroupAttendanceModalForm: ({
-  group,
-  attendances,
   selectedDate,
 }: {
-  group: Group;
-  attendances: Attendance[];
   selectedDate: string;
-  onSubmit: (attendances: Attendance[]) => void;
-}) => JSX.Element = ({ group, attendances, selectedDate, onSubmit }) => {
-  const userStore = useUserStore();
+}) => JSX.Element = ({ selectedDate }) => {
+  const { selectedGroup } = useGroupStore();
+  const { groupAttendances } = useAttendanceStore();
+
+  const group = selectedGroup as Group;
+
+  const athletes = group.users.filter(
+    (user) => user.role.type === USER_ROLES.ATHLETE
+  );
+
   const draftAttendances: DraftAttendance[] = [];
 
   const formik = useFormik({
@@ -54,16 +57,10 @@ const GroupAttendanceModalForm: ({
       draftAttendances: draftAttendances,
     },
     onSubmit: async (values) => {
-      if (values.draftAttendances.length === 0) return;
       try {
         // Action
-        const attendances = await postAttendances(
-          group.id,
-          selectedDate,
-          values.draftAttendances
-        );
+        await postAttendances(group.id, selectedDate, values.draftAttendances);
         // On Success
-        onSubmit(attendances);
         formik.resetForm();
         // handleSuccess();
         // onClose();
@@ -73,6 +70,22 @@ const GroupAttendanceModalForm: ({
       }
     },
   });
+
+  useEffect(() => {
+    const draftAttendances: DraftAttendance[] = athletes.map((athlete) => {
+      const attendance = groupAttendances.find(
+        (groupAttendance) => groupAttendance.user.id === athlete.id
+      );
+      return {
+        id: attendance ? attendance.id : null,
+        status: attendance ? attendance.status : false,
+        remarks: attendance ? attendance.remarks : "",
+        userID: attendance ? attendance.user.id : athlete.id,
+      };
+    });
+
+    formik.setFieldValue("draftAttendances", draftAttendances);
+  }, [groupAttendances]);
 
   const handleChange = (draftAttendance: DraftAttendance) => {
     const index = formik.values.draftAttendances.findIndex(
@@ -98,18 +111,14 @@ const GroupAttendanceModalForm: ({
   return (
     <div className="flex min-h-[24rem] flex-col justify-between space-y-8">
       <div className="max-h-96 overflow-y-auto">
-        {group.users.map((user) => {
-          if (user.id === userStore.user.id) return null;
-          return (
-            <GroupAttendanceFormItem
-              key={user.id}
-              user={user}
-              attendances={attendances}
-              selectedDate={selectedDate}
-              onChange={handleChange}
-            />
-          );
-        })}
+        {athletes.map((athlete) => (
+          <GroupAttendanceFormItem
+            key={athlete.id}
+            athlete={athlete}
+            selectedDate={selectedDate}
+            onChange={handleChange}
+          />
+        ))}
       </div>
 
       <form onClick={formik.handleSubmit} className="mx-auto w-1/2">
@@ -118,7 +127,9 @@ const GroupAttendanceModalForm: ({
           disabled={formik.isSubmitting}
           styles="w-full"
         >
-          Guardar Asistencias
+          {groupAttendances.length
+            ? "Actualizar Asistencias"
+            : "Guardar Asistencias"}
         </Button>
       </form>
     </div>

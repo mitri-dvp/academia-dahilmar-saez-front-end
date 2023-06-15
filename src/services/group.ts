@@ -1,6 +1,7 @@
 import { publicApi } from "@utils/http";
 import { useUserStore } from "@store/user";
 import { useGroupStore } from "@store/group";
+import { useAttendanceStore } from "@store/attendance";
 
 type GroupData = {
   name: string;
@@ -69,7 +70,7 @@ export const getAttendances = async (
 
   const { attendances } = getResponse.data;
 
-  return attendances;
+  useAttendanceStore.getState().setGroupAttendances(attendances);
 };
 
 export const postAttendances = async (
@@ -89,5 +90,5 @@ export const postAttendances = async (
 
   const { attendances } = getResponse.data;
 
-  return attendances;
+  useAttendanceStore.getState().setGroupAttendances(attendances);
 };

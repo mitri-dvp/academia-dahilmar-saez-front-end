@@ -33,20 +33,21 @@ import Link from "next/link";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";
 import { get } from "@services/attendance";
+import { useAttendanceStore } from "@store/attendance";
 
 const GroupAttendanceFormItem: ({
-  user,
-  attendances,
+  athlete,
   selectedDate,
   onChange,
 }: {
-  user: User;
-  attendances: Attendance[];
+  athlete: User;
   selectedDate: string;
   onChange: (draftAttendance: DraftAttendance) => void;
-}) => JSX.Element = ({ user, attendances, selectedDate, onChange }) => {
-  const attendance: Attendance | undefined = attendances.find((attendance) => {
-    const userMatch = attendance.user.id === user.id;
+}) => JSX.Element = ({ athlete, selectedDate, onChange }) => {
+  const { groupAttendances } = useAttendanceStore();
+
+  const attendance = groupAttendances.find((attendance) => {
+    const userMatch = attendance.user.id === athlete.id;
     const dateMatch =
       dayjs(attendance.datetime).format("YYYY-MM-DD") ===
       dayjs(selectedDate).format("YYYY-MM-DD");
@@ -60,7 +61,7 @@ const GroupAttendanceFormItem: ({
       id: attendance ? attendance.id : null,
       status: attendance ? attendance.status : false,
       remarks: attendance ? attendance.remarks : "",
-      userID: user.id,
+      userID: athlete.id,
     });
   }, [attendance]);
 
@@ -69,7 +70,7 @@ const GroupAttendanceFormItem: ({
       id: attendance ? attendance.id : null,
       status: attendance ? attendance.status : false,
       remarks: attendance ? attendance.remarks : "",
-      userID: user.id,
+      userID: athlete.id,
     },
     onSubmit: async (values) => {
       onChange(values);
@@ -84,11 +85,11 @@ const GroupAttendanceFormItem: ({
     >
       <div className="flex w-full select-none gap-4 bg-white p-2 hover:bg-gray-100">
         <div className="relative my-auto aspect-square h-8 w-8">
-          {user.photo ? (
+          {athlete.photo ? (
             <Image
               className="h-8 w-8 rounded-full object-cover"
-              src={getImageURL(user.photo)}
-              alt={user.photo.name}
+              src={getImageURL(athlete.photo)}
+              alt={athlete.photo.name}
               width={320}
               height={320}
             />
@@ -97,9 +98,9 @@ const GroupAttendanceFormItem: ({
           )}
         </div>
         <div className="flex items-center">
-          <h1 className="text-base font-bold text-dark-500">
-            {user.firstName} {user.lastName}
-          </h1>
+          <div className="text-base font-bold text-dark-500">
+            {athlete.firstName} {athlete.lastName}
+          </div>
         </div>
       </div>
       <div className="flex w-1/6 select-none items-center justify-center gap-4 bg-white p-2 hover:bg-gray-100">
