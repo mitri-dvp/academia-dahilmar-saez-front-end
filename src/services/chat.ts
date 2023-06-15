@@ -26,4 +26,6 @@ export const create = async (contact: User) => {
   const { chat } = postResponse.data;
 
   useChatStore.getState().add(chat);
+
+  return chat;
 };

@@ -93,12 +93,13 @@ const ChatContactModal: ({
     setIsLoading(true);
     // Create Chat
     create(contact)
-      .then(() => {
+      .then((chat) => {
         addToast({
           title: "Chat Creado",
         });
         setIsLoading(false);
         onClose();
+        onSelect(chat);
       })
       .catch(() => {
         setIsLoading(false);
