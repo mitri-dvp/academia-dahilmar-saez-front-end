@@ -89,7 +89,7 @@ const CalendarEventAddModal: ({
         <Content className="modal-content w-full max-w-xl">
           <div className="flex justify-end">
             <button onClick={handleClose} type="button">
-              <CrossSVG className="h-6 w-6 stroke-gray-900" />
+              <CrossSVG className="h-6 w-6 stroke-dark-500" />
             </button>
           </div>
           <div>

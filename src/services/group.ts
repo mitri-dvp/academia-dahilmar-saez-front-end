@@ -2,7 +2,7 @@ import { publicApi } from "@utils/http";
 import { useUserStore } from "@store/user";
 import { useGroupStore } from "@store/group";
 
-type CreateGroup = {
+type GroupData = {
   name: string;
   description: string;
   users: number[];
@@ -22,7 +22,7 @@ export const get = async () => {
   useGroupStore.getState().set(groups);
 };
 
-export const create = async (groupData: CreateGroup) => {
+export const create = async (groupData: GroupData) => {
   const postResponse = await publicApi.post<{ group: Group }>(
     `/groups`,
     {
@@ -36,6 +36,23 @@ export const create = async (groupData: CreateGroup) => {
   const { group } = postResponse.data;
 
   useGroupStore.getState().add(group);
+};
+
+export const edit = async (groupID: number, groupData: GroupData) => {
+  const postResponse = await publicApi.put<{ group: Group }>(
+    `/groups/${groupID}`,
+    {
+      data: { groupData },
+    },
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  const { group } = postResponse.data;
+
+  useGroupStore.getState().update(groupID, group);
+  useGroupStore.getState().setSelected(group);
 };
 
 export const getAttendances = async (

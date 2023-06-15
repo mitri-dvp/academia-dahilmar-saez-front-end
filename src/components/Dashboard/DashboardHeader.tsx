@@ -96,7 +96,7 @@ const DashboardHeader: FC = () => {
             type="button"
             className={`inline-flex items-center justify-center p-2 text-gray-400 transition ease-in-out hover:text-gray-900 focus:text-gray-900`}
           >
-            <BurgerSVG className="h-6 w-6 stroke-gray-900" />
+            <BurgerSVG className="h-6 w-6 stroke-dark-500" />
           </button>
         </div>
 
@@ -143,7 +143,7 @@ const DashboardHeader: FC = () => {
                   type="button"
                   className={`-m-3 -mt-2 flex items-center space-x-3 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-gray-400 transition  ease-in-out hover:bg-gray-50 hover:text-gray-900 focus:text-gray-900 md:hidden`}
                 >
-                  <CrossSVG className="h-6 w-6 stroke-gray-900" />
+                  <CrossSVG className="h-6 w-6 stroke-dark-500" />
                 </button>
                 <Link
                   href="/dashboard/"

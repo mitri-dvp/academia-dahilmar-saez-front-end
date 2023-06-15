@@ -4,18 +4,22 @@ import { devtools, persist, createJSONStorage } from "zustand/middleware";
 
 type GroupState = {
   groups: Group[];
+  selectedGroup: Group | null;
 };
 
 type GroupActions = {
   set: (groups: Group[]) => void;
   add: (group: Group) => void;
-  updateSchedule: (schedules: Schedule[], groupID: number) => void;
+  setSelected: (group: Group | null) => void;
+  update: (groupID: number, group: Group) => void;
+  updateSchedule: (groupID: number, schedules: Schedule[]) => void;
 };
 
 type GroupStore = GroupState & GroupActions;
 
 const initialState = {
   groups: [],
+  selectedGroup: null,
 };
 
 export const useGroupStore = create<GroupStore>()(
@@ -25,7 +29,18 @@ export const useGroupStore = create<GroupStore>()(
         ...initialState,
         set: (groups) => set(() => ({ groups: groups })),
         add: (group) => set((state) => ({ groups: [...state.groups, group] })),
-        updateSchedule: (schedules, groupID) =>
+        setSelected: (group) => set(() => ({ selectedGroup: group })),
+        update: (groupID, group) =>
+          set((state) => {
+            const groups = [...state.groups];
+
+            const index = groups.findIndex((group) => group.id === groupID);
+
+            groups[index] = { ...group };
+
+            return { groups: groups };
+          }),
+        updateSchedule: (groupID, schedules) =>
           set((state) => {
             const groups = [...state.groups];
 

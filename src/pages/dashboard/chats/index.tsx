@@ -58,7 +58,7 @@ const Chats: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className="mt-8 space-y-8">
+                <div className="mt-8">
                   {chats.length ? (
                     <ChatList onSelect={handleChatSelect} />
                   ) : (

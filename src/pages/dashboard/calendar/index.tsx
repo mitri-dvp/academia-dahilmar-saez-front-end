@@ -85,10 +85,10 @@ const Calendar: NextPage = () => {
                     "Domingo",
                     "Lunes",
                     "Martes",
-                    "Miercoles",
+                    "Miércoles",
                     "Jueves",
                     "Viernes",
-                    "Sabado",
+                    "Sábado",
                   ].map((day) => (
                     <th key={day} className="rounded-md bg-secondary-500 p-4">
                       <span className="select-none font-bold uppercase tracking-wide">

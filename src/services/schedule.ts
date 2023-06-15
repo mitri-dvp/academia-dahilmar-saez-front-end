@@ -20,5 +20,5 @@ export const create = async (scheduleData: CreateSchedule) => {
 
   const { schedules } = postResponse.data;
 
-  useGroupStore.getState().updateSchedule(schedules, scheduleData.groupID);
+  useGroupStore.getState().updateSchedule(scheduleData.groupID, schedules);
 };
