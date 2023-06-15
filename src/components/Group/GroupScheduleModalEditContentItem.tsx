@@ -8,7 +8,7 @@ import {
   TrashFillSVG,
 } from "../SVG";
 import { removeFocus } from "@utils/global";
-import { create, update } from "@services/schedule";
+import { create, update, deleteSchedule } from "@services/schedule";
 
 import { useFormik } from "formik";
 import { z } from "zod";
@@ -26,6 +26,10 @@ const GroupScheduleModalEditContentItem: ({
   group: Group;
 }) => JSX.Element = ({ schedule, group }) => {
   const { addToast } = useToastStore();
+
+  const [showDayInput, setShowDayInput] = useState(false);
+  const [showTimeInput, setShowTimeInput] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -45,6 +49,8 @@ const GroupScheduleModalEditContentItem: ({
       })
     ),
     onSubmit: async (values) => {
+      if (isLoading) return;
+      setIsLoading(true);
       let datetime = dayjs();
 
       const dayDate = dayjs(values.day);
@@ -72,11 +78,23 @@ const GroupScheduleModalEditContentItem: ({
         // On Error
         // handleError(error);
       }
+      setIsLoading(false);
     },
   });
 
-  const [showDayInput, setShowDayInput] = useState(false);
-  const [showTimeInput, setShowTimeInput] = useState(false);
+  const handleDelete = async () => {
+    if (isLoading) return;
+
+    try {
+      await deleteSchedule(schedule.id, group.id);
+
+      addToast({
+        title: "Horario Borrado",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <form className="space-y-8" onSubmit={formik.handleSubmit}>
@@ -177,15 +195,22 @@ const GroupScheduleModalEditContentItem: ({
         </div>
 
         <div className="flex w-max items-center gap-2 pb-4">
-          <div
-            onClick={() => formik.handleSubmit()}
+          <button
+            type="button"
+            disabled={formik.isSubmitting}
             className="w-5 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700"
+            onClick={() => formik.handleSubmit()}
           >
             <CheckCircleFillSVG className="h-full w-full" />
-          </div>
-          <div className="w-5 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700">
+          </button>
+          <button
+            type="button"
+            disabled={formik.isSubmitting}
+            className="w-5 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700"
+            onClick={() => handleDelete()}
+          >
             <TrashFillSVG className="h-full w-full" />
-          </div>
+          </button>
         </div>
       </div>
     </form>

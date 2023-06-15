@@ -41,3 +41,16 @@ export const update = async (
 
   useGroupStore.getState().updateSchedules(scheduleData.groupID, schedules);
 };
+
+export const deleteSchedule = async (scheduleID: number, groupID: number) => {
+  const deleteResponse = await publicApi.delete<{ schedules: Schedule[] }>(
+    `/schedules/${scheduleID}`,
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  const { schedules } = deleteResponse.data;
+
+  useGroupStore.getState().updateSchedules(groupID, schedules);
+};
