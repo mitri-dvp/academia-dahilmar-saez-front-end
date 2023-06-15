@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
-import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
 import { CheckCircleSVG, CrossSVG, PencilSquareSVG, PersonSVG } from "../SVG";
 import { getAthletes } from "@services/user";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
-import { edit } from "@services/group";
+import { update } from "@services/group";
 import { useUserStore } from "@store/user";
 
 import { useFormik } from "formik";
@@ -54,7 +53,7 @@ const GroupModalEditContent: ({
 
       try {
         // Action
-        await edit(group.id, data);
+        await update(group.id, data);
         // On Success
         // handleSuccess();
         toggleEditing();

@@ -38,7 +38,7 @@ export const create = async (groupData: GroupData) => {
   useGroupStore.getState().add(group);
 };
 
-export const edit = async (groupID: number, groupData: GroupData) => {
+export const update = async (groupID: number, groupData: GroupData) => {
   const postResponse = await publicApi.put<{ group: Group }>(
     `/groups/${groupID}`,
     {
@@ -52,7 +52,6 @@ export const edit = async (groupID: number, groupData: GroupData) => {
   const { group } = postResponse.data;
 
   useGroupStore.getState().update(groupID, group);
-  useGroupStore.getState().setSelected(group);
 };
 
 export const getAttendances = async (

@@ -6,6 +6,8 @@ import NextNProgress from "nextjs-progressbar";
 import "@styles/globals.css";
 import { SpinnerSVG } from "@components/SVG";
 
+import Toast from "@components/Toast/Toasts";
+
 const MyApp: AppType = ({ Component, pageProps }) => {
   const [isHydrated, setIsHydrated] = useState(false);
 
@@ -30,6 +32,7 @@ const MyApp: AppType = ({ Component, pageProps }) => {
           }}
         />
         <Component {...pageProps} />
+        <Toast />
       </>
     );
 

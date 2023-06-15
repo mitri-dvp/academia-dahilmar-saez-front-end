@@ -12,7 +12,7 @@ import GroupAddModal from "@components/Group/GroupAddModal";
 import GroupModal from "@components/Group/GroupModal";
 
 const Group: NextPage = () => {
-  const groupsStore = useGroupStore();
+  const groupStore = useGroupStore();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -26,7 +26,7 @@ const Group: NextPage = () => {
   }, []);
 
   const handleSelectGroup = (group: Group | null) => {
-    groupsStore.setSelected(group);
+    groupStore.setSelected(group);
   };
 
   return (
@@ -54,7 +54,7 @@ const Group: NextPage = () => {
                 <PlusCircleDottedSVG className="h-12 w-12" />
                 <span>Añadir</span>
               </div>
-              {groupsStore.groups.map((group) => (
+              {groupStore.groups.map((group) => (
                 <div
                   key={group.id}
                   className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
@@ -72,9 +72,9 @@ const Group: NextPage = () => {
             onClose={() => setShowModal(false)}
           />
         ) : null}
-        {groupsStore.selectedGroup ? (
+        {groupStore.selectedGroup ? (
           <GroupModal
-            showModal={Boolean(groupsStore.selectedGroup)}
+            showModal={Boolean(groupStore.selectedGroup)}
             onClose={() => handleSelectGroup(null)}
           />
         ) : null}

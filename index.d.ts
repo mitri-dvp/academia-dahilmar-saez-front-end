@@ -132,3 +132,9 @@ type CollectionResponse<T> = {
 type PopulateResponse<T> = {
   data: T | null;
 };
+
+type ToastProp = {
+  id?: string;
+  title: string;
+  description?: string;
+};

@@ -44,7 +44,7 @@ const TimeInput: ({
   };
 
   return (
-    <div className="absolute bottom-0 translate-y-full">
+    <div className="absolute bottom-0 z-10 translate-y-full">
       <div className="absolute  mt-0.5 ml-[1.2rem] h-4 w-4 rotate-45 border-l border-t border-gray-300 bg-white dark:border-slate-600 dark:bg-slate-800" />
       <div className="mt-2.5 border border-gray-300 bg-white p-2.5">
         <div className="flex gap-2">

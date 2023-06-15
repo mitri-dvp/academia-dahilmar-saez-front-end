@@ -12,7 +12,7 @@ type GroupActions = {
   add: (group: Group) => void;
   setSelected: (group: Group | null) => void;
   update: (groupID: number, group: Group) => void;
-  updateSchedule: (groupID: number, schedules: Schedule[]) => void;
+  updateSchedules: (groupID: number, schedules: Schedule[]) => void;
 };
 
 type GroupStore = GroupState & GroupActions;
@@ -38,23 +38,19 @@ export const useGroupStore = create<GroupStore>()(
 
             groups[index] = { ...group };
 
-            return { groups: groups };
+            return { groups: groups, selectedGroup: groups[index] };
           }),
-        updateSchedule: (groupID, schedules) =>
+        updateSchedules: (groupID, schedules) =>
           set((state) => {
             const groups = [...state.groups];
 
             const index = groups.findIndex((group) => group.id === groupID);
 
-            const group = groups[index];
+            const group = groups[index] as Group;
 
-            if (group) {
-              groups[index] = { ...group, schedules: schedules };
+            groups[index] = { ...group, schedules: schedules };
 
-              return { groups: groups };
-            }
-
-            return { groups: groups };
+            return { groups: groups, selectedGroup: groups[index] };
           }),
       }),
       {

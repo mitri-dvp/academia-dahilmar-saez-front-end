@@ -11,11 +11,10 @@ import { get } from "@services/group";
 import GroupScheduleModal from "@components/Group/GroupScheduleModal";
 
 const Schedule: NextPage = () => {
-  const { groups } = useGroupStore();
+  const groupStore = useGroupStore();
 
   const [isLoading, setIsLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [selectedGroup, setSelectedGroup] = useState<Group | null>(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,6 +23,10 @@ const Schedule: NextPage = () => {
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
   }, []);
+
+  const handleSelectGroup = (group: Group | null) => {
+    groupStore.setSelected(group);
+  };
 
   return (
     <DashboardLayout>
@@ -43,16 +46,16 @@ const Schedule: NextPage = () => {
             </div>
           ) : (
             <div className="grid grid-cols-4 gap-6">
-              {groups.length === 0 ? (
+              {groupStore.groups.length === 0 ? (
                 <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
                   Grupos no encontrados
                 </div>
               ) : null}
-              {groups.map((group) => (
+              {groupStore.groups.map((group) => (
                 <div
                   key={group.id}
                   className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
-                  onClick={() => setSelectedGroup(group)}
+                  onClick={() => handleSelectGroup(group)}
                 >
                   <span>{group.name}</span>
                 </div>
@@ -60,11 +63,10 @@ const Schedule: NextPage = () => {
             </div>
           )}
         </div>
-        {selectedGroup ? (
+        {groupStore.selectedGroup ? (
           <GroupScheduleModal
-            showModal={Boolean(selectedGroup)}
-            onClose={() => setSelectedGroup(null)}
-            groupID={selectedGroup.id}
+            showModal={Boolean(groupStore.selectedGroup)}
+            onClose={() => handleSelectGroup(null)}
           />
         ) : null}
       </section>
