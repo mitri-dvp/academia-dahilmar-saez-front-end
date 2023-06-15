@@ -10,6 +10,7 @@ import { getImageURL } from "@utils/media";
 import { create } from "@services/chat";
 import { useUserStore } from "@store/user";
 import { useChatStore } from "@store/chat";
+import { useToastStore } from "@store/toast";
 
 const ChatContactModal: ({
   showModal,
@@ -20,9 +21,10 @@ const ChatContactModal: ({
   onClose: () => void;
   onSelect: (chat: Chat) => void;
 }) => JSX.Element = ({ showModal, onClose, onSelect }) => {
-  const { groups } = useGroupStore();
   const userStore = useUserStore();
+  const { groups } = useGroupStore();
   const { chats } = useChatStore();
+  const { addToast } = useToastStore();
 
   const [contacts, setContacts] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -92,6 +94,9 @@ const ChatContactModal: ({
     // Create Chat
     create(contact)
       .then(() => {
+        addToast({
+          title: "Chat Creado",
+        });
         setIsLoading(false);
         onClose();
       })

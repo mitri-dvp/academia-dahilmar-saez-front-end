@@ -12,6 +12,7 @@ import dayjs from "@utils/dayjs";
 import Button from "@components/Button";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";
+import { useToastStore } from "@store/toast";
 
 const GroupScheduleModalViewContent: ({
   group,
@@ -22,6 +23,8 @@ const GroupScheduleModalViewContent: ({
   onClose: () => void;
   toggleEditing: () => void;
 }) => JSX.Element = ({ group, onClose, toggleEditing }) => {
+  const { addToast } = useToastStore();
+
   const formik = useFormik({
     initialValues: {
       day: null,
@@ -58,7 +61,9 @@ const GroupScheduleModalViewContent: ({
         });
         // On Success
         formik.resetForm();
-        // handleSuccess();
+        addToast({
+          title: "Horario Agregado",
+        });
         // onClose();
       } catch (error) {
         // On Error
@@ -219,7 +224,7 @@ const GroupScheduleModalViewContent: ({
                 </p>
               </div>
             </div>
-            <Button styles="mx-auto">Añadir Horario</Button>
+            <Button styles="mx-auto">Agregar Horario</Button>
           </form>
         </div>
       </div>

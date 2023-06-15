@@ -3,14 +3,11 @@ import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
 import { ChevronLeftSVG, ChevronRightSVG, CrossSVG, SpinnerSVG } from "../SVG";
 import { useGroupStore } from "@store/group";
-import { create } from "@services/schedule";
 
-import { useFormik } from "formik";
-import { z } from "zod";
-import { toFormikValidationSchema } from "zod-formik-adapter";
 import dayjs from "@utils/dayjs";
 import { getAttendances } from "@services/group";
 import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
+import { useToastStore } from "@store/toast";
 
 const GroupAttendanceModal: ({
   showModal,
@@ -20,6 +17,7 @@ const GroupAttendanceModal: ({
   onClose: () => void;
 }) => JSX.Element = ({ showModal, onClose }) => {
   const { selectedGroup } = useGroupStore();
+  const { addToast } = useToastStore();
 
   const group = selectedGroup as Group;
 
@@ -131,6 +129,9 @@ const GroupAttendanceModal: ({
 
       if (dayjs().diff(selectedDate.add(i, "day"), "milliseconds") < 0) {
         // TO-DO Add better feedback
+        addToast({
+          title: "No se puede acceder a una fecha futura",
+        });
         // Restriction Can't access a future date
         return;
       }

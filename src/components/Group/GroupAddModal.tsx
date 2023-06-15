@@ -12,6 +12,7 @@ import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Button from "@components/Button";
+import { useToastStore } from "@store/toast";
 
 const GroupAddModal: ({
   showModal,
@@ -21,6 +22,7 @@ const GroupAddModal: ({
   onClose: () => void;
 }) => JSX.Element = ({ showModal, onClose }) => {
   const user = useUserStore();
+  const { addToast } = useToastStore();
 
   const users: User[] = [];
 
@@ -52,7 +54,9 @@ const GroupAddModal: ({
         // Action
         await create(createValues);
         // On Success
-        // handleSuccess();
+        addToast({
+          title: "Grupo Creado",
+        });
         onClose();
       } catch (error) {
         // On Error

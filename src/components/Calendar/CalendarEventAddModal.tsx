@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 
@@ -12,6 +12,7 @@ import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
 import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
 import Button from "@components/Button";
+import { useToastStore } from "@store/toast";
 
 const CalendarEventAddModal: ({
   showModal,
@@ -20,6 +21,7 @@ const CalendarEventAddModal: ({
   showModal: boolean;
   onClose: () => void;
 }) => JSX.Element = ({ showModal, onClose }) => {
+  const { addToast } = useToastStore();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -68,7 +70,9 @@ const CalendarEventAddModal: ({
           datetime: dayjs(values.date.startDate).toDate(),
         });
         // On Success
-        // handleSuccess();
+        addToast({
+          title: "Evento Agregado",
+        });
         handleClose();
       } catch (error) {
         // On Error
@@ -198,7 +202,7 @@ const CalendarEventAddModal: ({
                 loading={formik.isSubmitting}
                 disabled={formik.isSubmitting}
               >
-                Añadir Evento
+                Agregar Evento
               </Button>
             </form>
           </div>

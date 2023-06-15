@@ -1,38 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import React from "react";
-import {
-  CalendarSVG,
-  CheckCircleSVG,
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  ClockSVG,
-  CrossSVG,
-  DatepickerSVG,
-  PersonSVG,
-  SpinnerSVG,
-} from "../SVG";
-import { useGroupStore } from "@store/group";
-import { getAthletes } from "@services/user";
-import { USER_ROLES } from "@utils/global";
+import { PersonSVG } from "../SVG";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
-import { create } from "@services/schedule";
-import { useUserStore } from "@store/user";
-import { useChatStore } from "@store/chat";
 
 import { useFormik } from "formik";
-import { date, z } from "zod";
-import { toFormikValidationSchema } from "zod-formik-adapter";
-import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
-import Button from "@components/Button";
-import Link from "next/link";
-import DayInput from "@components/DayInput";
-import TimeInput from "@components/TimeInput";
-import { get } from "@services/attendance";
 import { useAttendanceStore } from "@store/attendance";
 
 const GroupAttendanceFormItem: ({

@@ -22,11 +22,13 @@ import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
 import type { AxiosError } from "axios";
 import axios from "axios";
+import { useToastStore } from "@store/toast";
 
 const Profile: NextPage = () => {
   const router = useRouter();
 
   const { user } = useUserStore();
+  const { addToast } = useToastStore();
 
   const [isUploadingPhoto, setIsUploadingPhoto] = useState(false);
   const [isDeletingPhoto, setIsDeletingPhoto] = useState(false);
@@ -105,6 +107,9 @@ const Profile: NextPage = () => {
 
   const handleSuccess = () => {
     router.push("/dashboard/profile");
+    addToast({
+      title: "Perfil Editado",
+    });
   };
 
   const handleError = (error: unknown | AxiosError) => {
@@ -143,10 +148,13 @@ const Profile: NextPage = () => {
           if (target.files && target.files[0]) {
             setIsUploadingPhoto(true);
             photoUpload(target.files[0])
-              .then((value) => {
+              .then(() => {
+                addToast({
+                  title: user.photo ? "Foto Actualizada" : "Foto Publicada",
+                });
                 setIsUploadingPhoto(false);
               })
-              .catch((error) => {
+              .catch(() => {
                 setIsUploadingPhoto(false);
               });
           }
@@ -159,10 +167,13 @@ const Profile: NextPage = () => {
   const handlePhotoDelete = () => {
     setIsDeletingPhoto(true);
     photoDelete()
-      .then((value) => {
+      .then(() => {
+        addToast({
+          title: "Foto Eliminada",
+        });
         setIsDeletingPhoto(false);
       })
-      .catch((error) => {
+      .catch(() => {
         setIsDeletingPhoto(false);
       });
   };

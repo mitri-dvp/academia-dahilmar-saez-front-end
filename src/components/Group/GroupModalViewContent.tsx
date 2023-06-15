@@ -1,19 +1,10 @@
-import { useEffect, useState } from "react";
-import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
+import { useState } from "react";
 
 import React from "react";
 import { CrossSVG, PencilSquareSVG, PersonSVG } from "../SVG";
-import { getAthletes } from "@services/user";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
-import { create } from "@services/group";
 import { useUserStore } from "@store/user";
-
-import { useFormik } from "formik";
-import { z } from "zod";
-import { toFormikValidationSchema } from "zod-formik-adapter";
-import Button from "@components/Button";
-import Link from "next/link";
 
 const GroupModalViewContent: ({
   group,

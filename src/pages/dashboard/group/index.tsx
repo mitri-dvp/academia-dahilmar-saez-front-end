@@ -36,7 +36,7 @@ const Group: NextPage = () => {
         description="Grupos | Academia Dahilmar Sáez"
       />
 
-      <section className="w-full bg-gray-50 md:py-14 md:px-10">
+      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
         <div className="w-max bg-white p-16 shadow-lg">
           <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
             Grupos
@@ -52,7 +52,7 @@ const Group: NextPage = () => {
                 onClick={() => setShowModal(true)}
               >
                 <PlusCircleDottedSVG className="h-12 w-12" />
-                <span>Añadir</span>
+                <span>Agregar</span>
               </div>
               {groupStore.groups.map((group) => (
                 <div

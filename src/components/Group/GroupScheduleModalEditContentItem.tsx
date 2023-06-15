@@ -70,8 +70,7 @@ const GroupScheduleModalEditContentItem: ({
         // On Success
         // formik.resetForm();
         addToast({
-          title: "Horario Actualizado!",
-          // description: "descripcion",
+          title: "Horario Actualizado",
         });
         // onClose();
       } catch (error) {
@@ -89,7 +88,7 @@ const GroupScheduleModalEditContentItem: ({
       await deleteSchedule(schedule.id, group.id);
 
       addToast({
-        title: "Horario Borrado",
+        title: "Horario Eliminado",
       });
     } catch (error) {
       console.log(error);

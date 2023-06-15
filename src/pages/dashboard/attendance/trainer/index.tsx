@@ -3,14 +3,8 @@ import type { NextPage } from "next";
 
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
-import dayjs from "@utils/dayjs";
 
-import {
-  PlusCircleDottedSVG,
-  SpinnerSVG,
-  TennisBallSVG,
-  TennisRaquetSVG,
-} from "@components/SVG";
+import { SpinnerSVG } from "@components/SVG";
 
 import { useGroupStore } from "@store/group";
 import { get } from "@services/group";

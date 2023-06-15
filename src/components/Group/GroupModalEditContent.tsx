@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Button from "@components/Button";
+import { useToastStore } from "@store/toast";
 
 const GroupModalEditContent: ({
   group,
@@ -22,6 +23,7 @@ const GroupModalEditContent: ({
   toggleEditing: () => void;
 }) => JSX.Element = ({ group, onClose, toggleEditing }) => {
   const userStore = useUserStore();
+  const { addToast } = useToastStore();
 
   const users: User[] = group.users.filter(
     (user) => user.id !== userStore.user.id
@@ -55,7 +57,9 @@ const GroupModalEditContent: ({
         // Action
         await update(group.id, data);
         // On Success
-        // handleSuccess();
+        addToast({
+          title: "Grupo Actualizado",
+        });
         toggleEditing();
       } catch (error) {
         // On Error

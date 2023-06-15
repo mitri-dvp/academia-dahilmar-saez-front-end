@@ -7,19 +7,12 @@ import Seo from "@components/Seo";
 import { useChatStore } from "@store/chat";
 import { get } from "@services/chat";
 
-import {
-  CrossSVG,
-  PersonSVG,
-  PlusCircleDottedSVG,
-  SpinnerSVG,
-} from "@components/SVG";
+import { PlusCircleDottedSVG, SpinnerSVG } from "@components/SVG";
 import ChatContactModal from "@components/Chat/ChatContactModal";
-import { useUserStore } from "@store/user";
-import Image from "next/image";
-import { getImageURL } from "@utils/media";
 import ChatList from "@components/Chat/ChatList";
 import ChatView from "@components/Chat/ChatView";
 import ChatViewEmpty from "@components/Chat/ChatViewEmpty";
+import { socket } from "@lib/socket";
 
 const Chats: NextPage = () => {
   const { chats } = useChatStore();
@@ -33,6 +26,10 @@ const Chats: NextPage = () => {
     get()
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
+  }, []);
+
+  useEffect(() => {
+    socket.connect();
   }, []);
 
   const handleChatSelect = async (chat: Chat) => {
