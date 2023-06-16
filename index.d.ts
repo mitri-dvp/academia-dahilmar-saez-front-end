@@ -138,3 +138,22 @@ type ToastProp = {
   title: string;
   description?: string;
 };
+
+type DerivedSchedule = {
+  group: {
+    id: number;
+    name: string;
+    description: string;
+  };
+  trainers: {
+    id: number;
+    firstName: string;
+    lastName: string;
+    photo: UserPhoto | null;
+    email: string;
+  }[];
+  schedule: {
+    day: number;
+    hour: number;
+  };
+};

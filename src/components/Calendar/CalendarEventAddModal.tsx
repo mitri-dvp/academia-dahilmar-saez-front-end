@@ -22,6 +22,7 @@ const CalendarEventAddModal: ({
   onClose: () => void;
 }) => JSX.Element = ({ showModal, onClose }) => {
   const { addToast } = useToastStore();
+
   const formik = useFormik({
     initialValues: {
       name: "",
