@@ -1,10 +1,12 @@
 import { useState } from "react";
 
 import React from "react";
-import { CrossSVG, PencilSquareSVG, PersonSVG } from "../SVG";
+import { CrossSVG, PencilSquareSVG, PersonSVG, TrashFillSVG } from "../SVG";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
 import { useUserStore } from "@store/user";
+
+import GroupDeleteButton from "@components/Button/GroupDeleteButton";
 
 const GroupModalViewContent: ({
   group,
@@ -22,6 +24,8 @@ const GroupModalViewContent: ({
   return (
     <React.Fragment>
       <div className="flex justify-end gap-4">
+        <GroupDeleteButton group={group} onConfirm={onClose} />
+
         <button onClick={toggleEditing} type="button">
           <PencilSquareSVG className="h-6 w-6 stroke-dark-500" />
         </button>

@@ -39,6 +39,21 @@ export const create = async (groupData: GroupData) => {
   useGroupStore.getState().add(group);
 };
 
+export const deleteGroup = async (groupID: number) => {
+  const deleteResponse = await publicApi.delete<{ groups: Group[] }>(
+    `/groups/${groupID}`,
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  const { groups } = deleteResponse.data;
+
+  console.log(groups);
+
+  useGroupStore.getState().set(groups);
+};
+
 export const update = async (groupID: number, groupData: GroupData) => {
   const postResponse = await publicApi.put<{ group: Group }>(
     `/groups/${groupID}`,
