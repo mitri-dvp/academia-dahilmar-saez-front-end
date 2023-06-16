@@ -1,14 +1,9 @@
 import { useState } from "react";
 
 import React from "react";
-import {
-  CheckCircleFillSVG,
-  ClockSVG,
-  DatepickerSVG,
-  TrashFillSVG,
-} from "../SVG";
+import { CheckCircleFillSVG, ClockSVG, DatepickerSVG } from "../SVG";
 import { removeFocus } from "@utils/global";
-import { create, update, deleteSchedule } from "@services/schedule";
+import { update } from "@services/schedule";
 
 import { useFormik } from "formik";
 import { z } from "zod";
@@ -17,6 +12,7 @@ import dayjs from "@utils/dayjs";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";
 import { useToastStore } from "@store/toast";
+import ScheduleDeleteButton from "@components/Button/ScheduleDeleteButton";
 
 const GroupScheduleModalEditContentItem: ({
   schedule,
@@ -80,20 +76,6 @@ const GroupScheduleModalEditContentItem: ({
       setIsLoading(false);
     },
   });
-
-  const handleDelete = async () => {
-    if (isLoading) return;
-
-    try {
-      await deleteSchedule(schedule.id, group.id);
-
-      addToast({
-        title: "Horario Eliminado",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   return (
     <form className="space-y-8" onSubmit={formik.handleSubmit}>
@@ -197,19 +179,12 @@ const GroupScheduleModalEditContentItem: ({
           <button
             type="button"
             disabled={formik.isSubmitting}
-            className="w-5 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700"
+            className="w-6 cursor-pointer text-blue-600 transition-all hover:text-blue-700"
             onClick={() => formik.handleSubmit()}
           >
             <CheckCircleFillSVG className="h-full w-full" />
           </button>
-          <button
-            type="button"
-            disabled={formik.isSubmitting}
-            className="w-5 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700"
-            onClick={() => handleDelete()}
-          >
-            <TrashFillSVG className="h-full w-full" />
-          </button>
+          <ScheduleDeleteButton schedule={schedule} group={group} />
         </div>
       </div>
     </form>

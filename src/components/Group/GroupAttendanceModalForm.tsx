@@ -91,6 +91,17 @@ const GroupAttendanceModalForm: ({
   return (
     <div className="flex min-h-[24rem] flex-col justify-between space-y-8">
       <div className="max-h-96 overflow-y-auto">
+        <div className="flex">
+          <div className="flex w-full select-none gap-4 bg-white p-2 hover:bg-gray-100">
+            <h1 className="text-sm font-bold text-dark-500">Nombre</h1>
+          </div>
+          <div className="flex w-1/3 select-none items-center justify-center gap-4 bg-white p-0 hover:bg-gray-100">
+            <h1 className="text-sm font-bold text-dark-500">Asistencia</h1>
+          </div>
+          <div className="flex w-full items-center  bg-white p-2 hover:bg-gray-100">
+            <h1 className="text-sm font-bold text-dark-500">Observaciones</h1>
+          </div>
+        </div>
         {athletes.map((athlete) => (
           <GroupAttendanceFormItem
             key={athlete.id}

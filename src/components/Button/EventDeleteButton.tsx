@@ -3,43 +3,41 @@ import { useState } from "react";
 import { TrashFillSVG } from "../SVG";
 import Confirm from "@components/Popover/Confirm";
 import { useToastStore } from "@store/toast";
-import { deleteGroup } from "@services/group";
 import Button from "@components/Button";
+import { deleteEvent } from "@services/event";
 
-const GroupDeleteButton: ({
-  group,
-  onConfirm,
+const EventDeleteButton: ({
+  event,
 }: {
-  group: Group;
-  onConfirm: () => void;
-}) => JSX.Element = ({ group, onConfirm }) => {
+  event: CalendarEvent;
+}) => JSX.Element = ({ event }) => {
   const { addToast } = useToastStore();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
+    if (isLoading) return;
     setIsLoading(true);
+
     try {
-      await deleteGroup(group.id);
+      await deleteEvent(event.id);
 
       addToast({
-        title: "Grupo Eliminado",
+        title: "Evento Eliminado",
       });
-      setShowConfirm(false);
-      onConfirm();
     } catch (error) {
       console.log(error);
     }
-
     setIsLoading(false);
   };
+
   return (
     <Confirm
       open={showConfirm}
       isLoading={isLoading}
       trigger={
-        <button type="button" onClick={() => setShowConfirm(!showConfirm)}>
+        <button onClick={() => setShowConfirm(!showConfirm)} type="button">
           <TrashFillSVG className="h-6 w-6 " />
         </button>
       }
@@ -48,7 +46,7 @@ const GroupDeleteButton: ({
           <div className="mb-4 text-center text-lg font-semibold">
             Confirmación
           </div>
-          <div className="text-center">¿Desea borrar el grupo?</div>
+          <div className="text-center">¿Desea borrar el evento?</div>
           <div className="text-center">Esta acción es irreversible</div>
           <div className="mt-4 flex gap-4">
             <Button
@@ -68,4 +66,4 @@ const GroupDeleteButton: ({
   );
 };
 
-export default GroupDeleteButton;
+export default EventDeleteButton;

@@ -1,7 +1,19 @@
-import { CalendarSVG, CrossSVG } from "@components/SVG";
+import { useState } from "react";
+import Button from "@components/Button";
+import {
+  CalendarSVG,
+  CrossSVG,
+  PencilSquareSVG,
+  PlusCircleDottedSVG,
+  TrashFillSVG,
+} from "@components/SVG";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
+import { useUserStore } from "@store/user";
 import dayjs from "@utils/dayjs";
+import { USER_ROLES } from "@utils/global";
+import CalendarTableBodyEventsModalViewContent from "./CalendarTableBodyEventsModalViewContent";
+import CalendarTableBodyEventsModalEditContent from "./CalendarTableBodyEventsModalEditContent";
 
 const CalendarTableBodyEventsModal: ({
   showModal,
@@ -12,28 +24,36 @@ const CalendarTableBodyEventsModal: ({
   onClose: () => void;
   events: CalendarEvent[];
 }) => JSX.Element = ({ showModal, onClose, events }) => {
+  const [isEditing, setIsEditing] = useState(false);
+  const [event, setEvent] = useState<CalendarEvent | null>(null);
+
+  const toggleEditing = (event: CalendarEvent | null) => {
+    setEvent(event);
+    setIsEditing(!isEditing);
+  };
+
   return (
     <Root open={showModal} onOpenChange={onClose}>
       <Portal>
         <Overlay className="modal-overlay" />
         <Content className="modal-content w-full max-w-xl">
-          <div className="flex justify-end">
-            <button onClick={onClose} type="button">
-              <CrossSVG className="h-6 w-6 stroke-dark-500" />
-            </button>
-          </div>
-          {events.map((event) => (
-            <div key={event.id} className="flex gap-4 rounded-md  p-4  ">
-              <CalendarSVG className="" />
-              <div>
-                <div className="font-semibold">{event.name}</div>
-                <div>{event.description}</div>
-                <div className="mt-1 text-sm capitalize text-gray-400">
-                  {dayjs(event.datetime).format("dddd DD [de] MMMM")}
-                </div>
-              </div>
-            </div>
-          ))}
+          {isEditing ? (
+            <>
+              {event ? (
+                <CalendarTableBodyEventsModalEditContent
+                  onClose={onClose}
+                  event={event}
+                  toggleEditing={toggleEditing}
+                />
+              ) : null}
+            </>
+          ) : (
+            <CalendarTableBodyEventsModalViewContent
+              onClose={onClose}
+              events={events}
+              toggleEditing={toggleEditing}
+            />
+          )}
         </Content>
       </Portal>
     </Root>

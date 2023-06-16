@@ -3,44 +3,48 @@ import { useState } from "react";
 import { TrashFillSVG } from "../SVG";
 import Confirm from "@components/Popover/Confirm";
 import { useToastStore } from "@store/toast";
-import { deleteGroup } from "@services/group";
 import Button from "@components/Button";
+import { deleteSchedule } from "@services/schedule";
 
-const GroupDeleteButton: ({
+const ScheduleDeleteButton: ({
   group,
-  onConfirm,
+  schedule,
 }: {
   group: Group;
-  onConfirm: () => void;
-}) => JSX.Element = ({ group, onConfirm }) => {
+  schedule: Schedule;
+}) => JSX.Element = ({ group, schedule }) => {
   const { addToast } = useToastStore();
 
   const [showConfirm, setShowConfirm] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleDelete = async () => {
+    if (isLoading) return;
     setIsLoading(true);
+
     try {
-      await deleteGroup(group.id);
+      await deleteSchedule(schedule.id, group.id);
 
       addToast({
-        title: "Grupo Eliminado",
+        title: "Horario Eliminado",
       });
-      setShowConfirm(false);
-      onConfirm();
     } catch (error) {
       console.log(error);
     }
-
     setIsLoading(false);
   };
+
   return (
     <Confirm
       open={showConfirm}
       isLoading={isLoading}
       trigger={
-        <button type="button" onClick={() => setShowConfirm(!showConfirm)}>
-          <TrashFillSVG className="h-6 w-6 " />
+        <button
+          type="button"
+          className="w-6 cursor-pointer text-red-600 transition-all hover:text-red-700"
+          onClick={() => setShowConfirm(!showConfirm)}
+        >
+          <TrashFillSVG className="h-full w-full" />
         </button>
       }
       content={
@@ -48,7 +52,7 @@ const GroupDeleteButton: ({
           <div className="mb-4 text-center text-lg font-semibold">
             Confirmación
           </div>
-          <div className="text-center">¿Desea borrar el grupo?</div>
+          <div className="text-center">¿Desea borrar el horario?</div>
           <div className="text-center">Esta acción es irreversible</div>
           <div className="mt-4 flex gap-4">
             <Button
@@ -68,4 +72,4 @@ const GroupDeleteButton: ({
   );
 };
 
-export default GroupDeleteButton;
+export default ScheduleDeleteButton;
