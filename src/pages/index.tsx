@@ -43,20 +43,19 @@ const Home: NextPage = () => {
           Nosotros
         </h1>
 
-        <div className="flex gap-4">
-          <div className="w-1/2 space-y-4 text-xl tracking-wide">
+        <div className="flex gap-8">
+          <div className="my-auto w-1/2 space-y-4 text-justify text-xl tracking-wide">
             <p>
-              Quienes Somos. Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit. Praesentium excepturi veritatis cupiditate quam totam,
-              debitis ipsa deserunt obcaecati earum fuga commodi ratione iure
-              veniam, id rem dicta nostrum perspiciatis repellat.
+              Somos una Academia de tenis dirigida a entusiastas del deporte que
+              buscan el lugar perfecto para jugar y entretenerse. Te acompañamos
+              desde la iniciación hasta la mas alta competencia con Guáramo y
+              Corazón.
             </p>
             <p>
-              Mision y Vision. Lorem ipsum dolor sit amet consectetur
-              adipisicing elit. Magni similique totam optio laborum, repudiandae
-              omnis debitis saepe voluptatum laudantium excepturi molestias!
-              Eveniet unde eaque eligendi, neque doloremque distinctio ullam
-              quam.
+              Tenemos por objeto fomentar, promover y desarrollar la práctica
+              del deporte en general y del tenis en especial, desde una temprana
+              edad hasta cualquier edad para que los practicantes vean en el
+              Tenis un estilo de vida y tengan opción a una vida saludable.
             </p>
           </div>
           <Image

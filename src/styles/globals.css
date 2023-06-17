@@ -230,3 +230,11 @@ button[class~="line-through"] {
     transform: translateX(0);
   }
 }
+
+.card-gradient {
+  background: linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 1) 25%,
+    rgba(241, 90, 37, 1) 25%
+  );
+}

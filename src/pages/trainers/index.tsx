@@ -26,8 +26,68 @@ const Trainers: NextPage = () => {
         </div>
       </section>
 
-      <section className="mx-auto w-full max-w-screen-xl p-8">
-        Lorem, ipsum.
+      <section className="mx-auto w-full max-w-screen-xl py-16 px-8">
+        <div className="my-16 grid grid-cols-2 gap-16">
+          <div className="mx-auto w-full max-w-md pb-24">
+            <div className="card-gradient mx-auto max-w-md pt-24">
+              <Image
+                className="mx-auto aspect-square h-80 w-80 object-cover"
+                src="/img/trainer/carlos-ferrer.png"
+                alt="carlos-ferrer"
+                width={380}
+                height={380}
+              />
+            </div>
+            <h1 className="mt-8 text-center font-display text-4xl font-semibold uppercase">
+              Carlos Ferrer
+            </h1>
+          </div>
+
+          <div className="mx-auto w-full max-w-md pb-24">
+            <div className="card-gradient mx-auto max-w-md pt-24">
+              <Image
+                className="mx-auto aspect-square h-80 w-80 object-cover"
+                src="/img/trainer/leandro-castillo.png"
+                alt="leandro-castillo"
+                width={380}
+                height={380}
+              />
+            </div>
+            <h1 className="mt-8 text-center font-display text-4xl font-semibold uppercase">
+              Leandro Castillo
+            </h1>
+          </div>
+
+          <div className="mx-auto w-full max-w-md pb-24">
+            <div className="card-gradient mx-auto max-w-md pt-24">
+              <Image
+                className="mx-auto aspect-square h-80 w-80 object-cover"
+                src="/img/trainer/keyler-carvajal.png"
+                alt="keyler-carvajal"
+                width={380}
+                height={380}
+              />
+            </div>
+            <h1 className="mt-8 text-center font-display text-4xl font-semibold uppercase">
+              Keyler Carvajal
+            </h1>
+          </div>
+
+          <div className="mx-auto w-full max-w-md pb-24">
+            <div className="card-gradient mx-auto max-w-md pt-24">
+              <Image
+                className="mx-auto aspect-square h-80 w-80 object-cover"
+                src="/img/trainer/ricardo-chacin.png"
+                alt="ricardo-chacin"
+                width={380}
+                height={380}
+              />
+            </div>
+            <h1 className="mt-8 text-center font-display text-4xl font-semibold uppercase">
+              Ricardo Chacín
+            </h1>
+          </div>
+        </div>
       </section>
     </Layout>
   );

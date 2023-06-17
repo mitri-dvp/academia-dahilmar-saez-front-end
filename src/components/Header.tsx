@@ -56,7 +56,7 @@ const Header: FC = () => {
 
           <div className="hidden flex-1 md:block">
             <Link className="ml-auto block w-max" href="/login">
-              <Button>Ingresar</Button>
+              <Button styles="px-12">Ingresar</Button>
             </Link>
           </div>
 

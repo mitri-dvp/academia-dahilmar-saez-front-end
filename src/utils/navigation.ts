@@ -28,12 +28,12 @@ export const navItems = [
     href: "/locations",
   },
   {
-    title: "Contacto",
-    href: "/contact",
-  },
-  {
     title: "Horarios",
     href: "/schedule",
+  },
+  {
+    title: "Contacto",
+    href: "/contact",
   },
 ];
 
