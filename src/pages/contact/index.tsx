@@ -49,6 +49,7 @@ const Contact: NextPage = () => {
       } catch (error) {
         // On Error
         handleError(error);
+        setSuccess(false);
       }
     },
   });
@@ -170,8 +171,8 @@ const Contact: NextPage = () => {
 
         <Button
           styles="w-full"
-          loading={Boolean(formik.isSubmitting)}
-          disabled={Boolean(formik.submitCount || formik.isSubmitting)}
+          loading={formik.isSubmitting}
+          disabled={success || formik.isSubmitting}
         >
           Enviar
         </Button>
