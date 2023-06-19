@@ -28,10 +28,6 @@ const Chats: NextPage = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  useEffect(() => {
-    socket.connect();
-  }, []);
-
   const handleChatSelect = async (chat: Chat) => {
     setChat(chat);
   };

@@ -4,16 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import {
-  BurgerSVG,
-  CrossSVG,
-  BellSVG,
-  PersonSVG,
-  LogOutSVG,
-} from "@components/SVG";
+import { BurgerSVG, CrossSVG, PersonSVG, LogOutSVG } from "@components/SVG";
 import { dashboardNavItems } from "@utils/navigation";
 import { useUserStore } from "@store/user";
 import { getImageURL } from "@utils/media";
+import NotificationsButton from "@components/Button/NotificationsButton";
 
 const DashboardHeader: FC = () => {
   // Open / Close Mobile Nav
@@ -103,11 +98,9 @@ const DashboardHeader: FC = () => {
         <div className="flex flex-1 gap-8 ">
           {getPageTitle(router.pathname)}
 
-          <div className="ml-auto">
-            <BellSVG className="h-6 w-6 cursor-pointer text-dark-500" />
-          </div>
+          <NotificationsButton />
 
-          <Link className="flex w-max gap-4" href="/dashboard/profile">
+          <Link className="w- flex gap-4" href="/dashboard/profile">
             {user.photo ? (
               <div className="relative my-auto h-6 w-11">
                 <Image
@@ -123,8 +116,8 @@ const DashboardHeader: FC = () => {
                 <PersonSVG className="aspect-square h-6 w-6" />
               </div>
             )}
-            <span className="font-display font-semibold uppercase tracking-wide">
-              {user.firstName} {user.lastName}
+            <span className="max-w-[100px] font-display font-semibold uppercase tracking-wide line-clamp-1">
+              {user.firstName} {user.lastName[0]}.
             </span>
           </Link>
         </div>

@@ -27,9 +27,12 @@ const Contact: NextPage = () => {
     },
     validationSchema: toFormikValidationSchema(
       z.object({
-        name: z.string({
-          required_error: "Introduzca un nombre",
-        }),
+        name: z
+          .string({
+            required_error: "Introduzca un nombre",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
         email: z
           .string({
             required_error: "Introduzca un email",

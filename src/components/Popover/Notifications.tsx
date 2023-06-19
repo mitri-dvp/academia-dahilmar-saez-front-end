@@ -1,26 +1,30 @@
+import { useState } from "react";
 import { Root, Trigger, Portal, Content, Arrow } from "@radix-ui/react-popover";
 import React from "react";
 import { SpinnerSVG } from "../SVG";
 
-const Confirm: ({
+const Notifications: ({
   open,
   isLoading,
+  onClose,
   trigger,
   content,
 }: {
   open: boolean;
   isLoading: boolean;
+  onClose: () => void;
   trigger: React.ReactNode;
   content: React.ReactNode;
-}) => JSX.Element = ({ open, isLoading, trigger, content }) => {
+}) => JSX.Element = ({ open, isLoading, onClose, trigger, content }) => {
   return (
     <Root open={open}>
       <Trigger asChild>{trigger}</Trigger>
       {open ? (
         <Portal>
           <Content
-            className="PopoverContent z-50 border bg-white p-4 shadow-lg"
+            className="PopoverContent z-50 w-64 border bg-white p-1 shadow-lg outline-none"
             sideOffset={6}
+            onBlur={onClose}
           >
             {isLoading ? (
               <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
@@ -35,4 +39,4 @@ const Confirm: ({
   );
 };
 
-export default Confirm;
+export default Notifications;

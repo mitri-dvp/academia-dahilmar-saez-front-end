@@ -29,8 +29,8 @@ const Home: NextPage = () => {
             Academia Dahilmar Saez
           </h1>
           <p className="mb-4">“Guáramo y Corazón“</p>
-          <Link href="/schedule">
-            <Button styles="mx-auto ">Consigue tu clase gratuita</Button>
+          <Link href="/login">
+            <Button styles="mx-auto px-16">Ingresar</Button>
           </Link>
         </div>
       </section>

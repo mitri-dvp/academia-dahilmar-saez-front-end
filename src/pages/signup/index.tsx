@@ -37,12 +37,18 @@ const Signup: NextPage = () => {
     },
     validationSchema: toFormikValidationSchema(
       z.object({
-        firstName: z.string({
-          required_error: "Introduzca un nombre",
-        }),
-        lastName: z.string({
-          required_error: "Introduzca un apellido",
-        }),
+        firstName: z
+          .string({
+            required_error: "Introduzca un nombre",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
+        lastName: z
+          .string({
+            required_error: "Introduzca un apellido",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
         documentID: z.coerce
           .number({
             required_error: "Introduzca una cédula",
@@ -144,7 +150,7 @@ const Signup: NextPage = () => {
 
       <form
         onSubmit={formik.handleSubmit}
-        className="mx-auto mt-40 w-full max-w-sm space-y-8 px-4 py-8"
+        className="mx-auto my-40 w-full max-w-sm space-y-8 px-4 py-8"
       >
         <h1 className="text-lg font-bold">Crea tu cuenta</h1>
 

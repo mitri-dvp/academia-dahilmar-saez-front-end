@@ -4,6 +4,8 @@ const useScrollPosition = () => {
   const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
+    setScrollY(window.pageYOffset);
+
     const onScroll = () => setScrollY(window.pageYOffset);
 
     window.addEventListener("scroll", onScroll);

@@ -34,6 +34,7 @@ const GroupDeleteButton: ({
 
     setIsLoading(false);
   };
+
   return (
     <Confirm
       open={showConfirm}

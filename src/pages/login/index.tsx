@@ -76,7 +76,7 @@ const Login: NextPage = () => {
 
       <form
         onSubmit={formik.handleSubmit}
-        className="mx-auto mt-40 w-full max-w-sm space-y-8 px-4"
+        className="mx-auto my-40 w-full max-w-sm space-y-8 px-4 py-8"
       >
         <h1 className="text-lg font-bold">Ingresa a tu cuenta</h1>
 

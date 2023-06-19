@@ -37,9 +37,12 @@ const GroupModalEditContent: ({
     },
     validationSchema: toFormikValidationSchema(
       z.object({
-        name: z.string({
-          required_error: "Introduzca un nombre",
-        }),
+        name: z
+          .string({
+            required_error: "Introduzca un nombre",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
         description: z.string({
           required_error: "Introduzca una descripción",
         }),

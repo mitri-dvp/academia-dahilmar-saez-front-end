@@ -5,9 +5,10 @@ import { useRouter } from "next/router";
 import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import DashboardFooter from "@components/Dashboard/DashboardFooter";
 import { useUserStore } from "@store/user";
+import { socket } from "@lib/socket";
 
 const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
-  const { user } = useUserStore();
+  const { user, token } = useUserStore();
   const router = useRouter();
 
   const checkRoleRedirect = useCallback(() => {
@@ -19,6 +20,10 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
   useEffect(() => {
     checkRoleRedirect();
   }, [checkRoleRedirect]);
+
+  useEffect(() => {
+    if (token) socket.connect();
+  }, [router, token]);
 
   if (user.role.type !== "") {
     return (

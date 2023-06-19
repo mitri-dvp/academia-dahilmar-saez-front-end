@@ -160,8 +160,6 @@ button[class~="line-through"] {
 .PopoverContent {
   z-index: 1000;
   border-radius: 4px;
-  padding: 20px;
-  width: 260px;
   animation-duration: 400ms;
   animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;

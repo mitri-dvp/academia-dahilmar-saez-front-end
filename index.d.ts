@@ -60,6 +60,19 @@ type Message = {
   updatedAt: string;
 };
 
+type UserNotification = {
+  id: number;
+  read: boolean;
+  // actor: User;
+  // notifiers: User[];
+  message: string;
+  entity: string;
+  entityID: string;
+  action: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
 type UserID = {
   id: number;
 };

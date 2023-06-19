@@ -46,12 +46,18 @@ const Profile: NextPage = () => {
     },
     validationSchema: toFormikValidationSchema(
       z.object({
-        firstName: z.string({
-          required_error: "Introduzca un nombre",
-        }),
-        lastName: z.string({
-          required_error: "Introduzca un apellido",
-        }),
+        firstName: z
+          .string({
+            required_error: "Introduzca un nombre",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
+        lastName: z
+          .string({
+            required_error: "Introduzca un apellido",
+          })
+          .min(0, "Introduzca un nombre")
+          .max(50, "Longitud máxima superada"),
         documentID: z.coerce
           .number({
             required_error: "Introduzca una cédula",
