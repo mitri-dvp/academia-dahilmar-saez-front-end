@@ -7,6 +7,7 @@ type EditValues = {
   documentID: string;
   dateOfBirth: string;
   email: string;
+  phone: string;
 };
 
 export const edit = async (editValues: EditValues) => {

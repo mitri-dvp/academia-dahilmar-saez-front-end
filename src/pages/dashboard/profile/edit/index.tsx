@@ -43,6 +43,7 @@ const Profile: NextPage = () => {
       documentID: user.documentID,
       dateOfBirth: dayjs(user.dateOfBirth).toDate(),
       email: user.email,
+      phone: user.phone,
     },
     validationSchema: toFormikValidationSchema(
       z.object({
@@ -82,6 +83,9 @@ const Profile: NextPage = () => {
             required_error: "Introduzca un email",
           })
           .email("Introduzca un email válido"),
+        phone: z.string({
+          required_error: "Introduzca un teléfono",
+        }),
       })
     ),
     onSubmit: async (values) => {
@@ -383,29 +387,56 @@ const Profile: NextPage = () => {
               </div>
             </div>
 
-            <div>
-              <div className="relative z-0">
-                <input
-                  type="text"
-                  id="email"
-                  className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
-                  placeholder=" "
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                />
-                <label
-                  htmlFor="email"
-                  className="peer-focus:dark:text-sering-secondary-300 absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
-                >
-                  Email
-                </label>
+            <div className="flex gap-4">
+              <div className="w-1/2">
+                <div className="relative z-0">
+                  <input
+                    type="text"
+                    id="email"
+                    className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
+                    placeholder=" "
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <label
+                    htmlFor="email"
+                    className="peer-focus:dark:text-sering-secondary-300 absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                  >
+                    Email
+                  </label>
+                </div>
+                <p className="mt-2 text-xs text-red-500">
+                  {formik.touched.email && Boolean(formik.errors.email)
+                    ? formik.errors.email
+                    : "\xA0"}
+                </p>
               </div>
-              <p className="mt-2 text-xs text-red-500">
-                {formik.touched.email && Boolean(formik.errors.email)
-                  ? formik.errors.email
-                  : "\xA0"}
-              </p>
+
+              <div className="w-1/2">
+                <div className="relative z-0">
+                  <input
+                    type="text"
+                    id="phone"
+                    className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
+                    placeholder=" "
+                    value={formik.values.phone}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                  />
+                  <label
+                    htmlFor="phone"
+                    className="peer-focus:dark:text-sering-secondary-300 absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                  >
+                    Teléfono
+                  </label>
+                </div>
+                <p className="mt-2 text-xs text-red-500">
+                  {formik.touched.phone && Boolean(formik.errors.phone)
+                    ? formik.errors.phone
+                    : "\xA0"}
+                </p>
+              </div>
             </div>
 
             <div className="flex gap-4">

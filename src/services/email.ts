@@ -3,6 +3,7 @@ import { publicApi } from "@utils/http";
 type EmailData = {
   name: string;
   email: string;
+  phone: string;
   message: string;
 };
 

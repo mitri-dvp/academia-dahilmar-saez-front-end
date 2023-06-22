@@ -5,6 +5,7 @@ module.exports = {
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
     "./pages/**/*.{ts,tsx}",
+    "./node_modules/flowbite/**/*.{js,ts,jsx,tsx}",
     "./public/**/*.html",
   ],
   theme: {
@@ -49,6 +50,7 @@ module.exports = {
   },
   plugins: [
     require("@tailwindcss/line-clamp"),
+    require("flowbite/plugin"),
     require("tailwindcss-animated"),
   ],
 };

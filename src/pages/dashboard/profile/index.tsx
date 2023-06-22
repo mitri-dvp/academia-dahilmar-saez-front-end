@@ -69,14 +69,26 @@ const Profile: NextPage = () => {
               </div>
             </div>
 
-            <div>
-              <h1 className="text-sm font-bold text-dark-500">Email</h1>
-              <Link
-                href={`mailto:${user.email}`}
-                className="mb-2 w-full text-secondary-700 hover:underline"
-              >
-                {user.email}
-              </Link>
+            <div className="flex gap-4">
+              <div className="w-1/2">
+                <h1 className="text-sm font-bold text-dark-500">Email</h1>
+                <Link
+                  href={`mailto:${user.email}`}
+                  className="mb-2 w-full text-secondary-700 hover:underline"
+                >
+                  {user.email}
+                </Link>
+              </div>
+
+              <div className="w-1/2">
+                <h1 className="text-sm font-bold text-dark-500">Teléfono</h1>
+                <Link
+                  href={`tel:${user.phone}`}
+                  className="mb-2 w-full text-secondary-700 hover:underline"
+                >
+                  {user.phone}
+                </Link>
+              </div>
             </div>
 
             <Link

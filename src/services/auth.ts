@@ -9,6 +9,7 @@ type SignupValues = {
   documentID: string;
   dateOfBirth: Date;
   email: string;
+  phone: string;
   password: string;
   role: string;
 };
