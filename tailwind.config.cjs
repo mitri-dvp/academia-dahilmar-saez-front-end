@@ -4,7 +4,6 @@ module.exports = {
   content: [
     "./src/**/*.{js,ts,jsx,tsx}",
     "./node_modules/react-tailwindcss-datepicker/dist/index.esm.js",
-    "./node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
     "./pages/**/*.{ts,tsx}",
     "./public/**/*.html",
   ],
@@ -34,11 +33,22 @@ module.exports = {
       transitionDuration: {
         DEFAULT: "300ms",
       },
+      keyframes: {
+        "fade-down": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(-0.25rem)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+      },
     },
   },
   plugins: [
     require("@tailwindcss/line-clamp"),
-    require("flowbite/plugin"),
     require("tailwindcss-animated"),
   ],
 };

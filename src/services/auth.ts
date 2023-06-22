@@ -7,7 +7,7 @@ type SignupValues = {
   firstName: string;
   lastName: string;
   documentID: string;
-  dateOfBirth: string;
+  dateOfBirth: Date;
   email: string;
   password: string;
   role: string;

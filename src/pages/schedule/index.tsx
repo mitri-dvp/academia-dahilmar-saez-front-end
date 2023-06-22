@@ -15,6 +15,7 @@ const Schedule: NextPage = () => {
 
       <section className="relative w-full">
         <Image
+          className="pt-28"
           src={"/img/hero-bg.jpg"}
           alt="hero-image"
           width={1800}

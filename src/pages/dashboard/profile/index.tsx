@@ -10,6 +10,7 @@ import { PersonSVG } from "@components/SVG";
 import { useUserStore } from "@store/user";
 
 import { getImageURL } from "@utils/media";
+import dayjs from "@utils/dayjs";
 
 const Profile: NextPage = () => {
   const { user } = useUserStore();
@@ -63,7 +64,7 @@ const Profile: NextPage = () => {
                   Fecha de Nacimiento
                 </h1>
                 <div className="mb-2 w-full text-dark-500">
-                  {user.dateOfBirth}
+                  {dayjs(user.dateOfBirth).format("DD/MM/YYYY")}
                 </div>
               </div>
             </div>

@@ -18,10 +18,8 @@ const Header: FC = () => {
 
   return (
     <header
-      className={`fixed z-20 w-full text-dark-500 transition ${
+      className={`fixed z-20 w-full bg-white text-dark-500 shadow-sm transition ${
         open ? "bg-white transition-none" : ""
-      } ${
-        scrollPosition > 0 ? "bg-white shadow-lg" : "bg-transparent text-white"
       }`}
     >
       <div className="mx-auto w-full max-w-screen-xl px-8">

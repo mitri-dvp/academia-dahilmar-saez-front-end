@@ -7,30 +7,30 @@ import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
 import { signup } from "@services/auth";
-import { USER_ROLES } from "@utils/global";
+import { USER_ROLES, removeFocus } from "@utils/global";
 import { attributeToLabel } from "@utils/i18n";
 
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import type { DateValueType } from "react-tailwindcss-datepicker/dist/types";
-import Datepicker from "react-tailwindcss-datepicker";
 import dayjs from "@utils/dayjs";
 import type { AxiosError } from "axios";
 import axios from "axios";
+import { useState, useRef } from "react";
+import DateInput from "@components/DateInput";
 
 const Signup: NextPage = () => {
   const router = useRouter();
+
+  const [showCalendarInput, setShowCalendarInput] = useState(false);
+  const dateRef = useRef<HTMLInputElement>(null);
 
   const formik = useFormik({
     initialValues: {
       firstName: "",
       lastName: "",
       documentID: "",
-      dateOfBirth: {
-        startDate: null,
-        endDate: null,
-      },
+      dateOfBirth: undefined,
       email: "",
       password: "",
       role: USER_ROLES.ATHLETE,
@@ -55,27 +55,19 @@ const Signup: NextPage = () => {
             invalid_type_error: "Introduzca una cédula válida",
           })
           .positive("Introduzca una cédula válida")
-          .int("Introduzca una cédula válida"),
-        dateOfBirth: z.object({
-          startDate: z
-            .string({
-              required_error: "Introduzca una fecha",
-              invalid_type_error: "Introduzca una fecha válida",
-            })
-            .regex(
-              /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
-              "Introduzca una fecha válida"
-            ),
-          endDate: z
-            .string({
-              required_error: "Introduzca una fecha",
-              invalid_type_error: "Introduzca una fecha válida",
-            })
-            .regex(
-              /(\d{1,4}(\/|-)\d{1,2}(\/|-)\d{1,2})/gm,
-              "Introduzca una fecha válida"
-            ),
-        }),
+          .int("Introduzca una cédula válida")
+          .min(0, "Introduzca una cédula")
+          .max(1000000000000, "Longitud máxima superada"),
+        dateOfBirth: z
+          .date({
+            errorMap: () => ({ message: "Ingrese una fecha válida" }),
+          })
+          .min(dayjs().subtract(85, "years").toDate(), {
+            message: "Muy mayor para registrarse",
+          })
+          .max(dayjs().subtract(3, "years").toDate(), {
+            message: "Muy jóven para registrarse",
+          }),
         email: z
           .string({
             required_error: "Introduzca un email",
@@ -95,7 +87,7 @@ const Signup: NextPage = () => {
       const signupValues = {
         ...values,
         documentID: String(values.documentID),
-        dateOfBirth: dayjs(values.dateOfBirth.startDate).format("YYYY-MM-DD"),
+        dateOfBirth: dayjs(values.dateOfBirth).toDate(),
       };
 
       try {
@@ -233,42 +225,70 @@ const Signup: NextPage = () => {
           </p>
         </div>
 
-        <div className="z-1 group relative" tabIndex={-1}>
-          <Datepicker
-            primaryColor={"orange"}
-            containerClassName="group"
-            toggleClassName="text-dark-500 pr-0"
-            inputClassName="text-base font-normal text-dark-500 group rounded-none outline-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 pl-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white dark:focus:border-sering-secondary-300"
-            inputId="dateOfBirth"
-            inputName="dateOfBirth"
-            value={formik.values.dateOfBirth}
-            onChange={(newDate: DateValueType) => {
-              formik.setFieldValue("dateOfBirth", newDate);
-            }}
-            asSingle={true}
-            maxDate={new Date()}
-            useRange={false}
-            toggleIcon={() => <DatepickerSVG className="h-5 w-5" />}
-            displayFormat="DD/MM/YYYY"
-            placeholder=" "
-            i18n="es"
-            readOnly
-          />
-          <label
-            htmlFor="dateOfBirth"
-            onBlur={formik.handleBlur}
-            className={`group-focus:dark:text-sering-secondary-300 absolute top-3 origin-[0] translate-y-0 transform text-base text-dark-500 duration-300 group-focus-within:-translate-y-6 group-focus-within:scale-75 group-focus-within:text-secondary-500 group-focus:left-0 group-focus:-translate-y-6 group-focus:scale-75 dark:text-dark-500 ${
-              formik.values.dateOfBirth &&
-              formik.values.dateOfBirth.startDate === null
-                ? "translate-y-0 scale-100"
-                : "-translate-y-6 scale-75"
-            }`}
-          >
-            Fecha de Nacimiento
-          </label>
+        <div className="w-full">
+          <div className="relative">
+            <div className="relative z-0">
+              <input
+                ref={dateRef}
+                id="dateOfBirth"
+                type="text"
+                className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 capitalize text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
+                placeholder=" "
+                onChange={(e) => {
+                  if (e.target.value === "") {
+                    return formik.setFieldValue("dateOfBirth", undefined);
+                  }
+                  formik.setFieldValue(
+                    "dateOfBirth",
+                    dayjs(e.target.value, "DD/MM/YYYY").toDate()
+                  );
+                }}
+                onBlur={(e) => {
+                  formik.handleBlur(e);
+                  setShowCalendarInput(false);
+                }}
+                onFocus={() => {
+                  setShowCalendarInput(true);
+                }}
+              />
+              <label
+                htmlFor="dateOfBirth"
+                className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+              >
+                Fecha de Nacimiento
+              </label>
+              <label
+                htmlFor="dateOfBirth"
+                className="peer-focus:text-secondary-500"
+              >
+                <DatepickerSVG className="absolute bottom-2 right-0 h-5 w-5" />
+              </label>
+            </div>
+
+            <div onMouseDown={(e) => e.preventDefault()}>
+              {showCalendarInput ? (
+                <DateInput
+                  selectedDate={dayjs(formik.values.dateOfBirth).toDate()}
+                  onChange={(date: Date) => {
+                    removeFocus();
+                    formik.setFieldValue("dateOfBirth", date);
+                    if (dateRef.current) {
+                      dateRef.current.value = dayjs(date).format("DD/MM/YYYY");
+                    }
+                  }}
+                  onClear={() => {
+                    formik.setFieldValue("dateOfBirth", undefined);
+                    if (dateRef.current) {
+                      dateRef.current.value = "";
+                    }
+                  }}
+                />
+              ) : null}
+            </div>
+          </div>
           <p className="mt-2 text-xs text-red-500">
             {formik.touched.dateOfBirth && Boolean(formik.errors.dateOfBirth)
-              ? formik.errors.dateOfBirth?.startDate
+              ? String(formik.errors.dateOfBirth)
               : "\xA0"}
           </p>
         </div>
