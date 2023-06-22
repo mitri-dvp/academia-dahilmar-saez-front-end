@@ -4,24 +4,24 @@ import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 
-import Seo from "@components/Seo";
-import DashboardLayout from "@components/Dashboard/DashboardLayout";
-import Button from "@components/Button";
-
-import { DatepickerSVG, PersonSVG } from "@components/SVG";
-import { edit, photoUpload, photoDelete } from "@services/user";
-import { useUserStore } from "@store/user";
-import { attributeToLabel } from "@utils/i18n";
-import { getImageURL } from "@utils/media";
-
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import dayjs from "@lib/dayjs";
 import type { AxiosError } from "axios";
-import axios from "axios";
-import { useToastStore } from "@store/toast";
+import { isAxiosError } from "axios";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+
+import Seo from "@components/Seo";
+import DashboardLayout from "@components/Dashboard/DashboardLayout";
+import Button from "@components/Button";
+import { DatepickerSVG, PersonSVG } from "@components/SVG";
 import DateInput from "@components/DateInput";
+import { edit, photoUpload, photoDelete } from "@services/user";
+import { useUserStore } from "@store/user";
+import { useToastStore } from "@store/toast";
+import { attributeToLabel } from "@utils/i18n";
+import { getImageURL } from "@utils/media";
+import dayjs from "@lib/dayjs";
 import { removeFocus } from "@utils/global";
 
 const Profile: NextPage = () => {
@@ -83,9 +83,15 @@ const Profile: NextPage = () => {
             required_error: "Introduzca un email",
           })
           .email("Introduzca un email válido"),
-        phone: z.string({
-          required_error: "Introduzca un teléfono",
-        }),
+        phone: z
+          .string({
+            required_error: "Introduzca un teléfono",
+          })
+          .refine((phone) => {
+            const parsedPhone = parsePhoneNumberFromString(phone, "VE");
+
+            return parsedPhone && parsedPhone.isValid();
+          }, "Introduzca un teléfono válido"),
       })
     ),
     onSubmit: async (values) => {
@@ -115,7 +121,7 @@ const Profile: NextPage = () => {
   };
 
   const handleError = (error: unknown | AxiosError) => {
-    if (axios.isAxiosError(error)) {
+    if (isAxiosError(error)) {
       // Access to config, request, and response
       if (error.response && error.response.data.error) {
         for (
@@ -420,9 +426,45 @@ const Profile: NextPage = () => {
                     id="phone"
                     className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
                     placeholder=" "
-                    value={formik.values.phone}
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
+                    defaultValue={formik.values.phone}
+                    onChange={(e) => {
+                      const parsedPhone = parsePhoneNumberFromString(
+                        e.target.value,
+                        "VE"
+                      );
+
+                      if (parsedPhone && parsedPhone.isValid()) {
+                        if (parsedPhone.country === "VE") {
+                          formik.setFieldValue(
+                            "phone",
+                            parsedPhone.formatNational()
+                          );
+                        } else {
+                          formik.setFieldValue(
+                            "phone",
+                            parsedPhone.formatInternational()
+                          );
+                        }
+                      } else {
+                        formik.setFieldValue("phone", e.target.value);
+                      }
+                    }}
+                    onBlur={(e) => {
+                      const parsedPhone = parsePhoneNumberFromString(
+                        e.target.value,
+                        "VE"
+                      );
+
+                      if (parsedPhone && parsedPhone.isValid()) {
+                        if (parsedPhone.country === "VE") {
+                          e.target.value = parsedPhone.formatNational();
+                        } else {
+                          e.target.value = parsedPhone.formatInternational();
+                        }
+                      }
+
+                      formik.handleBlur(e);
+                    }}
                   />
                   <label
                     htmlFor="phone"

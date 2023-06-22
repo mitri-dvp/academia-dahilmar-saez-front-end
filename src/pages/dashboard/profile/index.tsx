@@ -2,6 +2,7 @@ import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
 
+import { parsePhoneNumber } from "libphonenumber-js";
 import Seo from "@components/Seo";
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Button from "@components/Button";
@@ -83,7 +84,7 @@ const Profile: NextPage = () => {
               <div className="w-1/2">
                 <h1 className="text-sm font-bold text-dark-500">Teléfono</h1>
                 <Link
-                  href={`tel:${user.phone}`}
+                  href={parsePhoneNumber(user.phone, "VE").getURI()}
                   className="mb-2 w-full text-secondary-700 hover:underline"
                 >
                   {user.phone}

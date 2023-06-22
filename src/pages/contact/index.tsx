@@ -1,18 +1,19 @@
+import { useState } from "react";
 import type { NextPage } from "next";
 import Image from "next/image";
+
+import type { AxiosError } from "axios";
+import { isAxiosError } from "axios";
+import { useFormik } from "formik";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import { z } from "zod";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
 import Button from "@components/Button";
-
-import { useFormik } from "formik";
-import { toFormikValidationSchema } from "zod-formik-adapter";
-import { z } from "zod";
 import { sendEmail } from "@services/email";
-import type { AxiosError } from "axios";
-import { isAxiosError } from "axios";
 import { useToastStore } from "@store/toast";
-import { useState } from "react";
 
 const Contact: NextPage = () => {
   const { addToast } = useToastStore();
@@ -42,9 +43,15 @@ const Contact: NextPage = () => {
         message: z.string({
           required_error: "Introduzca un mensaje",
         }),
-        phone: z.string({
-          required_error: "Introduzca un teléfono",
-        }),
+        phone: z
+          .string({
+            required_error: "Introduzca un teléfono",
+          })
+          .refine((phone) => {
+            const parsedPhone = parsePhoneNumberFromString(phone, "VE");
+
+            return parsedPhone && parsedPhone.isValid();
+          }, "Introduzca un teléfono válido"),
       })
     ),
     onSubmit: async (values) => {
@@ -159,9 +166,41 @@ const Contact: NextPage = () => {
               id="phone"
               className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
               placeholder=" "
-              value={formik.values.phone}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              onChange={(e) => {
+                const parsedPhone = parsePhoneNumberFromString(
+                  e.target.value,
+                  "VE"
+                );
+
+                if (parsedPhone && parsedPhone.isValid()) {
+                  if (parsedPhone.country === "VE") {
+                    formik.setFieldValue("phone", parsedPhone.formatNational());
+                  } else {
+                    formik.setFieldValue(
+                      "phone",
+                      parsedPhone.formatInternational()
+                    );
+                  }
+                } else {
+                  formik.setFieldValue("phone", e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                const parsedPhone = parsePhoneNumberFromString(
+                  e.target.value,
+                  "VE"
+                );
+
+                if (parsedPhone && parsedPhone.isValid()) {
+                  if (parsedPhone.country === "VE") {
+                    e.target.value = parsedPhone.formatNational();
+                  } else {
+                    e.target.value = parsedPhone.formatInternational();
+                  }
+                }
+
+                formik.handleBlur(e);
+              }}
             />
             <label
               htmlFor="phone"

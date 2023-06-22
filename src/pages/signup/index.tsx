@@ -1,23 +1,24 @@
+import { useState, useRef } from "react";
 import type { NextPage } from "next";
 import Link from "next/link";
 import { useRouter } from "next/router";
+
+import { useFormik } from "formik";
+import { z } from "zod";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+import type { AxiosError } from "axios";
+import { isAxiosError } from "axios";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 import Seo from "@components/Seo";
 import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
+import DateInput from "@components/DateInput";
 import { signup } from "@services/auth";
 import { USER_ROLES, removeFocus } from "@utils/global";
 import { attributeToLabel } from "@utils/i18n";
-
-import { useFormik } from "formik";
-import { z } from "zod";
-import { toFormikValidationSchema } from "zod-formik-adapter";
 import dayjs from "@lib/dayjs";
-import type { AxiosError } from "axios";
-import axios from "axios";
-import { useState, useRef } from "react";
-import DateInput from "@components/DateInput";
 
 const Signup: NextPage = () => {
   const router = useRouter();
@@ -74,9 +75,15 @@ const Signup: NextPage = () => {
             required_error: "Introduzca un email",
           })
           .email("Introduzca un email válido"),
-        phone: z.string({
-          required_error: "Introduzca un teléfono",
-        }),
+        phone: z
+          .string({
+            required_error: "Introduzca un teléfono",
+          })
+          .refine((phone) => {
+            const parsedPhone = parsePhoneNumberFromString(phone, "VE");
+
+            return parsedPhone && parsedPhone.isValid();
+          }, "Introduzca un teléfono válido"),
         password: z
           .string({
             required_error: "Introduzca una contraseña",
@@ -111,7 +118,7 @@ const Signup: NextPage = () => {
   };
 
   const handleError = (error: unknown | AxiosError) => {
-    if (axios.isAxiosError(error)) {
+    if (isAxiosError(error)) {
       // Access to config, request, and response
       if (error.response && error.response.data.error) {
         for (
@@ -329,9 +336,41 @@ const Signup: NextPage = () => {
               id="phone"
               className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
               placeholder=" "
-              value={formik.values.phone}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
+              onChange={(e) => {
+                const parsedPhone = parsePhoneNumberFromString(
+                  e.target.value,
+                  "VE"
+                );
+
+                if (parsedPhone && parsedPhone.isValid()) {
+                  if (parsedPhone.country === "VE") {
+                    formik.setFieldValue("phone", parsedPhone.formatNational());
+                  } else {
+                    formik.setFieldValue(
+                      "phone",
+                      parsedPhone.formatInternational()
+                    );
+                  }
+                } else {
+                  formik.setFieldValue("phone", e.target.value);
+                }
+              }}
+              onBlur={(e) => {
+                const parsedPhone = parsePhoneNumberFromString(
+                  e.target.value,
+                  "VE"
+                );
+
+                if (parsedPhone && parsedPhone.isValid()) {
+                  if (parsedPhone.country === "VE") {
+                    e.target.value = parsedPhone.formatNational();
+                  } else {
+                    e.target.value = parsedPhone.formatInternational();
+                  }
+                }
+
+                formik.handleBlur(e);
+              }}
             />
             <label
               htmlFor="phone"
