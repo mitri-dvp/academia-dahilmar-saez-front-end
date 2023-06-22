@@ -101,9 +101,6 @@ const DateInput: ({
                   {showMonthSelect ? (
                     <div
                       ref={monthRef}
-                      onBlur={(e) => {
-                        console.log(e);
-                      }}
                       className="absolute top-10 -left-0 max-h-full w-full overflow-y-scroll border border-t-0 bg-white text-center shadow-sm"
                     >
                       {calendarMonths.map((_, i) => (
@@ -135,9 +132,6 @@ const DateInput: ({
                   {showYearSelect ? (
                     <div
                       ref={yearRef}
-                      onBlur={(e) => {
-                        console.log(e);
-                      }}
                       className="absolute top-10 -left-0 max-h-full w-full overflow-y-scroll border border-t-0 bg-white text-center shadow-sm"
                     >
                       {calendarYears.map((_, i) => (

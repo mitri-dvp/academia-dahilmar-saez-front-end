@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { NextPage } from "next";
 
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
@@ -30,6 +30,22 @@ const AttendanceAthlete: NextPage = () => {
   }, []);
 
   const [initialDate, setInitialDate] = useState(dayjs());
+  const [showMonthSelect, setShowMonthSelect] = useState(false);
+  const [showYearSelect, setShowYearSelect] = useState(false);
+  const monthRef = useRef<HTMLDivElement>(null);
+  const yearRef = useRef<HTMLDivElement>(null);
+
+  const calendarDays = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+  const calendarMonths = Array.from(Array(12));
+  const calendarYears = Array.from(Array(80));
 
   const startDayOfMonth = initialDate.startOf("month").get("day");
   const startDate = initialDate
@@ -39,16 +55,48 @@ const AttendanceAthlete: NextPage = () => {
   const handleDateReset = () => {
     setInitialDate(dayjs());
   };
-
   const handleDateIncrement = () => {
     setInitialDate(initialDate.add(1, "month"));
   };
   const handleDateDecrement = () => {
     setInitialDate(initialDate.subtract(1, "month"));
   };
+  const handleMonthSelect = (i: number) => {
+    setInitialDate(initialDate.set("month", i));
+    setShowMonthSelect(false);
+  };
+  const handleYearSelect = (year: number) => {
+    setInitialDate(initialDate.set("year", year));
+    setShowYearSelect(false);
+  };
+
+  const handleShowMonthSelect = () => {
+    setShowMonthSelect(!showMonthSelect);
+    setShowYearSelect(false);
+  };
+
+  const handleShowYearSelect = () => {
+    setShowYearSelect(!showYearSelect);
+    setShowMonthSelect(false);
+  };
 
   const renderTableBody = () => {
     let currentDate = startDate;
+
+    if (attendances.length === 0)
+      return (
+        <tbody>
+          <tr>
+            <td
+              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-2xl font-semibold uppercase"
+              colSpan={8}
+            >
+              Asistencias no encontradas
+            </td>
+          </tr>
+        </tbody>
+      );
+
     const weeks: JSX.Element[] = [];
     for (let i = 0; i < 6; i++) {
       const week: JSX.Element[] = [];
@@ -113,22 +161,88 @@ const AttendanceAthlete: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="w-max bg-white p-16 shadow-lg">
+        <div className="relative w-max bg-white p-16 shadow-lg">
           <div className="flex">
             <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
-              {initialDate.format("MMMM YYYY")}
+              <div className="flex gap-4">
+                <div className="cursor-pointer font-display font-semibold uppercase">
+                  <span
+                    className="transition-all hover:text-secondary-500"
+                    onClick={handleShowMonthSelect}
+                  >
+                    {initialDate.format("MMMM")}
+                  </span>
+                  {showMonthSelect ? (
+                    <div
+                      ref={monthRef}
+                      onBlur={() => setShowMonthSelect(false)}
+                      className="absolute top-36 left-16 grid max-h-full w-[calc(100%-128px)] grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                    >
+                      <button autoFocus className="absolute" />
+                      {calendarMonths.map((_, i) => (
+                        <div
+                          key={i}
+                          className={`p-5 text-2xl transition-all hover:bg-gray-100 ${
+                            initialDate.get("month") === i
+                              ? "text-secondary-500"
+                              : ""
+                          }`}
+                          onMouseDown={() => handleMonthSelect(i)}
+                        >
+                          {dayjs().set("month", i).format("MMMM").slice(0, 3)}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+                <div className="cursor-pointer font-display font-semibold uppercase transition-all">
+                  <span
+                    className="transition-all hover:text-secondary-500"
+                    onClick={handleShowYearSelect}
+                  >
+                    {initialDate.format("YYYY")}
+                  </span>
+                  {showYearSelect ? (
+                    <div
+                      ref={yearRef}
+                      onBlur={() => setShowYearSelect(false)}
+                      className="absolute top-36 left-16 grid max-h-full w-[calc(100%-128px)] grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                    >
+                      <button autoFocus className="absolute" />
+                      {calendarYears.map((_, i) => (
+                        <div
+                          key={i}
+                          className={`p-5 text-2xl transition-all hover:bg-gray-100 ${
+                            initialDate.get("year") ===
+                            dayjs().subtract(i, "years").get("year")
+                              ? "text-secondary-500"
+                              : ""
+                          }`}
+                          onMouseDown={() =>
+                            handleYearSelect(
+                              dayjs().subtract(i, "years").get("year")
+                            )
+                          }
+                        >
+                          {dayjs().subtract(i, "years").format("YYYY")}
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              </div>
             </h1>
             <div className="ml-auto flex items-center justify-center gap-2">
               <div onClick={handleDateDecrement}>
-                <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
+                <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700" />
               </div>
               <div onClick={handleDateReset}>
-                <span className="cursor-pointer font-display text-4xl font-semibold uppercase">
+                <span className="cursor-pointer font-display text-4xl font-semibold uppercase transition-all hover:text-secondary-500">
                   Hoy
                 </span>
               </div>
               <div onClick={handleDateIncrement}>
-                <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500" />
+                <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700" />
               </div>
             </div>
           </div>
@@ -140,15 +254,7 @@ const AttendanceAthlete: NextPage = () => {
             <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
               <thead className="rounded-full text-white">
                 <tr>
-                  {[
-                    "Domingo",
-                    "Lunes",
-                    "Martes",
-                    "Miércoles",
-                    "Jueves",
-                    "Viernes",
-                    "Sábado",
-                  ].map((day) => (
+                  {calendarDays.map((day) => (
                     <th key={day} className="rounded-md bg-secondary-500 p-4">
                       <span className="select-none font-bold uppercase tracking-wide">
                         {day}
