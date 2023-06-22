@@ -1,6 +1,4 @@
-import dayjs from "@utils/dayjs";
-import type { FC } from "react";
-import React from "react";
+import dayjs from "@lib/dayjs";
 
 const DayInput: ({
   onChange,

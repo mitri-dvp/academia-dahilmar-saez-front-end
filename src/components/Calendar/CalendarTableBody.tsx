@@ -1,6 +1,6 @@
-import type dayjs from "@utils/dayjs";
+import type dayjs from "@lib/dayjs";
 
-import CalendarTableBodyDay from "./CalendarTableBodyDay";
+import CalendarTableBodyDay from "@components/Calendar/CalendarTableBodyDay";
 
 const CalendarTableBody: ({
   initialDate,

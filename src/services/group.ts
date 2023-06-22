@@ -1,4 +1,4 @@
-import { publicApi } from "@utils/http";
+import { publicApi } from "@lib/http";
 import { useUserStore } from "@store/user";
 import { useGroupStore } from "@store/group";
 import { useAttendanceStore } from "@store/attendance";

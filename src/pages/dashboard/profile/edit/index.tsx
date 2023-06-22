@@ -17,7 +17,7 @@ import { getImageURL } from "@utils/media";
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import type { AxiosError } from "axios";
 import axios from "axios";
 import { useToastStore } from "@store/toast";

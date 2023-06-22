@@ -1,4 +1,4 @@
-import { publicApi } from "@utils/http";
+import { publicApi } from "@lib/http";
 
 type EmailData = {
   name: string;

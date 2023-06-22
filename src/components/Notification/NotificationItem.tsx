@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { entityToIcon } from "@utils/global";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import React from "react";
 import {
   CheckCircleFillSVG,

@@ -1,8 +1,7 @@
-import dayjs from "@utils/dayjs";
-import type { FC } from "react";
-import React, { useState } from "react";
-import { CaretDownSVG, CaretUpSVG } from "./SVG";
-import Button from "./Button";
+import { useState } from "react";
+
+import dayjs from "@lib/dayjs";
+import { CaretDownSVG, CaretUpSVG } from "@components/SVG";
 
 const TimeInput: ({
   onChange,

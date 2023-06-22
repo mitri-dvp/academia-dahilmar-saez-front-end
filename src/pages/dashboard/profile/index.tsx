@@ -10,7 +10,7 @@ import { PersonSVG } from "@components/SVG";
 import { useUserStore } from "@store/user";
 
 import { getImageURL } from "@utils/media";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 
 const Profile: NextPage = () => {
   const { user } = useUserStore();

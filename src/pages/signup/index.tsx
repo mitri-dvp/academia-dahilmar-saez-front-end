@@ -13,7 +13,7 @@ import { attributeToLabel } from "@utils/i18n";
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import type { AxiosError } from "axios";
 import axios from "axios";
 import { useState, useRef } from "react";

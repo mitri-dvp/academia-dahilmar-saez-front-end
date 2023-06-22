@@ -5,7 +5,7 @@ import Image from "next/image";
 import { getImageURL } from "@utils/media";
 
 import { useFormik } from "formik";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import { useAttendanceStore } from "@store/attendance";
 
 const GroupAttendanceFormItem: ({

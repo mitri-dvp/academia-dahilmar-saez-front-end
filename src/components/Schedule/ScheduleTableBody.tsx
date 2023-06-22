@@ -1,7 +1,7 @@
 import React from "react";
 import { USER_ROLES } from "@utils/global";
 import { TennisBallSVG, TennisRaquetSVG } from "@components/SVG";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import ScheduleTableBodyDay from "./ScheduleTableBodyDay";
 
 const ScheduleTableBody: ({ groups }: { groups: Group[] }) => JSX.Element = ({

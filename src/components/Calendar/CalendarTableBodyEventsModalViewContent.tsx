@@ -10,7 +10,7 @@ import {
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import { useUserStore } from "@store/user";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import { USER_ROLES } from "@utils/global";
 import EventDeleteButton from "@components/Button/EventDeleteButton";
 

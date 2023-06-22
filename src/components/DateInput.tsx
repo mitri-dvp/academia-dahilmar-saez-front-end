@@ -1,6 +1,7 @@
-import dayjs from "@utils/dayjs";
-import React, { useState, useRef } from "react";
-import { ChevronLeftSVG, ChevronRightSVG } from "./SVG";
+import { useState, useRef } from "react";
+
+import dayjs from "@lib/dayjs";
+import { ChevronLeftSVG, ChevronRightSVG } from "@components/SVG";
 
 const DateInput: ({
   selectedDate,

@@ -13,7 +13,7 @@ import { send, get } from "@services/message";
 import { socket } from "@lib/socket";
 import { useMessageStore } from "@store/message";
 
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 
 const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
   const { messages, set } = useMessageStore();

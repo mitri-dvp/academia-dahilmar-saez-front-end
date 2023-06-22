@@ -8,7 +8,7 @@ import { create } from "@services/schedule";
 import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import Button from "@components/Button";
 import DayInput from "@components/DayInput";
 import TimeInput from "@components/TimeInput";

@@ -1,19 +1,8 @@
 import { useState } from "react";
-import Button from "@components/Button";
-import {
-  CalendarSVG,
-  CrossSVG,
-  PencilSquareSVG,
-  PlusCircleDottedSVG,
-  TrashFillSVG,
-} from "@components/SVG";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
-import { useUserStore } from "@store/user";
-import dayjs from "@utils/dayjs";
-import { USER_ROLES } from "@utils/global";
-import CalendarTableBodyEventsModalViewContent from "./CalendarTableBodyEventsModalViewContent";
-import CalendarTableBodyEventsModalEditContent from "./CalendarTableBodyEventsModalEditContent";
+import CalendarTableBodyEventsModalViewContent from "@components/Calendar/CalendarTableBodyEventsModalViewContent";
+import CalendarTableBodyEventsModalEditContent from "@components/Calendar/CalendarTableBodyEventsModalEditContent";
 
 const CalendarTableBodyEventsModal: ({
   showModal,

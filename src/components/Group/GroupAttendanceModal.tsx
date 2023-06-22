@@ -4,7 +4,7 @@ import React from "react";
 import { ChevronLeftSVG, ChevronRightSVG, CrossSVG, SpinnerSVG } from "../SVG";
 import { useGroupStore } from "@store/group";
 
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 import { getAttendances } from "@services/group";
 import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
 import { useToastStore } from "@store/toast";

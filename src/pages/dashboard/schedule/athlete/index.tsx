@@ -3,7 +3,7 @@ import type { NextPage } from "next";
 
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
-import dayjs from "@utils/dayjs";
+import dayjs from "@lib/dayjs";
 
 import { SpinnerSVG } from "@components/SVG";
 

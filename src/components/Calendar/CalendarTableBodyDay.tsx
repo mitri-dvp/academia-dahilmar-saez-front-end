@@ -1,10 +1,9 @@
 import { useState } from "react";
 
-import dayjs from "@utils/dayjs";
-
+import dayjs from "@lib/dayjs";
 import { useEventStore } from "@store/event";
-import CalendarTableBodyEvents from "./CalendarTableBodyEvents";
-import CalendarTableBodyEventsModal from "./CalendarTableBodyEventsModal";
+import CalendarTableBodyEvents from "@components/Calendar/CalendarTableBodyEvents";
+import CalendarTableBodyEventsModal from "@components/Calendar/CalendarTableBodyEventsModal";
 
 const CalendarTableBodyDay: ({
   initialDate,
