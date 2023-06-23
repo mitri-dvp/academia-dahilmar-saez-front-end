@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
-import CalendarTableBodyEventsModalViewContent from "@components/Calendar/CalendarTableBodyEventsModalViewContent";
-import CalendarTableBodyEventsModalEditContent from "@components/Calendar/CalendarTableBodyEventsModalEditContent";
+import CalendarEventsModalViewContent from "@components/Calendar/CalendarEventsModalViewContent";
+import CalendarEventsModalEditContent from "@components/Calendar/CalendarEventsModalEditContent";
 
-const CalendarTableBodyEventsModal: ({
+const CalendarEventsModal: ({
   showModal,
   onClose,
   events,
@@ -29,7 +29,7 @@ const CalendarTableBodyEventsModal: ({
           {isEditing ? (
             <>
               {event ? (
-                <CalendarTableBodyEventsModalEditContent
+                <CalendarEventsModalEditContent
                   onClose={onClose}
                   event={event}
                   toggleEditing={toggleEditing}
@@ -37,7 +37,7 @@ const CalendarTableBodyEventsModal: ({
               ) : null}
             </>
           ) : (
-            <CalendarTableBodyEventsModalViewContent
+            <CalendarEventsModalViewContent
               onClose={onClose}
               events={events}
               toggleEditing={toggleEditing}
@@ -49,4 +49,4 @@ const CalendarTableBodyEventsModal: ({
   );
 };
 
-export default CalendarTableBodyEventsModal;
+export default CalendarEventsModal;

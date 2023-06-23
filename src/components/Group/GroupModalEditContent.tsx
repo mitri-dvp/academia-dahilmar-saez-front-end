@@ -205,6 +205,13 @@ const GroupModalEditContent: ({
                     className="flex w-full cursor-pointer select-none gap-4 bg-white p-3 transition-all hover:bg-gray-100"
                     onClick={() => handleSelectAthlete(athlete, isSelected)}
                   >
+                    <div className="flex items-center">
+                      <input
+                        type="checkbox"
+                        checked={isSelected}
+                        className="dark:focus:ring-setext-secondary-500 h-8 w-8 cursor-pointer rounded border-gray-300 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                      />
+                    </div>
                     <div className="relative my-auto aspect-square h-12 w-12">
                       {athlete.photo ? (
                         <Image
@@ -223,11 +230,6 @@ const GroupModalEditContent: ({
                         {athlete.firstName} {athlete.lastName}
                       </h1>
                     </div>
-                    {isSelected ? (
-                      <div className="ml-auto flex items-center">
-                        <CheckCircleSVG className="h-8 w-8 text-secondary-500" />
-                      </div>
-                    ) : null}
                   </div>
                 );
               })}

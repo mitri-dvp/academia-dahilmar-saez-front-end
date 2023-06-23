@@ -1,6 +1,6 @@
 import type dayjs from "@lib/dayjs";
 
-import CalendarTableBodyDay from "@components/Calendar/CalendarTableBodyDay";
+import CalendarDay from "@components/Calendar/CalendarDay";
 
 const CalendarTableBody: ({
   initialDate,
@@ -25,7 +25,7 @@ const CalendarTableBody: ({
             {days.map((_, j) => {
               currentDate = currentDate.add(1, "day");
               return (
-                <CalendarTableBodyDay
+                <CalendarDay
                   key={currentDate.format("DD/MM/YYYY") + j}
                   initialDate={initialDate}
                   currentDate={currentDate}

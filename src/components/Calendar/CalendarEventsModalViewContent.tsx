@@ -14,7 +14,7 @@ import dayjs from "@lib/dayjs";
 import { USER_ROLES } from "@utils/global";
 import EventDeleteButton from "@components/Button/EventDeleteButton";
 
-const CalendarTableBodyEventsModalViewContent: ({
+const CalendarEventsModalViewContent: ({
   events,
   toggleEditing,
   onClose,
@@ -31,6 +31,9 @@ const CalendarTableBodyEventsModalViewContent: ({
         <button onClick={onClose} type="button">
           <CrossSVG className="h-6 w-6 stroke-dark-500" />
         </button>
+      </div>
+      <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+        Evento
       </div>
       {events.length === 0 ? (
         <h1 className="text-sm font-semibold text-dark-500">
@@ -61,4 +64,4 @@ const CalendarTableBodyEventsModalViewContent: ({
   );
 };
 
-export default CalendarTableBodyEventsModalViewContent;
+export default CalendarEventsModalViewContent;

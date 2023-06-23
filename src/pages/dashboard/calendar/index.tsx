@@ -5,25 +5,13 @@ import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
 import dayjs from "@lib/dayjs";
 
-import {
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  PlusCircleDottedSVG,
-  SpinnerSVG,
-} from "@components/SVG";
+import { ChevronLeftSVG, ChevronRightSVG, SpinnerSVG } from "@components/SVG";
 
 import { get } from "@services/event";
-import Button from "@components/Button";
-import { useUserStore } from "@store/user";
-import { USER_ROLES } from "@utils/global";
-import CalendarEventAddModal from "@components/Calendar/CalendarEventAddModal";
 import CalendarTableBody from "@components/Calendar/CalendarTableBody";
 
 const Calendar: NextPage = () => {
-  const userStore = useUserStore();
-
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -192,25 +180,7 @@ const Calendar: NextPage = () => {
               <CalendarTableBody initialDate={initialDate} />
             </table>
           )}
-          {userStore.user.role.type === USER_ROLES.TRAINER ? (
-            <div
-              className="mt-8 w-full px-2"
-              onClick={() => setShowModal(true)}
-            >
-              <Button styles="flex items-center justify-center gap-4 w-full py-6 text-2xl">
-                <PlusCircleDottedSVG className="h-8 w-8" />
-                Crear nuevo Evento
-              </Button>
-            </div>
-          ) : null}
         </div>
-        {/* Works in Prod */}
-        {showModal ? (
-          <CalendarEventAddModal
-            showModal={showModal}
-            onClose={() => setShowModal(false)}
-          />
-        ) : null}
       </section>
     </DashboardLayout>
   );

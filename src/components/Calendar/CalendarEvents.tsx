@@ -1,4 +1,4 @@
-const CalendarTableBodyEvents: ({
+const CalendarEvents: ({
   events,
 }: {
   events: CalendarEvent[];
@@ -17,4 +17,4 @@ const CalendarTableBodyEvents: ({
   );
 };
 
-export default CalendarTableBodyEvents;
+export default CalendarEvents;

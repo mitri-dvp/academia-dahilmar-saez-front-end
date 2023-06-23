@@ -20,7 +20,7 @@ import { toFormikValidationSchema } from "zod-formik-adapter";
 import { z } from "zod";
 import DateInput from "@components/DateInput";
 
-const CalendarTableBodyEventsModalEditContent: ({
+const CalendarEventsModalEditContent: ({
   event,
   toggleEditing,
   onClose,
@@ -234,4 +234,4 @@ const CalendarTableBodyEventsModalEditContent: ({
   );
 };
 
-export default CalendarTableBodyEventsModalEditContent;
+export default CalendarEventsModalEditContent;

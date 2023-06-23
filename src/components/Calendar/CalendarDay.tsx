@@ -2,10 +2,11 @@ import { useState } from "react";
 
 import dayjs from "@lib/dayjs";
 import { useEventStore } from "@store/event";
-import CalendarTableBodyEvents from "@components/Calendar/CalendarTableBodyEvents";
-import CalendarTableBodyEventsModal from "@components/Calendar/CalendarTableBodyEventsModal";
+import CalendarEvents from "@components/Calendar/CalendarEvents";
+import CalendarEventsModal from "@components/Calendar/CalendarEventsModal";
+import CalendarEventAddModal from "./CalendarEventAddModal";
 
-const CalendarTableBodyDay: ({
+const CalendarDay: ({
   initialDate,
   currentDate,
 }: {
@@ -28,13 +29,17 @@ const CalendarTableBodyDay: ({
   const isDateInMonth =
     dayjs(currentDate).get("month") === initialDate.get("month");
 
+  const handleDaySelect = () => {
+    eventsMatch.length ? setShowModal(true) : undefined;
+  };
+
   return (
     <>
       <td
         className={`relative rounded-md border border-gray-300 py-12 px-16 transition-all ${
           eventsMatch.length ? "cursor-pointer hover:bg-gray-100" : ""
         }`}
-        onClick={eventsMatch.length ? () => setShowModal(true) : undefined}
+        onClick={handleDaySelect}
       >
         <div
           className={`absolute top-2 right-2 flex h-7 w-7 select-none items-center justify-center text-xs font-bold ${
@@ -47,21 +52,27 @@ const CalendarTableBodyDay: ({
         </div>
         <div className="absolute top-9 left-0">
           {eventsMatch.length ? (
-            <CalendarTableBodyEvents events={eventsMatch} />
+            <CalendarEvents events={eventsMatch} />
           ) : (
             "\xA0"
           )}
         </div>
       </td>
       {showModal ? (
-        <CalendarTableBodyEventsModal
+        <CalendarEventsModal
           showModal={showModal}
           onClose={() => setShowModal(false)}
           events={eventsMatch}
         />
       ) : null}
+      {/* {showModal ? (
+        <CalendarEventAddModal
+          showModal={showModal}
+          onClose={() => setShowModal(false)}
+        />
+      ) : null} */}
     </>
   );
 };
 
-export default CalendarTableBodyDay;
+export default CalendarDay;
