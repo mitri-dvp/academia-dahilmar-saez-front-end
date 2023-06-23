@@ -39,10 +39,10 @@ const Chats: NextPage = () => {
         description="Mensajes | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="flex min-h-[calc(100vh-12rem)] bg-white shadow-lg">
-          <div className="flex flex-col p-0">
-            <h1 className="p-16 pb-0 font-display text-6xl font-semibold uppercase">
+      <section>
+        <div className="grid min-h-[calc(100vh-5rem)] grid-cols-10 bg-white shadow-lg">
+          <div className="col-span-3 flex flex-col pt-14">
+            <h1 className="mb-10 px-10 font-display text-6xl font-semibold uppercase">
               Chats
             </h1>
             {isLoading ? (
@@ -51,11 +51,11 @@ const Chats: NextPage = () => {
               </div>
             ) : (
               <>
-                <div className="mt-8">
+                <div>
                   {chats.length ? (
                     <ChatList onSelect={handleChatSelect} />
                   ) : (
-                    <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
+                    <div className="mt-16 mb-16 px-10  font-display text-2xl font-semibold uppercase">
                       Chats no encontrados
                     </div>
                   )}

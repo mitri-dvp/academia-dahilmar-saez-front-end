@@ -27,24 +27,24 @@ const ChatList: ({
     chatElements.push(
       <div
         key={contact.id}
-        className="flex w-full cursor-pointer select-none gap-8 bg-white py-8 px-16 transition-all hover:bg-gray-100"
+        className="flex w-full cursor-pointer select-none gap-4 bg-white py-4 pr-4 pl-10 transition-all hover:bg-gray-100"
         onClick={() => onSelect(chat)}
       >
-        <div className="relative my-auto aspect-square h-16 w-16">
+        <div className="relative my-auto aspect-square h-12 w-12">
           {contact.photo ? (
             <Image
-              className="h-16 w-16 rounded-full object-cover"
+              className="h-12 w-12 rounded-full object-cover"
               src={getImageURL(contact.photo)}
               alt={contact.photo.name}
               width={320}
               height={320}
             />
           ) : (
-            <PersonSVG className="aspect-square h-16 w-16" />
+            <PersonSVG className="aspect-square h-12 w-12" />
           )}
         </div>
         <div className="flex items-center">
-          <h1 className="text-xl font-bold text-dark-500">
+          <h1 className="break-all text-lg font-bold text-dark-500 line-clamp-2">
             {contact.firstName} {contact.lastName}
           </h1>
         </div>

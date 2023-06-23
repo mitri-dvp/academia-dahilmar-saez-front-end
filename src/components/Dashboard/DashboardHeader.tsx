@@ -24,7 +24,7 @@ const DashboardHeader: FC = () => {
 
     const isActive = (type: string) => {
       if (type === "dashboard") {
-        return router.pathname === "/" + type;
+        return router.pathname === `/${type}/${user.role.type}`;
       }
       if (type !== "dashboard") {
         return router.pathname.includes(type);
@@ -37,10 +37,10 @@ const DashboardHeader: FC = () => {
           key={`nav-${index}`}
           href={item.href}
           onClick={() => setOpen(false)}
-          className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition ${
+          className={`text-md -m-3 flex items-center gap-4 space-x-3 px-8 py-4 font-display font-semibold uppercase tracking-wide transition-all ${
             isActive(item.type)
-              ? "bg-gray-100 hover:border-b-white"
-              : "hover:border-b-dark-500 hover:bg-gray-50"
+              ? "bg-secondary-50 text-secondary-500"
+              : "hover:bg-gray-100"
           }`}
         >
           {item.Icon({
@@ -58,7 +58,7 @@ const DashboardHeader: FC = () => {
     const navItems = dashboardNavItems[user.role.type] || [];
     const navItem = navItems.find((item) => {
       if (item.type === "dashboard") {
-        return pathname === "/" + item.type;
+        return router.pathname === `/${item.type}/${user.role.type}`;
       }
       if (item.type !== "dashboard") {
         return pathname.includes(item.type);
@@ -81,7 +81,7 @@ const DashboardHeader: FC = () => {
 
   return (
     <header
-      className={`fixed z-20 w-full bg-white text-dark-500 shadow-lg transition`}
+      className={`fixed z-20 w-full bg-white text-dark-500 shadow-sm transition`}
     >
       <div className="mr-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-8 md:justify-start md:space-x-10">
         <div className="md:hidden">
@@ -123,11 +123,11 @@ const DashboardHeader: FC = () => {
         </div>
 
         <div
-          className={`absolute top-0 bottom-0 -left-0 z-20 min-h-screen w-64 bg-white shadow-lg transition-all md:-left-10 md:-translate-x-0 ${
+          className={`absolute top-0 bottom-0 -left-0 z-20 min-h-screen w-64 bg-white shadow-sm transition-all md:-left-10 md:-translate-x-0 ${
             open ? "-translate-x-0" : "-translate-x-full"
           }`}
         >
-          <div className="h-full divide-y-2 divide-gray-50 bg-white">
+          <div className="h-full divide-y-2 bg-white shadow-sm">
             <div className="space-y-6 px-5 pt-5 pb-6">
               <nav className="grid gap-y-12">
                 <button
@@ -139,7 +139,7 @@ const DashboardHeader: FC = () => {
                   <CrossSVG className="h-6 w-6 stroke-dark-500" />
                 </button>
                 <Link
-                  href="/dashboard/"
+                  href={`/dashboard/${user.role.type}`}
                   className="mx-auto hidden items-center md:mx-0 md:flex"
                 >
                   <Image

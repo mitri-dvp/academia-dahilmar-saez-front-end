@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 import React from "react";
 import { CheckCircleFillSVG, ClockSVG, DatepickerSVG } from "../SVG";
@@ -27,6 +27,19 @@ const GroupScheduleModalEditContentItem: ({
   const [showTimeInput, setShowTimeInput] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const calendarDays = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
+
+  const dayRef = useRef<HTMLInputElement>(null);
+  const timeRef = useRef<HTMLInputElement>(null);
+
   const formik = useFormik({
     initialValues: {
       day: dayjs(schedule.datetime).toDate(),
@@ -35,12 +48,10 @@ const GroupScheduleModalEditContentItem: ({
     validationSchema: toFormikValidationSchema(
       z.object({
         day: z.date({
-          required_error: "Introduzca el dia",
-          invalid_type_error: "Introduzca el dia",
+          errorMap: () => ({ message: "Ingrese el dia" }),
         }),
         time: z.date({
-          required_error: "Introduzca la hora",
-          invalid_type_error: "Introduzca la hora",
+          errorMap: () => ({ message: "Ingrese la hora" }),
         }),
       })
     ),
@@ -64,7 +75,6 @@ const GroupScheduleModalEditContentItem: ({
           groupID: group.id,
         });
         // On Success
-        // formik.resetForm();
         addToast({
           title: "Horario Actualizado",
         });
@@ -83,21 +93,44 @@ const GroupScheduleModalEditContentItem: ({
         <div className="w-1/2">
           <div className="relative">
             <input
+              ref={dayRef}
               type="text"
               id="day"
               className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 capitalize text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
               placeholder=" "
-              value={
-                formik.values.day ? dayjs(formik.values.day).format("dddd") : ""
-              }
+              defaultValue={dayjs(formik.values.day).format("dddd")}
               onFocus={() => {
                 setShowDayInput(true);
               }}
               onBlur={(e) => {
                 formik.handleBlur(e);
+
+                let dayMatch = false;
+                if (e.target.value) {
+                  for (let i = 0; i < calendarDays.length; i++) {
+                    const day = calendarDays[i] as string;
+
+                    if (
+                      day.toLowerCase().includes(e.target.value.toLowerCase())
+                    ) {
+                      dayMatch = true;
+                      if (dayRef.current) {
+                        dayRef.current.value = dayjs()
+                          .set("day", i)
+                          .format("dddd");
+                      }
+                      formik.setFieldValue(
+                        "day",
+                        dayjs().set("day", i).toDate()
+                      );
+                    }
+                  }
+                }
+
+                if (!dayMatch) formik.setFieldValue("day", undefined);
+
                 setShowDayInput(false);
               }}
-              readOnly
             />
             <label
               htmlFor="day"
@@ -113,6 +146,9 @@ const GroupScheduleModalEditContentItem: ({
                 <DayInput
                   onChange={(day) => {
                     removeFocus();
+                    if (dayRef.current) {
+                      dayRef.current.value = dayjs(day).format("dddd");
+                    }
                     formik.setFieldValue("day", day);
                   }}
                 />
@@ -129,23 +165,51 @@ const GroupScheduleModalEditContentItem: ({
         <div className="w-1/2">
           <div className="relative">
             <input
+              ref={timeRef}
               type="text"
               id="time"
               className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
               placeholder=" "
-              value={
-                formik.values.time
-                  ? dayjs(formik.values.time).format("hh:mm a")
-                  : ""
-              }
-              onFocus={() => {
-                setShowTimeInput(true);
-              }}
+              defaultValue={dayjs(formik.values.time).format("hh:mm a")}
+              onFocus={() => setShowTimeInput(true)}
               onBlur={(e) => {
                 formik.handleBlur(e);
+
+                const regexp = /([01]?[0-9]):([0-5][0-9]) ?(am|pm)/gi;
+                const matches = e.target.value.matchAll(regexp);
+
+                let timeMatch = false;
+                for (const match of matches) {
+                  const hour = Number(match[1]);
+                  const minutes = Number(match[2]);
+                  const a = String(match[3]).toLowerCase();
+                  const meridiem = a === "am" ? 0 : a === "pm" ? 1 : "";
+
+                  if (hour > 12) break;
+
+                  let timeInputDate = dayjs();
+
+                  timeInputDate = timeInputDate.set(
+                    "hour",
+                    hour +
+                      (meridiem ? (hour === 12 ? 0 : 12) : hour === 12 ? 12 : 0)
+                  );
+                  timeInputDate = timeInputDate.set("minutes", minutes);
+
+                  if (timeRef.current) {
+                    timeRef.current.value = dayjs(
+                      timeInputDate.toDate()
+                    ).format("hh:mm a");
+                  }
+
+                  formik.setFieldValue("time", timeInputDate.toDate());
+                  timeMatch = true;
+                }
+
+                if (!timeMatch) formik.setFieldValue("time", undefined);
+
                 setShowTimeInput(false);
               }}
-              readOnly
             />
             <label
               htmlFor="time"
@@ -156,14 +220,17 @@ const GroupScheduleModalEditContentItem: ({
             <label htmlFor="time" className="peer-focus:text-secondary-500">
               <ClockSVG className="absolute bottom-2 right-0 h-5 w-5" />
             </label>
-
             <div onMouseDown={(e) => e.preventDefault()}>
               {showTimeInput ? (
                 <TimeInput
                   onChange={(time) => {
                     removeFocus();
+                    if (timeRef.current) {
+                      timeRef.current.value = dayjs(time).format("hh:mm a");
+                    }
                     formik.setFieldValue("time", time);
                   }}
+                  selectedTime={formik.values.time}
                 />
               ) : null}
             </div>

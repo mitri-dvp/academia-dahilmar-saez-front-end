@@ -39,15 +39,6 @@ const Calendar: NextPage = () => {
   const monthRef = useRef<HTMLDivElement>(null);
   const yearRef = useRef<HTMLDivElement>(null);
 
-  const calendarDays = [
-    "Domingo",
-    "Lunes",
-    "Martes",
-    "Miércoles",
-    "Jueves",
-    "Viernes",
-    "Sábado",
-  ];
   const calendarMonths = Array.from(Array(12));
   const calendarYears = Array.from(Array(90));
 
@@ -86,8 +77,8 @@ const Calendar: NextPage = () => {
         description="Calendario | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="relative w-max bg-white p-16 shadow-lg">
+      <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
+        <div className="relative">
           <div className="flex">
             <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
               <div className="flex gap-4">
@@ -102,7 +93,7 @@ const Calendar: NextPage = () => {
                     <div
                       ref={monthRef}
                       onBlur={() => setShowMonthSelect(false)}
-                      className="absolute top-36 left-16 z-10 grid max-h-full w-[calc(100%-128px)] grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                      className="absolute top-20 left-2 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
                     >
                       <button autoFocus className="absolute" />
                       {calendarMonths.map((_, i) => (
@@ -132,7 +123,7 @@ const Calendar: NextPage = () => {
                     <div
                       ref={yearRef}
                       onBlur={() => setShowYearSelect(false)}
-                      className="absolute top-36 left-16 z-10 grid max-h-96 w-[calc(100%-128px)] grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                      className="absolute top-20 left-2 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
                     >
                       <button autoFocus className="absolute" />
                       {calendarYears.map((_, i) => {

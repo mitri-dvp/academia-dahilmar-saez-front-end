@@ -1,6 +1,5 @@
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import Layout from "@components/Layout";
 import Seo from "@components/Seo";
@@ -14,8 +13,6 @@ import axios from "axios";
 import { login } from "@services/auth";
 
 const Login: NextPage = () => {
-  const router = useRouter();
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -39,18 +36,12 @@ const Login: NextPage = () => {
       try {
         // Action
         await login(values);
-        // On Success
-        handleSuccess();
       } catch (error) {
         // On Error
         handleError(error);
       }
     },
   });
-
-  const handleSuccess = () => {
-    router.push("/dashboard");
-  };
 
   const handleError = (error: unknown | AxiosError) => {
     if (axios.isAxiosError(error)) {

@@ -67,7 +67,7 @@ const Schedule: NextPage = () => {
     }
 
     return (
-      <thead className="rounded-full text-white">
+      <thead className="rounded-full text-gray-50">
         <tr>{days}</tr>
       </thead>
     );
@@ -80,20 +80,18 @@ const Schedule: NextPage = () => {
         description="Horario | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="w-max bg-white p-16 shadow-lg">
-          <div className="flex">{renderTableTitle()}</div>
-          {isLoading ? (
-            <div className="w-full bg-white pt-16">
-              <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
-            </div>
-          ) : (
-            <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
-              {renderTableHead()}
-              <ScheduleTableBody groups={groups} />
-            </table>
-          )}
-        </div>
+      <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
+        <div className="flex">{renderTableTitle()}</div>
+        {isLoading ? (
+          <div className="w-full bg-gray-50 pt-16">
+            <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+          </div>
+        ) : (
+          <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
+            {renderTableHead()}
+            <ScheduleTableBody groups={groups} />
+          </table>
+        )}
       </section>
     </DashboardLayout>
   );

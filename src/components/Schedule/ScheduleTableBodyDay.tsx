@@ -20,7 +20,7 @@ const ScheduleTableBodyDay: ({
         onClick={derivedSchedule ? () => undefined : undefined}
       >
         {derivedSchedule ? (
-          <div className="max-w-[130px] text-sm font-bold uppercase tracking-tight">
+          <div className="text-sm font-bold uppercase tracking-tight">
             <div className="flex items-center gap-1">
               <TennisBallSVG className="w-4 text-primary-500" />
               <span className="line-clamp-2">{derivedSchedule.group.name}</span>

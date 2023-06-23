@@ -1,7 +1,6 @@
 import { useState, useRef } from "react";
 import type { NextPage } from "next";
 import Link from "next/link";
-import { useRouter } from "next/router";
 
 import { useFormik } from "formik";
 import { z } from "zod";
@@ -21,8 +20,6 @@ import { attributeToLabel } from "@utils/i18n";
 import dayjs from "@lib/dayjs";
 
 const Signup: NextPage = () => {
-  const router = useRouter();
-
   const [showCalendarInput, setShowCalendarInput] = useState(false);
   const dateRef = useRef<HTMLInputElement>(null);
 
@@ -104,18 +101,12 @@ const Signup: NextPage = () => {
       try {
         // Action
         await signup(signupValues);
-        // On Success
-        handleSuccess();
       } catch (error) {
         // On Error
         handleError(error);
       }
     },
   });
-
-  const handleSuccess = () => {
-    router.push("/dashboard");
-  };
 
   const handleError = (error: unknown | AxiosError) => {
     if (isAxiosError(error)) {

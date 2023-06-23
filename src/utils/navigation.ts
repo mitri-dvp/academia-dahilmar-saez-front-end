@@ -42,7 +42,7 @@ export const dashboardNavItems = {
     {
       Icon: HouseSVG,
       title: "Página Principal",
-      href: "/dashboard",
+      href: "/dashboard/athlete",
       type: "dashboard",
     },
     {
@@ -76,37 +76,11 @@ export const dashboardNavItems = {
       type: "profile",
     },
   ],
-  [USER_ROLES.GUARDIAN]: [
-    {
-      Icon: HouseSVG,
-      title: "Página Principal",
-      href: "/dashboard",
-      type: "dashboard",
-    },
-    {
-      Icon: ClockSVG,
-      title: "Atleta",
-      href: "/dashboard/athlete",
-      type: "athlete",
-    },
-    {
-      Icon: ChatSVG,
-      title: "Chats",
-      href: "/dashboard/chats",
-      type: "chats",
-    },
-    {
-      Icon: PersonSVG,
-      title: "Perfil",
-      href: "/dashboard/profile",
-      type: "profile",
-    },
-  ],
   [USER_ROLES.TRAINER]: [
     {
       Icon: HouseSVG,
       title: "Página Principal",
-      href: "/dashboard",
+      href: "/dashboard/trainer",
       type: "dashboard",
     },
     {

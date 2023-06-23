@@ -5,7 +5,7 @@ import type { FC } from "react";
 
 const ChatViewEmpty: FC = () => {
   return (
-    <div className="flex w-full flex-1 flex-col bg-gray-50">
+    <div className="col-span-7 flex w-full flex-1 flex-col bg-gray-50">
       <div className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100">
         <div className="relative my-auto aspect-square h-10 w-10">
           <PersonSVG className="aspect-square h-10 w-10" />
@@ -25,7 +25,7 @@ const ChatViewEmpty: FC = () => {
           height={40}
         />
       </div>
-      <div className="relative flex w-full items-center gap-4 p-4  opacity-80">
+      <div className="relative flex w-full items-center gap-4 p-3  opacity-80">
         <div className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500" />
         <div className="absolute top-8 left-8 cursor-text select-none"></div>
         <div className="flex h-14 w-14 items-center justify-center bg-secondary-500  p-2 text-white">

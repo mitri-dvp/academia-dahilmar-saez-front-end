@@ -9,8 +9,8 @@ const DayInput: ({
 
   return (
     <div className="absolute bottom-0 z-10 translate-y-full">
-      <div className="absolute  mt-0.5 ml-[1.2rem] h-4 w-4 rotate-45 border-l border-t border-gray-300 bg-white dark:border-slate-600 dark:bg-slate-800" />
-      <div className="mt-2.5 flex gap-2 border border-gray-300 bg-white p-2.5">
+      <div className="mt-2.5 flex  animate-fade-down gap-2 border  border-gray-300 bg-white p-2.5 animate-duration-200">
+        <div className="absolute -mt-[19px] ml-[1.2rem] h-4 w-4 rotate-45 border-l border-t border-gray-300 bg-white dark:border-slate-600 dark:bg-slate-800" />
         {days.map((day, index) => (
           <div
             key={day}

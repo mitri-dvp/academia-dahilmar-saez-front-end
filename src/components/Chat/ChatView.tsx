@@ -181,7 +181,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
   if (!contact) return <></>;
 
   return (
-    <div className="flex w-full flex-1 flex-col bg-gray-50">
+    <div className="relative col-span-7 flex w-full flex-1 flex-col bg-gray-50">
       <div
         className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100"
         // onClick={() => handleChatSelect(contact)}
@@ -207,11 +207,11 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
       </div>
       <div
         ref={messagesRef}
-        className="relative max-h-[calc(100vh-22rem)] flex-1 overflow-y-auto bg-gray-100"
+        className="relative max-h-[calc(100vh-15rem)] flex-1 overflow-y-auto bg-gray-50"
       >
         {renderMessages()}
       </div>
-      <div className="relative flex w-full items-center gap-4 p-4">
+      <div className="absolute bottom-0 flex w-full items-center gap-4 bg-white p-4">
         <div
           ref={divRef}
           className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500"

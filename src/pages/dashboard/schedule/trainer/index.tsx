@@ -35,8 +35,8 @@ const Schedule: NextPage = () => {
         description="Horarios | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="w-max bg-white p-16 shadow-lg">
+      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
+        <div>
           <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
             Horarios
           </h1>
@@ -54,7 +54,7 @@ const Schedule: NextPage = () => {
               {groupStore.groups.map((group) => (
                 <div
                   key={group.id}
-                  className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase "
+                  className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase transition-all hover:bg-gray-100"
                   onClick={() => handleSelectGroup(group)}
                 >
                   <span>{group.name}</span>

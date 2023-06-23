@@ -2,6 +2,7 @@ import { publicApi } from "@lib/http";
 import { useUserStore } from "@store/user";
 import { useAttendanceStore } from "@store/attendance";
 import { socket } from "@lib/socket";
+import Router from "next/router";
 
 type SignupValues = {
   firstName: string;
@@ -32,6 +33,8 @@ export const signup = async (signupValues: SignupValues) => {
 
   useUserStore.getState().signup(token, user);
   useAttendanceStore.getState().set(attendances);
+
+  Router.push(`/dashboard/${user.role.type}`);
 };
 
 export const login = async (loginValues: LoginValues) => {
@@ -49,4 +52,6 @@ export const login = async (loginValues: LoginValues) => {
   useAttendanceStore.getState().set(attendances);
 
   socket.connect();
+
+  Router.push(`/dashboard/${user.role.type}`);
 };

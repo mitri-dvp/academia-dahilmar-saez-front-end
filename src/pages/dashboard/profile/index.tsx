@@ -23,8 +23,8 @@ const Profile: NextPage = () => {
         description="Perfil | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="flex w-max gap-16 bg-white p-16 shadow-lg">
+      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
+        <div className="mt-4 flex gap-16">
           <div className="relative my-auto aspect-square h-80 w-80">
             {user.photo ? (
               <Image
@@ -92,11 +92,8 @@ const Profile: NextPage = () => {
               </div>
             </div>
 
-            <Link
-              href={"/dashboard/profile/edit"}
-              className="mr-auto block w-max pt-4"
-            >
-              <Button>Editar Perfil</Button>
+            <Link href={"/dashboard/profile/edit"} className="mt-4 block">
+              <Button styles="w-full">Editar Perfil</Button>
             </Link>
           </div>
         </div>
