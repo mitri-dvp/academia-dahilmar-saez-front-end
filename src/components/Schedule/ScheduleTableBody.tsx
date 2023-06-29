@@ -1,6 +1,5 @@
 import React from "react";
 import { USER_ROLES } from "@utils/global";
-import { TennisBallSVG, TennisRaquetSVG } from "@components/SVG";
 import dayjs from "@lib/dayjs";
 import ScheduleTableBodyDay from "./ScheduleTableBodyDay";
 
@@ -8,46 +7,33 @@ const ScheduleTableBody: ({ groups }: { groups: Group[] }) => JSX.Element = ({
   groups,
 }) => {
   const renderTableBody = () => {
-    const derivedSchedules: DerivedSchedule[] = [];
-
-    for (let index = 0; index < groups.length; index++) {
-      const group = groups[index] as Group;
-
-      const trainers = group.users.filter(
-        (user) => user.role.type === USER_ROLES.TRAINER
-      );
-
-      const derivedSchedule = {
-        group: {
-          id: group.id,
-          name: group.name,
-          description: group.description,
-        },
-        trainers: trainers.map((trainer) => ({
-          id: trainer.id,
-          firstName: trainer.firstName,
-          lastName: trainer.lastName,
-          photo: trainer.photo,
-          email: trainer.email,
-        })),
-      };
-
-      for (let j = 0; j < group.schedules.length; j++) {
-        const schedule = group.schedules[j] as Schedule;
-
-        const datetime = dayjs(schedule.datetime);
-
-        derivedSchedules.push({
-          ...derivedSchedule,
-          schedule: {
-            day: datetime.get("day"),
-            hour: datetime.get("hour"),
-          },
-        });
-      }
-    }
-
-    derivedSchedules.sort((a, b) => a.schedule.hour - b.schedule.hour);
+    const derivedSchedules: DerivedSchedule[] = groups
+      .map((group) =>
+        group.schedules.map((shcedule) => {
+          return {
+            group: {
+              id: group.id,
+              name: group.name,
+              description: group.description,
+            },
+            trainers: group.users
+              .filter((user) => user.role.type === USER_ROLES.TRAINER)
+              .map((trainer) => ({
+                id: trainer.id,
+                firstName: trainer.firstName,
+                lastName: trainer.lastName,
+                photo: trainer.photo,
+                email: trainer.email,
+              })),
+            schedule: {
+              day: dayjs(shcedule.datetime).get("day"),
+              hour: dayjs(shcedule.datetime).get("hour"),
+            },
+          };
+        })
+      )
+      .flat()
+      .sort((a, b) => a.schedule.hour - b.schedule.hour);
 
     const firstDerivedSchedule = derivedSchedules[0];
     const lastDerivedSchedule = derivedSchedules[derivedSchedules.length - 1];

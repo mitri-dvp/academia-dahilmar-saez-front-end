@@ -12,7 +12,6 @@ import ChatContactModal from "@components/Chat/ChatContactModal";
 import ChatList from "@components/Chat/ChatList";
 import ChatView from "@components/Chat/ChatView";
 import ChatViewEmpty from "@components/Chat/ChatViewEmpty";
-import { socket } from "@lib/socket";
 
 const Chats: NextPage = () => {
   const { chats } = useChatStore();

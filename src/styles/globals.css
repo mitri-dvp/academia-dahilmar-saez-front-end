@@ -16,7 +16,7 @@
 
 *,
 html {
-  scroll-behavior: smooth !important;
+  /* scroll-behavior: smooth !important; */
   scroll-padding-top: 120px;
 }
 
@@ -102,6 +102,7 @@ button[class~="line-through"] {
 
 .ToastRoot {
   @apply bg-white;
+  @apply border-l-8 border-l-secondary-500;
   /* @apply rounded-md; */
   @apply shadow-lg;
   @apply p-4;

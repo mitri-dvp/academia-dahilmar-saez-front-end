@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { CrossCircleFillSVG } from "@components/SVG";
+import { CrossSVG } from "@components/SVG";
 import * as Toast from "@radix-ui/react-toast";
 import { useToastStore } from "@store/toast";
 
@@ -24,8 +24,8 @@ const ToastItem: ({ toast }: { toast: ToastProp }) => JSX.Element = ({
       </div>
 
       <Toast.Close className="ToastAction" asChild>
-        <button className="h-8 w-8 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700">
-          <CrossCircleFillSVG className="h-full w-full" />
+        <button className="h-6 w-6 cursor-pointer text-gray-500 transition-all hover:text-gray-700">
+          <CrossSVG className="h-full w-full" />
         </button>
       </Toast.Close>
     </Toast.Root>

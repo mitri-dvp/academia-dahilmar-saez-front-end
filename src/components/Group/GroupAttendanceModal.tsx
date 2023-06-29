@@ -128,7 +128,6 @@ const GroupAttendanceModal: ({
       }
 
       if (dayjs().diff(selectedDate.add(i, "day"), "milliseconds") < 0) {
-        // TO-DO Add better feedback
         addToast({
           title: "No se puede acceder a una fecha futura",
         });
