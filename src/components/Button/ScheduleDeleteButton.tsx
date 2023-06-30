@@ -44,7 +44,7 @@ const ScheduleDeleteButton: ({
           className="w-6 cursor-pointer text-red-600 transition-all hover:text-red-700"
           onClick={() => setShowConfirm(!showConfirm)}
         >
-          <TrashFillSVG className="h-full w-full" />
+          <TrashFillSVG className="h-full w-full " />
         </button>
       }
       content={
@@ -55,15 +55,15 @@ const ScheduleDeleteButton: ({
           <div className="text-center">¿Desea borrar el horario?</div>
           <div className="text-center">Esta acción es irreversible</div>
           <div className="mt-4 flex gap-4">
+            <Button styles="w-1/2" onClick={handleDelete}>
+              Si
+            </Button>
             <Button
               styles="w-1/2"
               color="clear"
               onClick={() => setShowConfirm(false)}
             >
               No
-            </Button>
-            <Button styles="w-1/2" onClick={handleDelete}>
-              Si
             </Button>
           </div>
         </div>

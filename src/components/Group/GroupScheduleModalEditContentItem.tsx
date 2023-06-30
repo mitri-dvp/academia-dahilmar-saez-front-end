@@ -9,8 +9,8 @@ import { useFormik } from "formik";
 import { z } from "zod";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import dayjs from "@lib/dayjs";
-import DayInput from "@components/DayInput";
-import TimeInput from "@components/TimeInput";
+import DayInput from "@components/Input/DayInput";
+import TimeInput from "@components/Input/TimeInput";
 import { useToastStore } from "@store/toast";
 import ScheduleDeleteButton from "@components/Button/ScheduleDeleteButton";
 

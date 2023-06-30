@@ -13,7 +13,7 @@ import Seo from "@components/Seo";
 import Layout from "@components/Layout";
 import Button from "@components/Button";
 import { DatepickerSVG } from "@components/SVG";
-import DateInput from "@components/DateInput";
+import DateInput from "@components/Input/DateInput";
 import { signup } from "@services/auth";
 import { USER_ROLES, removeFocus } from "@utils/global";
 import { attributeToLabel } from "@utils/i18n";

@@ -1,21 +1,8 @@
-import { useState } from "react";
-import Button from "@components/Button";
-import {
-  CalendarSVG,
-  CrossSVG,
-  PencilSquareSVG,
-  PersonSVG,
-  PlusCircleDottedSVG,
-  TrashFillSVG,
-} from "@components/SVG";
+import { CrossSVG, PersonSVG } from "@components/SVG";
 
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
-import { useUserStore } from "@store/user";
-import dayjs from "@lib/dayjs";
-import { USER_ROLES } from "@utils/global";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
-import Link from "next/link";
 
 const ScheduleTableBodyDayModal: ({
   showModal,
@@ -33,7 +20,7 @@ const ScheduleTableBodyDayModal: ({
         <Content className="modal-content w-full max-w-xl">
           <div className="flex justify-end">
             <button onClick={onClose} type="button">
-              <CrossSVG className="h-6 w-6 stroke-dark-500" />
+              <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
           <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
@@ -63,16 +50,10 @@ const ScheduleTableBodyDayModal: ({
                         <PersonSVG className="aspect-square h-12 w-12" />
                       )}
                     </div>
-                    <div className="flex flex-col">
+                    <div className="flex items-center">
                       <h1 className="text-base font-bold text-dark-500">
                         {trainer.firstName} {trainer.lastName}
                       </h1>
-                      <Link
-                        href={`mailto:${trainer.email}`}
-                        className="w-full text-secondary-700 hover:underline"
-                      >
-                        {trainer.email}
-                      </Link>
                     </div>
                   </div>
                 );

@@ -4,7 +4,7 @@ import dayjs from "@lib/dayjs";
 import { useEventStore } from "@store/event";
 import CalendarEvents from "@components/Calendar/CalendarEvents";
 import CalendarEventsModal from "@components/Calendar/CalendarEventsModal";
-import CalendarEventAddModal from "./CalendarEventAddModal";
+import CalendarEventsModalAddContent from "./CalendarEventsModalAddContent";
 
 const CalendarDay: ({
   initialDate,
@@ -29,16 +29,12 @@ const CalendarDay: ({
   const isDateInMonth =
     dayjs(currentDate).get("month") === initialDate.get("month");
 
-  const handleDaySelect = () => {
-    eventsMatch.length ? setShowModal(true) : undefined;
-  };
+  const handleDaySelect = () => setShowModal(true);
 
   return (
     <>
       <td
-        className={`relative rounded-md border border-gray-300 py-12 px-16 transition-all ${
-          eventsMatch.length ? "cursor-pointer hover:bg-gray-100" : ""
-        }`}
+        className={`relative cursor-pointer rounded-md border border-gray-300 py-12 px-16 transition-all hover:bg-gray-100`}
         onClick={handleDaySelect}
       >
         <div
@@ -63,14 +59,9 @@ const CalendarDay: ({
           showModal={showModal}
           onClose={() => setShowModal(false)}
           events={eventsMatch}
+          currentDate={currentDate}
         />
       ) : null}
-      {/* {showModal ? (
-        <CalendarEventAddModal
-          showModal={showModal}
-          onClose={() => setShowModal(false)}
-        />
-      ) : null} */}
     </>
   );
 };

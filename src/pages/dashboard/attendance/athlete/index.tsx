@@ -5,20 +5,12 @@ import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Seo from "@components/Seo";
 import dayjs from "@lib/dayjs";
 
-import {
-  CheckCircleSVG,
-  ChevronLeftSVG,
-  ChevronRightSVG,
-  CrossCircleSVG,
-  SpinnerSVG,
-} from "@components/SVG";
+import { ChevronLeftSVG, ChevronRightSVG, SpinnerSVG } from "@components/SVG";
 
-import { useAttendanceStore } from "@store/attendance";
 import { get } from "@services/attendance";
+import AttendanceTableBody from "@components/Attendance/AttendanceTableBody";
 
 const AttendanceAthlete: NextPage = () => {
-  const { attendances } = useAttendanceStore();
-
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -80,79 +72,6 @@ const AttendanceAthlete: NextPage = () => {
     setShowMonthSelect(false);
   };
 
-  const renderTableBody = () => {
-    let currentDate = startDate;
-
-    if (attendances.length === 0)
-      return (
-        <tbody>
-          <tr>
-            <td
-              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-2xl font-semibold uppercase"
-              colSpan={8}
-            >
-              Asistencias no encontradas
-            </td>
-          </tr>
-        </tbody>
-      );
-
-    const weeks: JSX.Element[] = [];
-    for (let i = 0; i < 6; i++) {
-      const week: JSX.Element[] = [];
-      for (let j = 0; j < 7; j++) {
-        const dateMatch = attendances.filter(
-          (attendance) =>
-            dayjs(attendance.datetime).format("DD-MM-YYYY") ===
-            dayjs(currentDate).format("DD-MM-YYYY")
-        )[0];
-
-        const isToday =
-          dayjs().format("DD-MM-YYYY") ===
-          dayjs(currentDate).format("DD-MM-YYYY");
-
-        const isDateInMonth =
-          dayjs(currentDate).get("month") === initialDate.get("month");
-
-        const renderStatus = (status: boolean) => {
-          if (status === true) {
-            return <CheckCircleSVG className="h-8 w-8 text-secondary-500" />;
-          }
-
-          if (status === false) {
-            return <CrossCircleSVG className="h-8 w-8 text-secondary-500" />;
-          }
-          return "\xA0";
-        };
-
-        const day = (
-          <td
-            key={currentDate.format("DD-MM-YYYY")}
-            className="relative rounded-md border border-gray-300 p-12"
-          >
-            <div
-              className={`absolute top-2 right-2 flex h-8 w-8 select-none items-center justify-center text-xs font-bold ${
-                isToday
-                  ? "block aspect-square rounded-full bg-secondary-500 text-white"
-                  : ""
-              } ${!isDateInMonth && !isToday ? "text-gray-300" : ""}`}
-            >
-              {currentDate.format("D")}
-            </div>
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              {dateMatch ? renderStatus(dateMatch.status) : "\xA0"}
-            </div>
-          </td>
-        );
-
-        week.push(day);
-        currentDate = currentDate.add(1, "day");
-      }
-      weeks.push(<tr key={currentDate.format("DD/MM/YYYY")}>{week}</tr>);
-    }
-    return <tbody>{weeks}</tbody>;
-  };
-
   return (
     <DashboardLayout>
       <Seo
@@ -161,7 +80,7 @@ const AttendanceAthlete: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
-        <div className="relative ">
+        <div className="relative">
           <div className="flex">
             <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
               <div className="flex gap-4">
@@ -263,7 +182,10 @@ const AttendanceAthlete: NextPage = () => {
                   ))}
                 </tr>
               </thead>
-              {renderTableBody()}
+              <AttendanceTableBody
+                currentDate={startDate}
+                initialDate={initialDate}
+              />
             </table>
           )}
         </div>

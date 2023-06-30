@@ -66,7 +66,7 @@ const Header: FC = () => {
               className={`inline-flex items-center justify-center p-2 text-gray-400 transition ease-in-out hover:text-gray-900 focus:text-gray-900`}
             >
               <svg
-                className="h-6 w-6 stroke-dark-500"
+                className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500"
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
               >

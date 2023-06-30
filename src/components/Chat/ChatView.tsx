@@ -146,7 +146,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
         messagesList.push(
           <div
             key={currentDate}
-            className={`relative m-4 mx-auto w-max max-w-sm break-all bg-white py-6 px-8 font-display text-base font-semibold
+            className={`relative m-4 mx-auto w-max max-w-sm break-words bg-white py-6 px-8 font-display text-base font-semibold
             uppercase text-secondary-500
           `}
           >
@@ -161,7 +161,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
       messagesList.push(
         <div
           key={message.id}
-          className={`relative m-4 w-max max-w-sm break-all py-6 px-8 font-display text-base font-semibold uppercase ${
+          className={`relative m-4 w-max max-w-sm break-words py-6 px-8 font-display text-base font-semibold uppercase ${
             isOwnMessage
               ? "ml-auto bg-secondary-500 text-right text-white"
               : "bg-white text-secondary-500"
@@ -214,7 +214,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
       <div className="absolute bottom-0 flex w-full items-center gap-4 bg-white p-4">
         <div
           ref={divRef}
-          className="h-full max-h-24 w-full overflow-y-scroll break-all bg-white p-4 outline-none focus:outline-secondary-500"
+          className="h-full max-h-24 w-full overflow-y-scroll break-words bg-white p-4 outline-none focus:outline-secondary-500"
           onInput={handleInputChange}
           onKeyDown={handleKeyDown}
           contentEditable

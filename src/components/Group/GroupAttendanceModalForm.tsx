@@ -90,7 +90,7 @@ const GroupAttendanceModalForm: ({
 
   return (
     <div className="flex min-h-[24rem] flex-col justify-between space-y-8">
-      <div className="max-h-96 overflow-y-auto">
+      <div>
         <div className="flex">
           <div className="flex w-full select-none gap-4 bg-white p-2 hover:bg-gray-100">
             <h1 className="text-sm font-bold text-dark-500">Nombre</h1>
@@ -102,14 +102,16 @@ const GroupAttendanceModalForm: ({
             <h1 className="text-sm font-bold text-dark-500">Observaciones</h1>
           </div>
         </div>
-        {athletes.map((athlete) => (
-          <GroupAttendanceFormItem
-            key={athlete.id}
-            athlete={athlete}
-            selectedDate={selectedDate}
-            onChange={handleChange}
-          />
-        ))}
+        <div className="max-h-96 overflow-y-auto">
+          {athletes.map((athlete) => (
+            <GroupAttendanceFormItem
+              key={athlete.id}
+              athlete={athlete}
+              selectedDate={selectedDate}
+              onChange={handleChange}
+            />
+          ))}
+        </div>
       </div>
 
       <form onClick={formik.handleSubmit} className="mx-auto w-1/2">

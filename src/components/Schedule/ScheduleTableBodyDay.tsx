@@ -1,7 +1,5 @@
 import React, { useState } from "react";
-import { USER_ROLES } from "@utils/global";
 import { TennisBallSVG, TennisRaquetSVG } from "@components/SVG";
-import dayjs from "@lib/dayjs";
 import ScheduleTableBodyDayModal from "./ScheduleTableBodyDayModal";
 
 const ScheduleTableBodyDay: ({
@@ -14,10 +12,10 @@ const ScheduleTableBodyDay: ({
   return (
     <>
       <td
-        className={`cursor-default rounded-md border border-gray-300 p-2 align-top ${
+        className={`cursor-pointer rounded-md border border-gray-300 p-2 align-top ${
           derivedSchedule ? " hover:bg-gray-100" : ""
         }`}
-        onClick={derivedSchedule ? () => undefined : undefined}
+        onClick={derivedSchedule ? () => setShowModal(true) : undefined}
       >
         {derivedSchedule ? (
           <div className="text-sm font-bold uppercase tracking-tight">

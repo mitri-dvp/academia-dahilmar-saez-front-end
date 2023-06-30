@@ -4,6 +4,8 @@ import dayjs from "@lib/dayjs";
 import { useEffect, useState } from "react";
 import { get } from "@services/group";
 import { USER_ROLES } from "@utils/global";
+import Link from "next/link";
+import Button from "@components/Button";
 
 const DashboardNextSchedule = () => {
   const { groups } = useGroupStore();
@@ -18,7 +20,7 @@ const DashboardNextSchedule = () => {
       .catch(() => setIsLoading(false));
   }, []);
 
-  const nextSchedule: DerivedSchedule | undefined = groups
+  const derivedSchedules: DerivedSchedule[] = groups
     .map((group) =>
       group.schedules.map((shcedule) => {
         return {
@@ -44,58 +46,81 @@ const DashboardNextSchedule = () => {
       })
     )
     .flat()
-    .sort((a, b) => a.schedule.day - b.schedule.day)
-    .find((derivedSchedule) => {
+    .sort((a, b) => a.schedule.day - b.schedule.day);
+
+  const endSchedule: DerivedSchedule | undefined = derivedSchedules.find(
+    (derivedSchedule) => {
       return derivedSchedule.schedule.day >= dayjs().get("day");
-    });
+    }
+  );
+
+  const startSchedule: DerivedSchedule | undefined = derivedSchedules.find(
+    (derivedSchedule) => {
+      return derivedSchedule.schedule.day >= dayjs().startOf("week").get("day");
+    }
+  );
+
+  const nextSchedule = endSchedule || startSchedule;
 
   return (
-    <div className="flex h-full gap-4">
-      {isLoading ? (
-        <div className="flex w-full items-center justify-center">
-          <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
-        </div>
-      ) : (
-        <>
-          {nextSchedule ? (
-            <>
-              <div className="flex aspect-square shrink-0 flex-col items-center justify-center rounded-md bg-secondary-500 p-4 text-white">
-                <span className="select-none font-bold uppercase tracking-wide">
-                  {dayjs().set("day", nextSchedule.schedule.day).format("dddd")}
-                </span>
-                <br />
-                <span className="select-none text-xs tracking-wide">
-                  {dayjs()
-                    .set("day", nextSchedule.schedule.day)
-                    .format("DD/MM/YYYY")}
-                </span>
-              </div>
-              <div className="flex w-full flex-col items-start justify-center rounded-md border p-4">
-                <div className="text-sm font-bold uppercase tracking-tight">
-                  <div className="flex items-center gap-1">
-                    <TennisBallSVG className="w-4 text-primary-500" />
-                    <span className="line-clamp-2">
-                      {nextSchedule.group.name}
-                    </span>
-                  </div>
-                  {nextSchedule.trainers.slice(0, 3).map((trainer) => (
-                    <div key={trainer.id} className="mt-2 flex gap-1">
-                      <TennisRaquetSVG className="mt-1 w-4 text-secondary-500" />
-                      <span className=" line-clamp-1">
-                        {trainer.firstName} {trainer.lastName}
+    <div className="flex h-72 flex-col gap-4 border p-6">
+      <header className="flex items-center">
+        <h1 className="font-display text-2xl font-semibold uppercase">
+          Próxima Clase
+        </h1>
+        <Link href={"/dashboard/schedule/athlete"} className="ml-auto">
+          <Button>Ver Horarios</Button>
+        </Link>
+      </header>
+      <div className="flex h-full gap-4">
+        {isLoading ? (
+          <div className="flex w-full items-center justify-center">
+            <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+          </div>
+        ) : (
+          <>
+            {nextSchedule ? (
+              <>
+                <div className="flex aspect-square shrink-0 flex-col items-center justify-center rounded-md bg-secondary-500 p-4 text-white">
+                  <span className="select-none font-bold uppercase tracking-wide">
+                    {dayjs()
+                      .set("day", nextSchedule.schedule.day)
+                      .format("dddd")}
+                  </span>
+                  <br />
+                  <span className="select-none text-xs tracking-wide">
+                    {dayjs()
+                      .set("day", nextSchedule.schedule.day)
+                      .format("DD/MM/YYYY")}
+                  </span>
+                </div>
+                <div className="flex w-full flex-col items-start justify-center rounded-md border p-4">
+                  <div className="text-sm font-bold uppercase tracking-tight">
+                    <div className="flex items-center gap-1">
+                      <TennisBallSVG className="w-4 text-primary-500" />
+                      <span className="line-clamp-2">
+                        {nextSchedule.group.name}
                       </span>
                     </div>
-                  ))}
+                    {nextSchedule.trainers.slice(0, 3).map((trainer) => (
+                      <div key={trainer.id} className="mt-2 flex gap-1">
+                        <TennisRaquetSVG className="mt-1 w-4 text-secondary-500" />
+                        <span className=" line-clamp-1">
+                          {trainer.firstName} {trainer.lastName}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
+              </>
+            ) : (
+              <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-2xl font-semibold uppercase">
+                Horarios no encontrados
               </div>
-            </>
-          ) : (
-            <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-2xl font-semibold uppercase">
-              Horarios no encontrados
-            </div>
-          )}
-        </>
-      )}
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 };

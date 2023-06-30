@@ -16,6 +16,7 @@ const Schedule: NextPage = () => {
 
   const [isLoading, setIsLoading] = useState(true);
   const initialDate = dayjs();
+  const finalDate = initialDate.add(6, "days");
 
   useEffect(() => {
     setIsLoading(true);
@@ -24,21 +25,6 @@ const Schedule: NextPage = () => {
       .then(() => setIsLoading(false))
       .catch(() => setIsLoading(false));
   }, []);
-
-  const renderTableTitle = () => {
-    const finalDate = initialDate.add(6, "days");
-
-    return (
-      <h1 className="ml-2 font-display text-4xl font-semibold uppercase">
-        <span className="mr-4 font-display text-6xl font-semibold uppercase">
-          Semana
-        </span>
-        <span>
-          {initialDate.format("DD/MM/YYYY")} - {finalDate.format("DD/MM/YYYY")}
-        </span>
-      </h1>
-    );
-  };
 
   const renderTableHead = () => {
     const days: JSX.Element[] = [
@@ -81,7 +67,17 @@ const Schedule: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
-        <div className="flex">{renderTableTitle()}</div>
+        <div className="flex">
+          <h1 className="ml-2 font-display text-4xl font-semibold uppercase">
+            <span className="mr-4 font-display text-6xl font-semibold uppercase">
+              Semana
+            </span>
+            <span>
+              {initialDate.format("DD/MM/YYYY")} -{" "}
+              {finalDate.format("DD/MM/YYYY")}
+            </span>
+          </h1>
+        </div>
         {isLoading ? (
           <div className="w-full bg-gray-50 pt-16">
             <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />

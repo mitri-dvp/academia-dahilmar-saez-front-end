@@ -38,7 +38,7 @@ const EventDeleteButton: ({
       isLoading={isLoading}
       trigger={
         <button onClick={() => setShowConfirm(!showConfirm)} type="button">
-          <TrashFillSVG className="h-6 w-6 " />
+          <TrashFillSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
         </button>
       }
       content={
@@ -49,15 +49,15 @@ const EventDeleteButton: ({
           <div className="text-center">¿Desea borrar el evento?</div>
           <div className="text-center">Esta acción es irreversible</div>
           <div className="mt-4 flex gap-4">
+            <Button styles="w-1/2" onClick={handleDelete}>
+              Si
+            </Button>
             <Button
               styles="w-1/2"
               color="clear"
               onClick={() => setShowConfirm(false)}
             >
               No
-            </Button>
-            <Button styles="w-1/2" onClick={handleDelete}>
-              Si
             </Button>
           </div>
         </div>

@@ -16,10 +16,10 @@ const GroupScheduleModalEditContent: ({
     <React.Fragment>
       <div className="flex justify-end gap-4">
         <button onClick={toggleEditing} type="button">
-          <PencilSquareSVG className="h-6 w-6 stroke-dark-500" />
+          <PencilSquareSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
         </button>
         <button onClick={onClose} type="button">
-          <CrossSVG className="h-6 w-6 stroke-dark-500" />
+          <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
         </button>
       </div>
       <div>

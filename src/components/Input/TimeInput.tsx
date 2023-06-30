@@ -28,13 +28,13 @@ const TimeInput: ({
     }
   };
   const handleMinutesIncrement = () => {
-    if (minutes < 55) {
-      setMinutes(minutes + 5);
+    if (minutes + 1 < 60) {
+      setMinutes(minutes + 1);
     }
   };
   const handleMinutesDecrement = () => {
-    if (minutes > 0) {
-      setMinutes(minutes - 5);
+    if (minutes - 1 > 0) {
+      setMinutes(minutes - 1);
     }
   };
 

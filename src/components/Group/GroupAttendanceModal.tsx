@@ -1,13 +1,20 @@
 import { useEffect, useState } from "react";
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
-import { ChevronLeftSVG, ChevronRightSVG, CrossSVG, SpinnerSVG } from "../SVG";
+import {
+  ChevronLeftSVG,
+  ChevronRightSVG,
+  CrossSVG,
+  DownloadSVG,
+  SpinnerSVG,
+} from "../SVG";
 import { useGroupStore } from "@store/group";
 
 import dayjs from "@lib/dayjs";
 import { getAttendances } from "@services/group";
 import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
 import { useToastStore } from "@store/toast";
+import DateSelect from "@components/Input/DateSelect";
 
 const GroupAttendanceModal: ({
   showModal,
@@ -28,8 +35,9 @@ const GroupAttendanceModal: ({
     : [];
 
   const [selectedDate, setSelectedDate] = useState(dayjs());
-
   const [isLoading, setIsLoading] = useState(true);
+  const [showDateSelect, setShowDateSelect] = useState(false);
+  const [showFileExport, setShowFileExport] = useState(false);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -91,66 +99,60 @@ const GroupAttendanceModal: ({
     setSelectedDate(dayjs().add(i - 1, "day"));
   }, []);
 
-  const renderHeader = () => {
-    const goToPrevSchedule = () => {
-      if (isLoading) return;
+  const goToPrevSchedule = () => {
+    if (isLoading) return;
 
-      let prevSchedule = undefined;
+    let prevSchedule = undefined;
 
-      let i = 0;
-      while (!prevSchedule) {
-        i++;
-        prevSchedule = orderedSchedules.find(
-          (schedule) =>
-            dayjs(schedule.datetime).format("dddd") ===
-            selectedDate.subtract(i, "day").format("dddd")
-        );
-        if (i > 7) break;
-      }
+    let i = 0;
+    while (!prevSchedule) {
+      i++;
+      prevSchedule = orderedSchedules.find(
+        (schedule) =>
+          dayjs(schedule.datetime).format("dddd") ===
+          selectedDate.subtract(i, "day").format("dddd")
+      );
+      if (i > 7) break;
+    }
 
-      setSelectedDate(selectedDate.subtract(i, "day"));
-    };
+    setSelectedDate(selectedDate.subtract(i, "day"));
+  };
 
-    const goToNextSchedule = () => {
-      if (isLoading) return;
+  const goToNextSchedule = () => {
+    if (isLoading) return;
 
-      let nextSchedule = undefined;
+    let nextSchedule = undefined;
 
-      let i = 0;
-      while (!nextSchedule) {
-        i++;
-        nextSchedule = orderedSchedules.find(
-          (schedule) =>
-            dayjs(schedule.datetime).format("dddd") ===
-            selectedDate.add(i, "day").format("dddd")
-        );
-        if (i > 7) break;
-      }
+    let i = 0;
+    while (!nextSchedule) {
+      i++;
+      nextSchedule = orderedSchedules.find(
+        (schedule) =>
+          dayjs(schedule.datetime).format("dddd") ===
+          selectedDate.add(i, "day").format("dddd")
+      );
+      if (i > 7) break;
+    }
 
-      if (dayjs().diff(selectedDate.add(i, "day"), "milliseconds") < 0) {
-        addToast({
-          title: "No se puede acceder a una fecha futura",
-        });
-        // Restriction Can't access a future date
-        return;
-      }
+    if (dayjs().diff(selectedDate.add(i, "day"), "milliseconds") < 0) {
+      addToast({
+        title: "No se puede acceder a una fecha futura",
+      });
+      return;
+    }
 
-      setSelectedDate(selectedDate.add(i, "day"));
-    };
+    setSelectedDate(selectedDate.add(i, "day"));
+  };
 
-    return (
-      <div className="flex items-center justify-between text-base font-semibold">
-        <div className="cursor-pointer" onClick={goToPrevSchedule}>
-          <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
-        </div>
-        <div className="tex/t-dark-500 text-xl font-bold capitalize">
-          {selectedDate.format("dddd DD/MM/YY")}
-        </div>
-        <div className="cursor-pointer" onClick={goToNextSchedule}>
-          <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
-        </div>
-      </div>
-    );
+  const selectDate = (date: Date) => {
+    setSelectedDate(dayjs(date));
+  };
+
+  const handleShowDateSelect = () => {
+    setShowDateSelect(!showDateSelect);
+  };
+  const handleShowFileExport = () => {
+    setShowFileExport(true);
   };
 
   return (
@@ -158,9 +160,12 @@ const GroupAttendanceModal: ({
       <Portal>
         <Overlay className="modal-overlay" />
         <Content className="modal-content w-full max-w-2xl">
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-4">
+            <button onClick={handleShowFileExport} type="button">
+              <DownloadSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
+            </button>
             <button onClick={onClose} type="button">
-              <CrossSVG className="h-6 w-6 stroke-dark-500" />
+              <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
           <div>
@@ -169,7 +174,41 @@ const GroupAttendanceModal: ({
             </div>
 
             <div className="space-y-8">
-              <div className="mx-auto w-96">{renderHeader()}</div>
+              <div className="mx-auto w-96">
+                <div className="flex items-center justify-between text-base font-semibold">
+                  <div className="cursor-pointer" onClick={goToPrevSchedule}>
+                    <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
+                  </div>
+                  <button
+                    className="tex/t-dark-500 cursor-pointer select-none text-xl font-bold capitalize transition-all hover:text-secondary-500"
+                    onClick={handleShowDateSelect}
+                    onBlur={() => setShowDateSelect(false)}
+                  >
+                    {selectedDate.format("dddd DD/MM/YY")}
+                  </button>
+                  <div
+                    className="absolute left-1/2 z-10 w-full max-w-lg -translate-x-1/2 translate-y-2"
+                    onMouseDown={(e) => e.preventDefault()}
+                  >
+                    {showDateSelect ? (
+                      <DateSelect
+                        selectedDate={selectedDate.toDate()}
+                        allowedDays={orderedSchedules.map((schedule) =>
+                          dayjs(schedule.datetime).get("day")
+                        )}
+                        onChange={(date: Date) => {
+                          selectDate(date);
+                          setShowDateSelect(false);
+                        }}
+                      />
+                    ) : null}
+                  </div>
+
+                  <div className="cursor-pointer" onClick={goToNextSchedule}>
+                    <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
+                  </div>
+                </div>
+              </div>
 
               {isLoading ? (
                 <div className="flex h-96 items-center justify-center">

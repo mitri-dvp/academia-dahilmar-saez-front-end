@@ -15,7 +15,7 @@ import Seo from "@components/Seo";
 import DashboardLayout from "@components/Dashboard/DashboardLayout";
 import Button from "@components/Button";
 import { DatepickerSVG, PersonSVG } from "@components/SVG";
-import DateInput from "@components/DateInput";
+import DateInput from "@components/Input/DateInput";
 import { edit, photoUpload, photoDelete } from "@services/user";
 import { useUserStore } from "@store/user";
 import { useToastStore } from "@store/toast";
@@ -193,8 +193,8 @@ const Profile: NextPage = () => {
         description="Editar Perfil | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-gray-50 md:py-14 md:px-10">
-        <div className="flex w-max gap-16 bg-white p-16 shadow-lg">
+      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
+        <div className="mt-4 flex gap-16">
           <div className="min-h-80 relative my-auto aspect-square w-80">
             {user.photo ? (
               <Image

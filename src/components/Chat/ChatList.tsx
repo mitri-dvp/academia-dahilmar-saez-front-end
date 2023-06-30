@@ -44,7 +44,7 @@ const ChatList: ({
           )}
         </div>
         <div className="flex items-center">
-          <h1 className="break-all text-lg font-bold text-dark-500 line-clamp-2">
+          <h1 className="break-words text-lg font-bold text-dark-500 line-clamp-2">
             {contact.firstName} {contact.lastName}
           </h1>
         </div>

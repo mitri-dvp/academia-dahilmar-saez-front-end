@@ -3,22 +3,34 @@ import { useState } from "react";
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import CalendarEventsModalViewContent from "@components/Calendar/CalendarEventsModalViewContent";
 import CalendarEventsModalEditContent from "@components/Calendar/CalendarEventsModalEditContent";
+import type { Dayjs } from "dayjs";
+import CalendarEventsModalAddContent from "./CalendarEventsModalAddContent";
 
 const CalendarEventsModal: ({
   showModal,
-  onClose,
   events,
+  currentDate,
+  onClose,
 }: {
   showModal: boolean;
-  onClose: () => void;
   events: CalendarEvent[];
-}) => JSX.Element = ({ showModal, onClose, events }) => {
+  currentDate: Dayjs;
+  onClose: () => void;
+}) => JSX.Element = ({ showModal, events, currentDate, onClose }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isAdding, setIsAdding] = useState(false);
   const [event, setEvent] = useState<CalendarEvent | null>(null);
+
+  const toggleAdding = () => {
+    setEvent(null);
+    setIsAdding(!isAdding);
+    setIsEditing(false);
+  };
 
   const toggleEditing = (event: CalendarEvent | null) => {
     setEvent(event);
     setIsEditing(!isEditing);
+    setIsAdding(false);
   };
 
   return (
@@ -30,17 +42,26 @@ const CalendarEventsModal: ({
             <>
               {event ? (
                 <CalendarEventsModalEditContent
-                  onClose={onClose}
                   event={event}
+                  currentDate={currentDate}
+                  onClose={onClose}
                   toggleEditing={toggleEditing}
                 />
               ) : null}
             </>
+          ) : isAdding ? (
+            <CalendarEventsModalAddContent
+              currentDate={currentDate}
+              onClose={onClose}
+              toggleAdding={toggleAdding}
+            />
           ) : (
             <CalendarEventsModalViewContent
-              onClose={onClose}
               events={events}
+              currentDate={currentDate}
+              onClose={onClose}
               toggleEditing={toggleEditing}
+              toggleAdding={toggleAdding}
             />
           )}
         </Content>

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Root, Portal, Overlay, Content } from "@radix-ui/react-dialog";
 import React from "react";
-import { CheckCircleSVG, CrossSVG, PersonSVG } from "../SVG";
+import { CrossSVG, PersonSVG } from "../SVG";
 import { getAthletes } from "@services/user";
 import Image from "next/image";
 import { getImageURL } from "@utils/media";
@@ -103,7 +103,7 @@ const GroupAddModal: ({
         <Content className="modal-content w-full max-w-xl">
           <div className="flex justify-end">
             <button onClick={onClose} type="button">
-              <CrossSVG className="h-6 w-6 stroke-dark-500" />
+              <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
           <div>
@@ -205,13 +205,6 @@ const GroupAddModal: ({
                         className="flex w-full cursor-pointer select-none gap-4 bg-white p-3 transition-all hover:bg-gray-100"
                         onClick={() => handleSelectAthlete(athlete, isSelected)}
                       >
-                        <div className="flex items-center">
-                          <input
-                            type="checkbox"
-                            checked={isSelected}
-                            className="dark:focus:ring-setext-secondary-500 h-8 w-8 cursor-pointer rounded border-gray-300 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
-                          />
-                        </div>
                         <div className="relative my-auto aspect-square h-12 w-12">
                           {athlete.photo ? (
                             <Image
@@ -229,6 +222,13 @@ const GroupAddModal: ({
                           <h1 className="text-base font-bold text-dark-500">
                             {athlete.firstName} {athlete.lastName}
                           </h1>
+                        </div>
+                        <div className="ml-auto flex items-center">
+                          <input
+                            type="checkbox"
+                            checked={isSelected}
+                            className="dark:focus:ring-setext-secondary-500 h-8 w-8 cursor-pointer rounded border-gray-300 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
+                          />
                         </div>
                       </div>
                     );
