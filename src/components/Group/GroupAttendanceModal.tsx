@@ -15,6 +15,7 @@ import { getAttendances } from "@services/group";
 import GroupAttendanceModalForm from "./GroupAttendanceModalForm";
 import { useToastStore } from "@store/toast";
 import DateSelect from "@components/Input/DateSelect";
+import GroupAttendanceModalFileExport from "./GroupAttendanceModalFileExport";
 
 const GroupAttendanceModal: ({
   showModal,
@@ -43,7 +44,7 @@ const GroupAttendanceModal: ({
     const abortController = new AbortController();
     if (!isLoading) {
       setIsLoading(true);
-      getAttendances(group.id, selectedDate.format("YYYY-MM-DD"), {
+      getAttendances(group.id, selectedDate.format(), {
         signal: abortController.signal,
       })
         .then(() => setIsLoading(false))
@@ -151,8 +152,8 @@ const GroupAttendanceModal: ({
   const handleShowDateSelect = () => {
     setShowDateSelect(!showDateSelect);
   };
-  const handleShowFileExport = () => {
-    setShowFileExport(true);
+  const handleToggleShowFileExport = () => {
+    setShowFileExport(!showFileExport);
   };
 
   return (
@@ -161,66 +162,78 @@ const GroupAttendanceModal: ({
         <Overlay className="modal-overlay" />
         <Content className="modal-content w-full max-w-2xl">
           <div className="flex justify-end gap-4">
-            <button onClick={handleShowFileExport} type="button">
+            <button onClick={handleToggleShowFileExport} type="button">
               <DownloadSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
             <button onClick={onClose} type="button">
               <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
-          <div>
-            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
-              Asistencias {group.name}
-            </div>
-
-            <div className="space-y-8">
-              <div className="mx-auto w-96">
-                <div className="flex items-center justify-between text-base font-semibold">
-                  <div className="cursor-pointer" onClick={goToPrevSchedule}>
-                    <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
-                  </div>
-                  <button
-                    className="tex/t-dark-500 cursor-pointer select-none text-xl font-bold capitalize transition-all hover:text-secondary-500"
-                    onClick={handleShowDateSelect}
-                    onBlur={() => setShowDateSelect(false)}
-                  >
-                    {selectedDate.format("dddd DD/MM/YY")}
-                  </button>
-                  <div
-                    className="absolute left-1/2 z-10 w-full max-w-lg -translate-x-1/2 translate-y-2"
-                    onMouseDown={(e) => e.preventDefault()}
-                  >
-                    {showDateSelect ? (
-                      <DateSelect
-                        selectedDate={selectedDate.toDate()}
-                        allowedDays={orderedSchedules.map((schedule) =>
-                          dayjs(schedule.datetime).get("day")
-                        )}
-                        onChange={(date: Date) => {
-                          selectDate(date);
-                          setShowDateSelect(false);
-                        }}
-                      />
-                    ) : null}
-                  </div>
-
-                  <div className="cursor-pointer" onClick={goToNextSchedule}>
-                    <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
-                  </div>
-                </div>
+          {showFileExport ? (
+            <GroupAttendanceModalFileExport selectedDate={selectedDate} />
+          ) : (
+            <div>
+              <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+                Asistencias {group.name}
               </div>
 
-              {isLoading ? (
-                <div className="flex h-96 items-center justify-center">
-                  <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+              <div className="space-y-8">
+                <div className="mx-auto w-96">
+                  <div className="flex items-center justify-between text-base font-semibold">
+                    <div className="cursor-pointer" onClick={goToPrevSchedule}>
+                      <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
+                    </div>
+                    <button
+                      className="flex cursor-pointer select-none justify-center gap-1 text-center text-xl font-bold text-dark-500 transition-all hover:text-secondary-500"
+                      onClick={handleShowDateSelect}
+                      onBlur={() => setShowDateSelect(false)}
+                    >
+                      <div className="capitalize">
+                        {selectedDate.format("dddd, DD")}
+                      </div>
+                      <div className="">de</div>
+                      <div className="capitalize">
+                        {selectedDate.format("MMMM")}
+                      </div>
+                      <div className="">del</div>
+                      <div className="capitalize">
+                        {selectedDate.format("YYYY")}
+                      </div>
+                    </button>
+                    <div
+                      className="absolute left-1/2 z-10 w-full max-w-lg -translate-x-1/2 translate-y-2"
+                      onMouseDown={(e) => e.preventDefault()}
+                    >
+                      {showDateSelect ? (
+                        <DateSelect
+                          selectedDate={selectedDate.toDate()}
+                          allowedDays={orderedSchedules.map((schedule) =>
+                            dayjs(schedule.datetime).get("day")
+                          )}
+                          onChange={(date: Date) => {
+                            selectDate(date);
+                            setShowDateSelect(false);
+                          }}
+                        />
+                      ) : null}
+                    </div>
+
+                    <div className="cursor-pointer" onClick={goToNextSchedule}>
+                      <ChevronRightSVG className="h-5 w-5 text-secondary-500" />
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                <GroupAttendanceModalForm
-                  selectedDate={selectedDate.format()}
-                />
-              )}
+
+                {isLoading ? (
+                  <div className="flex h-[31rem] items-center justify-center">
+                    <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
+                  </div>
+                ) : (
+                  <GroupAttendanceModalForm selectedDate={selectedDate} />
+                )}
+              </div>
             </div>
-          </div>
+          )}
         </Content>
       </Portal>
     </Root>

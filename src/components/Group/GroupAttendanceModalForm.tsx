@@ -9,11 +9,12 @@ import { postAttendances } from "@services/group";
 import GroupAttendanceFormItem from "./GroupAttendanceModalFormItem";
 import { useAttendanceStore } from "@store/attendance";
 import { useToastStore } from "@store/toast";
+import type { Dayjs } from "dayjs";
 
 const GroupAttendanceModalForm: ({
   selectedDate,
 }: {
-  selectedDate: string;
+  selectedDate: Dayjs;
 }) => JSX.Element = ({ selectedDate }) => {
   const { selectedGroup } = useGroupStore();
   const { groupAttendances } = useAttendanceStore();
@@ -34,7 +35,11 @@ const GroupAttendanceModalForm: ({
     onSubmit: async (values) => {
       try {
         // Action
-        await postAttendances(group.id, selectedDate, values.draftAttendances);
+        await postAttendances(
+          group.id,
+          selectedDate.toDate(),
+          values.draftAttendances
+        );
         // On Success
         formik.resetForm();
 

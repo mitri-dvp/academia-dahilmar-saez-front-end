@@ -7,6 +7,7 @@ import { getImageURL } from "@utils/media";
 import { useFormik } from "formik";
 import dayjs from "@lib/dayjs";
 import { useAttendanceStore } from "@store/attendance";
+import type { Dayjs } from "dayjs";
 
 const GroupAttendanceFormItem: ({
   athlete,
@@ -14,7 +15,7 @@ const GroupAttendanceFormItem: ({
   onChange,
 }: {
   athlete: User;
-  selectedDate: string;
+  selectedDate: Dayjs;
   onChange: (draftAttendance: DraftAttendance) => void;
 }) => JSX.Element = ({ athlete, selectedDate, onChange }) => {
   const { groupAttendances } = useAttendanceStore();
@@ -23,7 +24,7 @@ const GroupAttendanceFormItem: ({
     const userMatch = attendance.user.id === athlete.id;
     const dateMatch =
       dayjs(attendance.datetime).format("YYYY-MM-DD") ===
-      dayjs(selectedDate).format("YYYY-MM-DD");
+      selectedDate.format("YYYY-MM-DD");
 
     return userMatch && dateMatch;
   });

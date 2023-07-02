@@ -90,7 +90,7 @@ export const getAttendances = async (
 
 export const postAttendances = async (
   groupID: number,
-  date: string,
+  date: Date,
   draftAttendances: DraftAttendance[]
 ) => {
   const getResponse = await publicApi.post<{ attendances: Attendance[] }>(
@@ -106,4 +106,19 @@ export const postAttendances = async (
   const { attendances } = getResponse.data;
 
   useAttendanceStore.getState().setGroupAttendances(attendances);
+};
+
+export const exportAttendances = async (
+  groupID: number,
+  date: string,
+  range: string
+) => {
+  const getResponse = await publicApi.get<{ attendances: Attendance[] }>(
+    `/group/${groupID}/export/attendances/?date=${date}&range=${range}`,
+    {
+      headers: { Authorization: "Bearer " + useUserStore.getState().token },
+    }
+  );
+
+  return getResponse.data.attendances;
 };

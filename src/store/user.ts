@@ -23,6 +23,7 @@ const initialState = {
     id: 0,
     username: "",
     email: "",
+    phone: "",
     firstName: "",
     lastName: "",
     documentID: "",

@@ -57,6 +57,7 @@ const GroupModalViewContent: ({
               .filter((user) =>
                 Boolean(`${user.firstName} ${user.lastName}`.includes(query))
               )
+              .sort((a, b) => Number(a.lastName > b.lastName))
               .map((user) => {
                 if (user.id === userStore.user.id) return null;
 
