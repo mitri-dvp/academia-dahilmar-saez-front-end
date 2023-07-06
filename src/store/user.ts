@@ -24,6 +24,7 @@ const initialState = {
     username: "",
     email: "",
     phone: "",
+    confirmed: false,
     firstName: "",
     lastName: "",
     documentID: "",

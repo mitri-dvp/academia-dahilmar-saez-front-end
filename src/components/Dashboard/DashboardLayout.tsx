@@ -17,9 +17,16 @@ const DashboardLayout: FC<{ children: ReactNode }> = ({ children }) => {
     }
   }, [router, user.role.type]);
 
+  const checkConfirmRedirect = useCallback(() => {
+    if (!user.confirmed) {
+      router.replace(`/${user.role.type}/pending`);
+    }
+  }, [router, user.confirmed]);
+
   useEffect(() => {
     checkRoleRedirect();
-  }, [checkRoleRedirect]);
+    checkConfirmRedirect();
+  }, [checkRoleRedirect, checkConfirmRedirect]);
 
   useEffect(() => {
     if (token) socket.connect();

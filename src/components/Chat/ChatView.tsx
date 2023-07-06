@@ -161,7 +161,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
       messagesList.push(
         <div
           key={message.id}
-          className={`relative m-4 w-max max-w-sm break-words py-6 px-8 font-display text-base font-semibold uppercase ${
+          className={`relative m-4 w-max max-w-sm break-words py-6 px-8 font-semibold  ${
             isOwnMessage
               ? "ml-auto bg-secondary-500 text-right text-white"
               : "bg-white text-secondary-500"

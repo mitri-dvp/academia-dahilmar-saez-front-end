@@ -13,11 +13,8 @@ import Layout from "@components/Layout";
 import Seo from "@components/Seo";
 import Button from "@components/Button";
 import { sendEmail } from "@services/email";
-import { useToastStore } from "@store/toast";
 
 const Contact: NextPage = () => {
-  const { addToast } = useToastStore();
-
   const [success, setSuccess] = useState(false);
 
   const formik = useFormik({

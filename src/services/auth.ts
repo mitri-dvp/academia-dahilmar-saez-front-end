@@ -34,7 +34,13 @@ export const signup = async (signupValues: SignupValues) => {
   useUserStore.getState().signup(token, user);
   useAttendanceStore.getState().set(attendances);
 
-  Router.push(`/dashboard/${user.role.type}`);
+  if (user.confirmed) {
+    Router.push(`/dashboard/${user.role.type}`);
+  }
+
+  if (!user.confirmed) {
+    Router.push(`/${user.role.type}/pending`);
+  }
 };
 
 export const login = async (loginValues: LoginValues) => {
@@ -53,5 +59,11 @@ export const login = async (loginValues: LoginValues) => {
 
   socket.connect();
 
-  Router.push(`/dashboard/${user.role.type}`);
+  if (user.confirmed) {
+    Router.push(`/dashboard/${user.role.type}`);
+  }
+
+  if (!user.confirmed) {
+    Router.push(`/${user.role.type}/pending`);
+  }
 };

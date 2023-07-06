@@ -7,6 +7,7 @@ type User = {
   username: string;
   email: string;
   phone: string;
+  confirmed: boolean;
   provider: string;
   createdAt: string;
   updatedAt: string;

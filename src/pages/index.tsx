@@ -44,7 +44,7 @@ const Home: NextPage = () => {
         </h1>
 
         <div className="flex gap-8">
-          <div className="my-auto w-1/2 space-y-4 text-justify text-xl tracking-wide">
+          <div className="my-auto w-1/2 space-y-4 text-xl tracking-wide">
             <p>
               Somos una Academia de tenis dirigida a entusiastas del deporte que
               buscan el lugar perfecto para jugar y entretenerse. Te acompañamos

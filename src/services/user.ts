@@ -10,6 +10,10 @@ type EditValues = {
   phone: string;
 };
 
+type RequestOptions = {
+  signal: AbortSignal;
+};
+
 export const edit = async (editValues: EditValues) => {
   const editResponse = await publicApi.put<{ token: string; user: User }>(
     `/users/edit`,
@@ -69,4 +73,27 @@ export const getAthletes = async () => {
   const { athletes } = getResponse.data;
 
   return athletes;
+};
+
+export const getUserFromToken = async (
+  token: string,
+  options: RequestOptions
+) => {
+  const userResponse = await publicApi.get<{
+    user: User;
+  }>(`/users/token?token=${token}`, { signal: options.signal });
+
+  const { user } = userResponse.data;
+
+  return user;
+};
+
+export const confirmUser = async (token: string) => {
+  const userResponse = await publicApi.get<{
+    user: User;
+  }>(`/users/confirm/token?token=${token}`);
+
+  const { user } = userResponse.data;
+
+  return user;
 };
