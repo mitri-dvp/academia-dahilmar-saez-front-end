@@ -64,12 +64,7 @@ const NotificationItem: ({
         {entityToIcon(notification.entity, "w-6 h-6")}
       </div>
       <div className="mr-3 text-sm">
-        <span className="line-clamp-2">
-          {notification.message} Lorem ipsum dolor, sit amet consectetur
-          adipisicing elit. Soluta asperiores vitae iusto rem sit omnis facere,
-          at, voluptates voluptatem recusandae explicabo nemo qui quod repellat
-          nobis odio! Recusandae, illo temporibus.
-        </span>
+        <span className="line-clamp-2">{notification.message}</span>
         <span className="mt-1 text-xs text-secondary-500 line-clamp-1">
           {dayjs(notification.createdAt).fromNow()}
         </span>
