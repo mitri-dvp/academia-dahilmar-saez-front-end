@@ -69,7 +69,7 @@ const NotificationsButton = () => {
       isLoading={isLoading}
       onClose={() => setShowConfirm(false)}
       trigger={
-        <div className="relative ml-auto">
+        <div className="relative ml-auto shrink-0">
           {showConfirm ? (
             <main>
               {unreadNotifications.length ? (
@@ -98,7 +98,7 @@ const NotificationsButton = () => {
       content={
         <>
           {notifications.length === 0 ? (
-            <div className="p-4 text-center text-sm font-semibold text-dark-500">
+            <div className="p-4 text-center text-xs font-semibold text-dark-500 md:text-sm">
               Notificaciones no encontradas
             </div>
           ) : (

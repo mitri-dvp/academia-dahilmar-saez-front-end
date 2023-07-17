@@ -24,12 +24,15 @@ const DashboardChatSummary = () => {
   const chatsSummary = chats.slice(0, 3);
 
   return (
-    <div className="flex h-72 flex-col gap-4 border p-6">
+    <div className="flex flex-col gap-4 border p-6 md:h-72">
       <header className="flex items-center">
-        <h1 className="font-display text-2xl font-semibold uppercase">
+        <h1 className="font-display text-lg font-semibold uppercase md:text-2xl">
           Mensajes
         </h1>
-        <Link href={"/dashboard/chats"} className="ml-auto">
+        <Link
+          href={"/dashboard/chats"}
+          className="ml-auto text-xs md:text-base"
+        >
           <Button>Ver Mensajes</Button>
         </Link>
       </header>
@@ -75,7 +78,7 @@ const DashboardChatSummary = () => {
                 })}
               </div>
             ) : (
-              <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-2xl font-semibold uppercase">
+              <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                 Chats no encontrados
               </div>
             )}

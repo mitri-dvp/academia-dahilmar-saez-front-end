@@ -36,20 +36,23 @@ const DashboardNextEvent = () => {
   const displayedEvent = nextEvent || prevEvent;
 
   return (
-    <div className="flex h-72 flex-col gap-4 border p-6">
+    <div className="flex flex-col gap-4 border p-6 md:h-72">
       <header className="flex items-center">
-        <h1 className="font-display text-2xl font-semibold uppercase">
+        <h1 className="font-display text-lg font-semibold uppercase md:text-2xl">
           {nextEvent
             ? "Próximo Evento"
             : prevEvent
             ? "Evento Anterior"
             : "Próximo Evento"}
         </h1>
-        <Link href={"/dashboard/calendar"} className="ml-auto">
+        <Link
+          href={"/dashboard/calendar"}
+          className="ml-auto text-xs md:text-base"
+        >
           <Button>Ver Eventos</Button>
         </Link>
       </header>
-      <div className="flex h-full gap-4">
+      <div className="flex gap-4 md:h-full">
         {isLoading ? (
           <div className="flex w-full items-center justify-center">
             <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
@@ -58,19 +61,23 @@ const DashboardNextEvent = () => {
           <>
             {displayedEvent ? (
               <>
-                <div className="flex aspect-square shrink-0 flex-col items-center justify-center rounded-md bg-secondary-500 p-4 text-white">
+                <div className="flex aspect-square w-1/3 shrink-0 flex-col items-center justify-center rounded-md bg-secondary-500 text-white md:w-auto md:p-4">
                   <CalendarSVG className="h-8 w-8 text-white" />
                 </div>
                 <div className="flex w-full flex-col items-start justify-center rounded-md border p-4">
-                  <div className="font-semibold">{displayedEvent.name}</div>
-                  <div>{displayedEvent.description}</div>
-                  <div className="mt-1 text-sm capitalize text-gray-400">
+                  <div className="text-sm font-semibold md:text-base">
+                    {displayedEvent.name}
+                  </div>
+                  <div className="mt-1 text-xs line-clamp-2 md:mt-0 md:text-base">
+                    {displayedEvent.description}
+                  </div>
+                  <div className="mt-1  text-xs capitalize text-gray-400 md:text-sm">
                     {dayjs(displayedEvent.datetime).format("dddd DD [de] MMMM")}
                   </div>
                 </div>
               </>
             ) : (
-              <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-2xl font-semibold uppercase">
+              <div className="flex w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                 Eventos no encontrados
               </div>
             )}

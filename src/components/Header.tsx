@@ -7,6 +7,7 @@ import { useState } from "react";
 import useScrollPosition from "@hooks/useScrollPosition";
 import Button from "@components/Button";
 import { navItems } from "@utils/navigation";
+import { BurgerSVG } from "@components/SVG";
 
 const Header: FC = () => {
   // Open / Close Mobile Nav
@@ -65,18 +66,7 @@ const Header: FC = () => {
               type="button"
               className={`inline-flex items-center justify-center p-2 text-gray-400 transition ease-in-out hover:text-gray-900 focus:text-gray-900`}
             >
-              <svg
-                className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+              <BurgerSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
 
@@ -102,11 +92,13 @@ const Header: FC = () => {
                           </Link>
                         );
                       })}
-                      <Button styles="-m-3 flex items-center  bg-secondary-500 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-white transition hover:bg-secondary-700">
-                        <Link href="/login" onClick={() => setOpen(false)}>
-                          Ingresar
-                        </Link>
-                      </Button>
+                      <Link
+                        className="-m-3 flex items-center space-x-3 bg-secondary-500 px-8 py-4 font-display text-lg font-semibold uppercase tracking-wide text-white transition  hover:bg-secondary-700"
+                        href="/login"
+                        onClick={() => setOpen(false)}
+                      >
+                        Ingresar
+                      </Link>
                     </nav>
                   </div>
                 </div>

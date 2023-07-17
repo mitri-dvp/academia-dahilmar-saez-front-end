@@ -98,7 +98,10 @@ const CalendarEventsModalEditContent: ({
         <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
           Editar Evento
         </div>
-        <form onSubmit={formik.handleSubmit} className="mx-auto w-96 space-y-8">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="mx-auto space-y-8 md:w-96"
+        >
           <div className="grid grid-cols-1 gap-4">
             <div className="w-full">
               <div className="relative z-0">

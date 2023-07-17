@@ -23,9 +23,9 @@ const Profile: NextPage = () => {
         description="Perfil | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
-        <div className="mt-4 flex gap-16">
-          <div className="relative my-auto aspect-square h-80 w-80">
+      <section className="min-h-screen w-full bg-white p-4 py-8 md:py-14 md:px-8">
+        <div className="mt-4 grid justify-center gap-8 md:flex md:justify-start md:gap-16">
+          <div className="my-auto mx-auto aspect-square h-80 w-80 md:mx-0">
             {user.photo ? (
               <Image
                 className="h-80 w-80 rounded-full object-cover"
@@ -38,7 +38,7 @@ const Profile: NextPage = () => {
               <PersonSVG className="aspect-square h-80 w-80" />
             )}
           </div>
-          <div className="w-96 space-y-8">
+          <div className="w-full max-w-sm space-y-8">
             <div className="flex gap-4">
               <div className="w-1/2">
                 <h1 className="text-sm font-bold text-dark-500">Nombre</h1>

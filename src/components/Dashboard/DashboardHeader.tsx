@@ -67,7 +67,7 @@ const DashboardHeader: FC = () => {
 
     if (navItem) {
       return (
-        <span className="ml-8 flex gap-4 font-display font-semibold uppercase tracking-wide md:ml-56">
+        <span className="ml-4 flex shrink-0 gap-2 font-display font-semibold uppercase tracking-wide md:ml-56 md:gap-4">
           {navItem.Icon({
             className: `h-6 w-6 text-dark-500 transition hover:fill-white`,
           })}
@@ -83,8 +83,8 @@ const DashboardHeader: FC = () => {
     <header
       className={`fixed z-20 w-full bg-white text-dark-500 shadow-sm transition`}
     >
-      <div className="mr-auto flex h-20 w-full max-w-screen-2xl items-center justify-between px-8 md:justify-start md:space-x-10">
-        <div className="md:hidden">
+      <div className="flex h-20 w-full max-w-screen-2xl items-center justify-between px-4 md:mr-auto md:justify-start md:space-x-10 md:px-8">
+        <div className="flex-shrink-0 md:hidden">
           <button
             onClick={() => setOpen(!open)}
             aria-label="Toggle Menu"
@@ -95,16 +95,19 @@ const DashboardHeader: FC = () => {
           </button>
         </div>
 
-        <div className="flex flex-1 gap-8 ">
+        <div className="mr-2 flex flex-1 items-center gap-4 md:mr-0 md:gap-8">
           {getPageTitle(router.pathname)}
 
           <NotificationsButton />
 
-          <Link className="w- flex gap-4" href="/dashboard/profile">
+          <Link
+            className="flex items-center gap-2 md:gap-4"
+            href="/dashboard/profile"
+          >
             {user.photo ? (
-              <div className="relative my-auto h-6 w-11">
+              <div className="relative my-auto h-8 w-8 flex-shrink-0 md:h-11 md:w-11">
                 <Image
-                  className="aspect-square h-11 w-11 -translate-y-2 rounded-full object-cover"
+                  className="aspect-square h-full w-full rounded-full object-cover"
                   src={getImageURL(user.photo)}
                   alt={user.photo.name}
                   width={40}
@@ -116,8 +119,8 @@ const DashboardHeader: FC = () => {
                 <PersonSVG className="aspect-square h-6 w-6" />
               </div>
             )}
-            <span className="max-w-[100px] font-display font-semibold uppercase tracking-wide line-clamp-1">
-              {user.firstName} {user.lastName[0]}.
+            <span className="hidden max-w-[100px] font-display font-semibold uppercase tracking-wide md:block md:line-clamp-1">
+              {user.firstName} {user.lastName[0]}
             </span>
           </Link>
         </div>

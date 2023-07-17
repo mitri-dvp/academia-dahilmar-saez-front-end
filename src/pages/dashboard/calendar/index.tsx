@@ -27,6 +27,15 @@ const Calendar: NextPage = () => {
   const monthRef = useRef<HTMLDivElement>(null);
   const yearRef = useRef<HTMLDivElement>(null);
 
+  const calendarDays = [
+    "Domingo",
+    "Lunes",
+    "Martes",
+    "Miércoles",
+    "Jueves",
+    "Viernes",
+    "Sábado",
+  ];
   const calendarMonths = Array.from(Array(12));
   const calendarYears = Array.from(Array(90));
 
@@ -65,11 +74,11 @@ const Calendar: NextPage = () => {
         description="Calendario | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
+      <section className="min-h-screen w-full bg-white p-4 py-8 md:py-14 md:px-8">
         <div className="relative">
           <div className="flex">
-            <h1 className="ml-2 font-display text-6xl font-semibold uppercase">
-              <div className="flex gap-4">
+            <h1 className="ml-2 font-display text-2xl font-semibold uppercase md:text-6xl">
+              <div className="flex gap-2 md:gap-4">
                 <div className="cursor-pointer font-display font-semibold uppercase">
                   <span
                     className="transition-all hover:text-secondary-500"
@@ -81,13 +90,13 @@ const Calendar: NextPage = () => {
                     <div
                       ref={monthRef}
                       onBlur={() => setShowMonthSelect(false)}
-                      className="absolute top-20 left-2 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                      className="absolute top-12 left-1 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm md:left-2 md:top-20"
                     >
                       <button autoFocus className="absolute" />
                       {calendarMonths.map((_, i) => (
                         <div
                           key={i}
-                          className={`p-5 text-2xl transition-all hover:bg-gray-100 ${
+                          className={`p-5 text-lg transition-all hover:bg-gray-100 md:text-2xl ${
                             initialDate.get("month") === i
                               ? "text-secondary-500"
                               : ""
@@ -111,7 +120,7 @@ const Calendar: NextPage = () => {
                     <div
                       ref={yearRef}
                       onBlur={() => setShowYearSelect(false)}
-                      className="absolute top-20 left-2 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm"
+                      className="absolute top-12 left-1 z-10 grid max-h-full w-full grid-cols-4 overflow-y-scroll border bg-white text-center shadow-sm md:left-2 md:top-20"
                     >
                       <button autoFocus className="absolute" />
                       {calendarYears.map((_, i) => {
@@ -119,7 +128,7 @@ const Calendar: NextPage = () => {
                         return (
                           <div
                             key={i}
-                            className={`p-5 text-2xl transition-all hover:bg-gray-100 ${
+                            className={`p-5 text-lg transition-all hover:bg-gray-100 md:text-2xl ${
                               initialDate.get("year") ===
                               currentYear.get("year")
                                 ? "text-secondary-500"
@@ -140,15 +149,15 @@ const Calendar: NextPage = () => {
             </h1>
             <div className="ml-auto flex items-center justify-center gap-2">
               <div onClick={handleDateDecrement}>
-                <ChevronLeftSVG className="h-12 w-12 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700" />
+                <ChevronLeftSVG className="h-6 w-6 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700 md:h-12 md:w-12" />
               </div>
               <div onClick={handleDateReset}>
-                <span className="cursor-pointer font-display text-4xl font-semibold uppercase transition-all hover:text-secondary-500">
+                <span className="cursor-pointer font-display text-lg font-semibold uppercase transition-all hover:text-secondary-500 md:text-4xl">
                   Hoy
                 </span>
               </div>
               <div onClick={handleDateIncrement}>
-                <ChevronRightSVG className="h-12 w-12 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700" />
+                <ChevronRightSVG className="h-6 w-6 cursor-pointer text-secondary-500 transition-all hover:text-secondary-700 md:h-12 md:w-12" />
               </div>
             </div>
           </div>
@@ -157,28 +166,25 @@ const Calendar: NextPage = () => {
               <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
             </div>
           ) : (
-            <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
-              <thead className="rounded-full text-white">
-                <tr>
-                  {[
-                    "Domingo",
-                    "Lunes",
-                    "Martes",
-                    "Miércoles",
-                    "Jueves",
-                    "Viernes",
-                    "Sábado",
-                  ].map((day) => (
-                    <th key={day} className="rounded-md bg-secondary-500 p-4">
-                      <span className="select-none font-bold uppercase tracking-wide">
-                        {day}
-                      </span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <CalendarTableBody initialDate={initialDate} />
-            </table>
+            <div className="overflow-x-auto">
+              <table className="mt-4 w-full border-separate border-spacing-1 bg-white text-xs md:mt-8 md:border-spacing-2 md:text-sm">
+                <thead className="rounded-full text-white">
+                  <tr>
+                    {calendarDays.map((day) => (
+                      <th
+                        key={day}
+                        className="rounded-md bg-secondary-500 px-1 py-4 md:p-4"
+                      >
+                        <span className="select-none font-bold uppercase tracking-wide">
+                          {day}
+                        </span>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <CalendarTableBody initialDate={initialDate} />
+              </table>
+            </div>
           )}
         </div>
       </section>

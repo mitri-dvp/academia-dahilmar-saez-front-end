@@ -193,9 +193,9 @@ const Profile: NextPage = () => {
         description="Editar Perfil | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
-        <div className="mt-4 flex gap-16">
-          <div className="min-h-80 relative my-auto aspect-square w-80">
+      <section className="min-h-screen w-full bg-white p-4 py-8 md:py-14 md:px-8">
+        <div className="mt-4 grid justify-center gap-8 md:flex md:justify-start md:gap-16">
+          <div className="my-auto mx-auto aspect-square w-80 md:mx-0">
             {user.photo ? (
               <Image
                 className="h-80 w-80 rounded-full object-cover"
@@ -237,7 +237,10 @@ const Profile: NextPage = () => {
               </Button>
             </div>
           </div>
-          <form onSubmit={formik.handleSubmit} className="w-96 space-y-8">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="w-full max-w-sm space-y-8"
+          >
             <div className="flex gap-4">
               <div className="w-1/2">
                 <div className="relative z-0">

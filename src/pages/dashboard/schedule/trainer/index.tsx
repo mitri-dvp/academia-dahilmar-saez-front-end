@@ -37,7 +37,7 @@ const Schedule: NextPage = () => {
 
       <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
         <div>
-          <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
+          <h1 className="mb-10 font-display text-4xl font-semibold uppercase md:text-6xl">
             Horarios
           </h1>
           {isLoading ? (
@@ -47,7 +47,7 @@ const Schedule: NextPage = () => {
           ) : (
             <div className="grid grid-cols-4 gap-6">
               {groupStore.groups.length === 0 ? (
-                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
+                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                   Grupos no encontrados
                 </div>
               ) : null}

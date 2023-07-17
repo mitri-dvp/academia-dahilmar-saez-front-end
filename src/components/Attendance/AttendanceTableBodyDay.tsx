@@ -1,11 +1,6 @@
 import type { Dayjs } from "dayjs";
 import dayjs from "@lib/dayjs";
-import {
-  CheckCircleFillSVG,
-  CheckCircleSVG,
-  CrossCircleFillSVG,
-  CrossCircleSVG,
-} from "@components/SVG";
+import { CheckCircleFillSVG, CrossCircleFillSVG } from "@components/SVG";
 import { useAttendanceStore } from "@store/attendance";
 import { useState } from "react";
 import AttendanceTableBodyDayModal from "./AttendanceTableBodyDayModal";
@@ -35,11 +30,15 @@ const AttendanceTableBodyDay: ({
 
   const renderStatus = (status: boolean) => {
     if (status === true) {
-      return <CheckCircleFillSVG className="h-8 w-8 text-secondary-500" />;
+      return (
+        <CheckCircleFillSVG className="h-6 w-6 text-secondary-500 md:h-8 md:w-8" />
+      );
     }
 
     if (status === false) {
-      return <CrossCircleFillSVG className="h-8 w-8 text-secondary-500" />;
+      return (
+        <CrossCircleFillSVG className="h-6 w-6 text-secondary-500 md:h-8 md:w-8" />
+      );
     }
     return "\xA0";
   };
@@ -48,13 +47,13 @@ const AttendanceTableBodyDay: ({
     <>
       <td
         key={currentDate.format("DD-MM-YYYY")}
-        className={`relative rounded-md border border-gray-300 p-12 ${
+        className={`relative rounded-md border border-gray-300 p-8 md:p-12 ${
           attendance ? "cursor-pointer transition-all hover:bg-gray-100" : ""
         }`}
         onClick={attendance ? () => setShowModal(true) : undefined}
       >
         <div
-          className={`absolute top-2 right-2 flex h-8 w-8 select-none items-center justify-center text-xs font-bold ${
+          className={`absolute top-0.5 right-0.5 flex h-6 w-6 select-none items-center justify-center text-xs font-bold md:top-2 md:right-2 md:h-8 md:w-8 ${
             isToday
               ? "block aspect-square rounded-full bg-secondary-500 text-white"
               : ""

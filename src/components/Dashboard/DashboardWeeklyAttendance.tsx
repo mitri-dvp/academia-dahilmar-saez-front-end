@@ -64,12 +64,15 @@ const DashboardWeeklyAttendance = () => {
   );
 
   return (
-    <div className="flex h-72 flex-col gap-4 border p-6">
+    <div className="flex flex-col gap-4 border p-6 md:h-72">
       <header className="flex items-center">
-        <h1 className="font-display text-2xl font-semibold uppercase">
+        <h1 className="font-display text-lg font-semibold uppercase md:text-2xl">
           Asistencia Semanal
         </h1>
-        <Link href={"/dashboard/attendance/athlete"} className="ml-auto">
+        <Link
+          href={"/dashboard/attendance/athlete"}
+          className="ml-auto text-xs md:text-base"
+        >
           <Button>Ver Asistencias</Button>
         </Link>
       </header>
@@ -99,7 +102,7 @@ const DashboardWeeklyAttendance = () => {
                     return (
                       <div key={day} className="flex justify-center">
                         <div
-                          className={`mt-auto  ${
+                          className={`mt-auto ${
                             match ? "h-full" : "h-0.5"
                           } w-8 rounded-t-full bg-secondary-500`}
                         />
@@ -114,7 +117,7 @@ const DashboardWeeklyAttendance = () => {
                 </div>
               </>
             ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-2xl font-semibold uppercase">
+              <div className="md:text-2xlfont-semibold flex h-full w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-lg uppercase">
                 Asistencias no encontradas
               </div>
             )}

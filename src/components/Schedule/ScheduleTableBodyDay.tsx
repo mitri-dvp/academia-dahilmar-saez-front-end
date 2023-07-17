@@ -18,15 +18,15 @@ const ScheduleTableBodyDay: ({
         onClick={derivedSchedule ? () => setShowModal(true) : undefined}
       >
         {derivedSchedule ? (
-          <div className="text-sm font-bold uppercase tracking-tight">
+          <div className="text-xs font-bold uppercase tracking-tight md:text-sm">
             <div className="flex items-center gap-1">
-              <TennisBallSVG className="w-4 text-primary-500" />
+              <TennisBallSVG className="w-4 shrink-0 text-primary-500" />
               <span className="line-clamp-2">{derivedSchedule.group.name}</span>
             </div>
             {derivedSchedule.trainers.map((trainer) => (
               <div key={trainer.id} className="mt-2 flex gap-1">
-                <TennisRaquetSVG className="mt-1 w-4 text-secondary-500" />
-                <span className=" line-clamp-2">
+                <TennisRaquetSVG className="mt-1 w-4 shrink-0 text-secondary-500" />
+                <span className="line-clamp-2">
                   {trainer.firstName} {trainer.lastName}
                 </span>
               </div>

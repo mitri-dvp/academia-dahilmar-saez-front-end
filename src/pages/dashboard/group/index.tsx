@@ -38,7 +38,7 @@ const Group: NextPage = () => {
 
       <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
         <div>
-          <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
+          <h1 className="mb-10 font-display text-4xl font-semibold uppercase md:text-6xl">
             Grupos
           </h1>
           {isLoading ? (

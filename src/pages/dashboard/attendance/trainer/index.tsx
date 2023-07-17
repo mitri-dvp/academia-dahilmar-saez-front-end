@@ -38,7 +38,7 @@ const Attendance: NextPage = () => {
 
       <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
         <div>
-          <h1 className="mb-10 font-display text-6xl font-semibold uppercase">
+          <h1 className="mb-10 font-display text-4xl font-semibold uppercase md:text-6xl">
             Asistencias
           </h1>
           {isLoading ? (
@@ -48,7 +48,7 @@ const Attendance: NextPage = () => {
           ) : (
             <div className="grid grid-cols-4 gap-6">
               {groupStore.groups.length === 0 ? (
-                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-2xl font-semibold uppercase">
+                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                   Grupos no encontrados
                 </div>
               ) : null}
@@ -61,7 +61,7 @@ const Attendance: NextPage = () => {
                       href={"/dashboard/schedule/trainer"}
                     >
                       <span>{group.name}</span>
-                      <span className="text-sm font-semibold text-dark-500">
+                      <span className="text-xs font-semibold text-dark-500 md:text-sm">
                         Horarios no encontrados
                       </span>
                     </Link>

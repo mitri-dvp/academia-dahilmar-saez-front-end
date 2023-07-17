@@ -4,7 +4,6 @@ import dayjs from "@lib/dayjs";
 import { useEventStore } from "@store/event";
 import CalendarEvents from "@components/Calendar/CalendarEvents";
 import CalendarEventsModal from "@components/Calendar/CalendarEventsModal";
-import CalendarEventsModalAddContent from "./CalendarEventsModalAddContent";
 
 const CalendarDay: ({
   initialDate,
@@ -34,7 +33,7 @@ const CalendarDay: ({
   return (
     <>
       <td
-        className={`relative cursor-pointer rounded-md border border-gray-300 py-12 px-16 transition-all hover:bg-gray-100`}
+        className={`md:px relative cursor-pointer rounded-md border border-gray-300 p-8 px-12 transition-all hover:bg-gray-100 md:py-12 md:px-16`}
         onClick={handleDaySelect}
       >
         <div

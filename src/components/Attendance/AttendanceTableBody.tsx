@@ -18,7 +18,7 @@ const AttendanceTableBody: ({
         <tbody>
           <tr>
             <td
-              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-2xl font-semibold uppercase"
+              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-lg font-semibold uppercase md:text-2xl"
               colSpan={8}
             >
               Asistencias no encontradas

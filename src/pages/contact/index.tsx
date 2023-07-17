@@ -85,16 +85,16 @@ const Contact: NextPage = () => {
         description="Contacto | Academia Dahilmar Sáez"
       />
 
-      <section className="relative w-full">
+      <section className="relative mt-20 w-full md:mt-28">
         <Image
-          className="pt-28"
+          className="h-96 bg-center object-cover md:h-auto"
           src={"/img/hero-bg.jpg"}
           alt="hero-image"
           width={1800}
           height={600}
         />
         <div className="absolute top-1/2 left-0 right-0 mx-auto w-full max-w-screen-xl translate-y-1/2 px-8">
-          <h1 className="-translate-y-16 font-display text-6xl font-semibold uppercase text-white">
+          <h1 className="-translate-y-16 text-center font-display text-4xl font-semibold uppercase text-white md:text-left md:text-6xl">
             Contacto
           </h1>
         </div>

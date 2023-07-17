@@ -27,7 +27,7 @@ const GroupScheduleModalEditContent: ({
           Editar Horarios {group.name}
         </div>
 
-        <div className="mx-auto w-96 space-y-8">
+        <div className="mx-auto space-y-8 md:w-96">
           <div className="text-base font-semibold">Horarios</div>
           {group.schedules.length ? (
             group.schedules.map((schedule) => (
@@ -38,7 +38,7 @@ const GroupScheduleModalEditContent: ({
               />
             ))
           ) : (
-            <h1 className="text-sm font-semibold text-dark-500">
+            <h1 className="text-xs font-semibold text-dark-500 md:text-sm">
               Horarios no encontrados
             </h1>
           )}

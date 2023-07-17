@@ -40,8 +40,12 @@ const Chats: NextPage = () => {
 
       <section>
         <div className="grid min-h-[calc(100vh-5rem)] grid-cols-10 bg-white shadow-lg">
-          <div className="col-span-3 flex flex-col pt-14">
-            <h1 className="mb-10 px-10 font-display text-6xl font-semibold uppercase">
+          <div
+            className={`absolute col-span-10 flex min-h-[calc(100vh-5rem)] w-full flex-col pt-8 md:relative md:col-span-3 md:pt-14 ${
+              chat ? "hidden md:flex" : "flex"
+            }`}
+          >
+            <h1 className="mb-10 px-6 font-display text-2xl font-semibold uppercase md:px-10 md:text-6xl">
               Chats
             </h1>
             {isLoading ? (
@@ -54,7 +58,7 @@ const Chats: NextPage = () => {
                   {chats.length ? (
                     <ChatList onSelect={handleChatSelect} />
                   ) : (
-                    <div className="mt-16 mb-16 px-10  font-display text-2xl font-semibold uppercase">
+                    <div className="mt-16 mb-16 px-10 font-display text-lg font-semibold uppercase md:text-2xl">
                       Chats no encontrados
                     </div>
                   )}
@@ -63,13 +67,24 @@ const Chats: NextPage = () => {
                   className="mt-auto flex cursor-pointer items-center justify-center gap-4 bg-secondary-500 py-6 px-8 text-center font-display text-2xl font-semibold uppercase text-white transition-all hover:bg-secondary-700"
                   onClick={() => setShowModal(true)}
                 >
-                  <PlusCircleDottedSVG className="h-8 w-8" />
+                  <PlusCircleDottedSVG className="h-8 w-8 flex-shrink-0" />
                   Nuevo Chat
                 </div>
               </>
             )}
           </div>
-          {chat ? <ChatView chat={chat} /> : <ChatViewEmpty />}
+          <div
+            key={new Date().toString()}
+            className={`absolute min-h-[calc(100vh-5rem)] w-full flex-1 flex-col bg-gray-50 md:relative md:col-span-7 md:flex ${
+              chat ? "flex" : "hidden"
+            }`}
+          >
+            {chat ? (
+              <ChatView chat={chat} onBack={() => setChat(undefined)} />
+            ) : (
+              <ChatViewEmpty />
+            )}
+          </div>
         </div>
         {showModal ? (
           <ChatContactModal

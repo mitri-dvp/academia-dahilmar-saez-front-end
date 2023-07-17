@@ -23,7 +23,7 @@ const Button: FC<
   ...rest
 }) => {
   styles +=
-    " block border-2 border-secondary-500 px-5 py-2 font-display font-semibold uppercase tracking-wider transition";
+    " block border-2 border-secondary-500 md:px-5 px-2 py-2 font-display font-semibold uppercase tracking-wider transition";
 
   switch (color) {
     case "primary":

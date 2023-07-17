@@ -1,9 +1,7 @@
-import { PersonSVG, SendSVG, SpinnerSVG } from "@components/SVG";
-import { useChatStore } from "@store/chat";
+import { CaretLeftSVG, PersonSVG, SendSVG, SpinnerSVG } from "@components/SVG";
 import { useUserStore } from "@store/user";
 import { getImageURL } from "@utils/media";
 import Image from "next/image";
-import type { LegacyRef } from "react";
 import React, { useEffect, useRef, useState } from "react";
 
 import { useFormik } from "formik";
@@ -15,7 +13,13 @@ import { useMessageStore } from "@store/message";
 
 import dayjs from "@lib/dayjs";
 
-const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
+const ChatView: ({
+  chat,
+  onBack,
+}: {
+  chat: Chat;
+  onBack: () => void;
+}) => JSX.Element = ({ chat, onBack }) => {
   const { messages, set } = useMessageStore();
   const { user } = useUserStore();
 
@@ -181,11 +185,12 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
   if (!contact) return <></>;
 
   return (
-    <div className="relative col-span-7 flex w-full flex-1 flex-col bg-gray-50">
+    <>
       <div
-        className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100"
-        // onClick={() => handleChatSelect(contact)}
+        className="flex w-full cursor-pointer select-none items-center gap-4 bg-white p-4 transition-all hover:bg-gray-50"
+        onClick={onBack}
       >
+        <CaretLeftSVG className="h-full w-8 flex-shrink-0 " />
         <div className="relative my-auto aspect-square h-10 w-10">
           {contact.photo ? (
             <Image
@@ -238,7 +243,7 @@ const ChatView: ({ chat }: { chat: Chat }) => JSX.Element = ({ chat }) => {
           )}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

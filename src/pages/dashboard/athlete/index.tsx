@@ -18,12 +18,12 @@ const Dashboard: NextPage = () => {
         description="Panel | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
-        <h1 className="font-display text-6xl font-semibold uppercase ">
+      <section className="min-h-screen w-full bg-white px-6 py-8 md:py-14 md:px-10">
+        <h1 className="font-display text-2xl font-semibold uppercase md:text-6xl ">
           Bienvenido, {user.firstName} {user.lastName}
         </h1>
 
-        <div className="mt-14 grid grid-cols-2 gap-8">
+        <div className="mt-8 grid grid-cols-1 gap-8 md:mt-14 md:grid-cols-2">
           <DashboardNextSchedule />
           <DashboardWeeklyAttendance />
           <DashboardNextEvent />

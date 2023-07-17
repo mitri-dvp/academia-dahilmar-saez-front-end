@@ -113,7 +113,10 @@ const GroupModalEditContent: ({
         <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
           Editar {group.name}
         </div>
-        <form onSubmit={formik.handleSubmit} className="mx-auto w-96 space-y-8">
+        <form
+          onSubmit={formik.handleSubmit}
+          className="mx-auto space-y-8 md:w-96"
+        >
           <div className="text-base font-semibold">
             Introduzca la Información
           </div>

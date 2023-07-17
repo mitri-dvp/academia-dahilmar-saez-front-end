@@ -5,8 +5,8 @@ import type { FC } from "react";
 
 const ChatViewEmpty: FC = () => {
   return (
-    <div className="col-span-7 flex w-full flex-1 flex-col bg-gray-50">
-      <div className="flex w-full cursor-pointer select-none gap-4 p-4 transition-all hover:bg-gray-100">
+    <>
+      <div className="flex w-full cursor-pointer select-none gap-4 bg-white p-4 transition-all hover:bg-gray-50">
         <div className="relative my-auto aspect-square h-10 w-10">
           <PersonSVG className="aspect-square h-10 w-10" />
         </div>
@@ -16,7 +16,7 @@ const ChatViewEmpty: FC = () => {
           </h1>
         </div>
       </div>
-      <div className="relative flex-1 bg-white">
+      <div className="relative flex-1 ">
         <Image
           className="absolute top-1/2 left-1/2 h-32 w-auto -translate-x-1/2 -translate-y-1/2 opacity-50"
           src="/logo.png"
@@ -32,7 +32,7 @@ const ChatViewEmpty: FC = () => {
           <SendSVG className="h-8 w-8" />
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

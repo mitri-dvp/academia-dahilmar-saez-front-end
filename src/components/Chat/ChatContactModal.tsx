@@ -122,8 +122,8 @@ const ChatContactModal: ({
             </div>
             <div className="max-h-[36rem] overflow-y-auto">
               {contacts.length === 0 ? (
-                <div className="mx-auto my-16 w-56 px-8 text-center font-display text-base font-semibold uppercase  text-dark-500">
-                  contactos no encontrados
+                <div className="mx-auto my-16 w-56 px-8 text-center font-display text-xs font-semibold uppercase text-dark-500 md:text-base">
+                  Contactos no encontrados
                 </div>
               ) : null}
               {contacts.map((contact) => (

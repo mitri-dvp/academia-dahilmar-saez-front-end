@@ -112,7 +112,7 @@ const GroupAddModal: ({
             </div>
             <form
               onSubmit={formik.handleSubmit}
-              className="mx-auto w-96 space-y-8"
+              className="mx-auto space-y-8 md:w-96"
             >
               <div className="text-base font-semibold">
                 Introduzca la Información

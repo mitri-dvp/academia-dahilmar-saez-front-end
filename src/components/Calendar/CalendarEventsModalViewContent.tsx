@@ -40,7 +40,7 @@ const CalendarEventsModalViewContent: ({
         Eventos
       </div>
       {events.length === 0 ? (
-        <h1 className="text-center text-sm font-semibold text-dark-500">
+        <h1 className="text-center text-xs font-semibold text-dark-500 md:text-sm">
           Eventos no encontrados
         </h1>
       ) : null}

@@ -44,7 +44,7 @@ const ScheduleTableBody: ({ groups }: { groups: Group[] }) => JSX.Element = ({
         <tbody>
           <tr>
             <td
-              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-2xl font-semibold uppercase"
+              className="rounded-md border border-gray-300 px-2 py-5 text-center font-display text-lg font-semibold uppercase md:text-2xl"
               colSpan={8}
             >
               Horarios no encontrados
@@ -67,7 +67,7 @@ const ScheduleTableBody: ({ groups }: { groups: Group[] }) => JSX.Element = ({
           key={currentHour.format("h")}
           className="rounded-md border border-gray-300 px-2 py-5 text-center"
         >
-          <span className="text-2xl font-semibold">
+          <span className="text-lg font-semibold md:text-2xl">
             {currentHour.format("h")}
           </span>
           <span>{currentHour.format("a")}</span>

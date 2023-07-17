@@ -28,7 +28,7 @@ const Schedule: NextPage = () => {
 
   const renderTableHead = () => {
     const days: JSX.Element[] = [
-      <th key={-1} className="rounded-md bg-secondary-500 p-4">
+      <th key={-1} className="rounded-md bg-secondary-500 p-2 md:p-4">
         <span className="select-none font-bold uppercase tracking-wide">
           Hora
         </span>
@@ -40,14 +40,14 @@ const Schedule: NextPage = () => {
       const dayIndex = currentDate.get("day") + 1;
 
       days[dayIndex] = (
-        <th key={i} className="rounded-md bg-secondary-500 p-4">
+        <th key={i} className="rounded-md bg-secondary-500 px-1 py-4 md:p-4">
           <span className="select-none font-bold uppercase tracking-wide">
             {currentDate.format("dddd")}
           </span>
           <br />
-          <span className="select-none text-xs tracking-wide">
+          <div className="scale-75 select-none tracking-wide">
             {currentDate.format("DD/MM/YYYY")}
-          </span>
+          </div>
         </th>
       );
     }
@@ -66,10 +66,10 @@ const Schedule: NextPage = () => {
         description="Horario | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-8">
+      <section className="min-h-screen w-full bg-white p-4 py-8 md:py-14 md:px-10">
         <div className="flex">
-          <h1 className="ml-2 font-display text-4xl font-semibold uppercase">
-            <span className="mr-4 font-display text-6xl font-semibold uppercase">
+          <h1 className="ml-2 font-display text-lg font-semibold uppercase md:text-4xl">
+            <span className="mr-2 font-display text-2xl font-semibold uppercase md:mr-4 md:text-6xl">
               Semana
             </span>
             <span>
@@ -83,10 +83,12 @@ const Schedule: NextPage = () => {
             <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
           </div>
         ) : (
-          <table className="mt-8 w-full border-separate border-spacing-2 bg-white text-sm">
-            {renderTableHead()}
-            <ScheduleTableBody groups={groups} />
-          </table>
+          <div className="overflow-x-auto">
+            <table className="mt-4 w-full border-separate border-spacing-1 bg-white text-xs md:mt-8 md:border-spacing-2 md:text-sm">
+              {renderTableHead()}
+              <ScheduleTableBody groups={groups} />
+            </table>
+          </div>
         )}
       </section>
     </DashboardLayout>
