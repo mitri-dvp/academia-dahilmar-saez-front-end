@@ -173,18 +173,18 @@ const GroupAttendanceModal: ({
             <GroupAttendanceModalFileExport selectedDate={selectedDate} />
           ) : (
             <div>
-              <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+              <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                 Asistencias {group.name}
               </div>
 
               <div className="space-y-8">
-                <div className="mx-auto w-96">
-                  <div className="flex items-center justify-between text-base font-semibold">
+                <div className="mx-auto w-full">
+                  <div className="flex items-center justify-between text-sm font-semibold md:text-base">
                     <div className="cursor-pointer" onClick={goToPrevSchedule}>
                       <ChevronLeftSVG className="h-5 w-5 text-secondary-500" />
                     </div>
                     <button
-                      className="flex cursor-pointer select-none justify-center gap-1 text-center text-xl font-bold text-dark-500 transition-all hover:text-secondary-500"
+                      className="flex cursor-pointer select-none justify-center gap-1 text-center text-base font-bold text-dark-500 transition-all hover:text-secondary-500 md:text-xl"
                       onClick={handleShowDateSelect}
                       onBlur={() => setShowDateSelect(false)}
                     >

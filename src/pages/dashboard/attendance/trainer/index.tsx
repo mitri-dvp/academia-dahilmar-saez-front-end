@@ -36,9 +36,9 @@ const Attendance: NextPage = () => {
         description="Asistencias | Academia Dahilmar Sáez"
       />
 
-      <section className="min-h-screen w-full bg-white md:py-14 md:px-10">
+      <section className="min-h-screen w-full bg-white px-6 py-8 md:py-14 md:px-10">
         <div>
-          <h1 className="mb-10 font-display text-4xl font-semibold uppercase md:text-6xl">
+          <h1 className="mb-10 font-display text-2xl font-semibold uppercase md:text-6xl">
             Asistencias
           </h1>
           {isLoading ? (
@@ -46,9 +46,9 @@ const Attendance: NextPage = () => {
               <SpinnerSVG className="mx-auto h-6 w-6 animate-spin text-secondary-500" />
             </div>
           ) : (
-            <div className="grid grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-4">
               {groupStore.groups.length === 0 ? (
-                <div className="mx-auto mt-16 mb-16 w-56 px-8 text-center font-display text-lg font-semibold uppercase md:text-2xl">
+                <div className="col-span-2 mt-16 mb-16 w-full font-display text-lg font-semibold uppercase md:text-2xl">
                   Grupos no encontrados
                 </div>
               ) : null}
@@ -57,7 +57,7 @@ const Attendance: NextPage = () => {
                   return (
                     <Link
                       key={group.id}
-                      className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase transition-all hover:bg-gray-100"
+                      className="flex aspect-square w-full cursor-pointer select-none flex-col items-center justify-center border border-gray-300 px-2 py-5 text-center font-display text-lg font-semibold uppercase transition-all hover:bg-gray-100 md:gap-4 md:text-xl lg:text-2xl"
                       href={"/dashboard/schedule/trainer"}
                     >
                       <span>{group.name}</span>
@@ -69,7 +69,7 @@ const Attendance: NextPage = () => {
                 return (
                   <div
                     key={group.id}
-                    className="flex h-72 w-72 cursor-pointer select-none flex-col items-center justify-center gap-4 border border-gray-300 px-12 py-5 text-center font-display text-2xl font-semibold uppercase transition-all hover:bg-gray-100"
+                    className="flex aspect-square w-full cursor-pointer select-none flex-col items-center justify-center border border-gray-300 px-2 py-5 text-center font-display text-lg font-semibold uppercase transition-all hover:bg-gray-100 md:text-xl lg:text-2xl"
                     onClick={() => handleSelectGroup(group)}
                   >
                     <span>{group.name}</span>

@@ -54,11 +54,11 @@ const GroupAttendanceModalFileExport: ({
 
   return (
     <div>
-      <div className="mb-8 text-center font-display text-2xl font-semibold uppercase">
+      <div className="mb-8 mt-8 text-center font-display text-lg font-semibold uppercase md:text-2xl">
         Exportar Asistencias {group.name}
       </div>
-      <div className="space-y-8">
-        <div className="flex select-none justify-center gap-1 text-center text-xl font-bold text-dark-500">
+      <div className="space-y-8 text-sm md:text-base">
+        <div className="flex select-none justify-center gap-1 text-center text-base font-bold text-dark-500 md:text-xl">
           <div className="capitalize">{selectedDate.format("dddd, DD")}</div>
           <div className="">de</div>
           <div className="capitalize">{selectedDate.format("MMMM")}</div>

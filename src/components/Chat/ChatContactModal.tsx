@@ -117,7 +117,7 @@ const ChatContactModal: ({
             </button>
           </div>
           <div>
-            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+            <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
               Selecciona Contacto
             </div>
             <div className="max-h-[36rem] overflow-y-auto">
@@ -129,24 +129,24 @@ const ChatContactModal: ({
               {contacts.map((contact) => (
                 <div
                   key={contact.id}
-                  className="flex w-full cursor-pointer select-none gap-8 bg-white p-8 transition-all hover:bg-gray-100"
+                  className="flex w-full cursor-pointer select-none gap-4 bg-white p-4 transition-all hover:bg-gray-100 md:gap-8 md:p-8"
                   onClick={() => handleSelectContact(contact)}
                 >
-                  <div className="relative my-auto aspect-square h-16 w-16">
+                  <div className="relative my-auto aspect-square h-10 w-10 md:h-16 md:w-16">
                     {contact.photo ? (
                       <Image
-                        className="h-16 w-16 rounded-full object-cover"
+                        className="h-10 w-10 rounded-full object-cover md:h-16 md:w-16"
                         src={getImageURL(contact.photo)}
                         alt={contact.photo.name}
                         width={320}
                         height={320}
                       />
                     ) : (
-                      <PersonSVG className="aspect-square h-16 w-16" />
+                      <PersonSVG className="aspect-square h-10 w-10 md:h-16 md:w-16" />
                     )}
                   </div>
                   <div className="flex items-center">
-                    <h1 className="text-xl font-bold text-dark-500">
+                    <h1 className="text-base font-bold text-dark-500 md:text-xl">
                       {contact.firstName} {contact.lastName}
                     </h1>
                   </div>

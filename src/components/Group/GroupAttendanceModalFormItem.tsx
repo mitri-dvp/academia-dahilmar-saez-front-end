@@ -57,7 +57,7 @@ const GroupAttendanceFormItem: ({
       onInput={formik.handleSubmit}
       className="flex"
     >
-      <div className="flex w-full select-none gap-4 bg-white p-2 hover:bg-gray-100">
+      <div className="flex w-1/2 select-none gap-1.5 bg-white px-0.5 py-2 hover:bg-gray-100 md:gap-4 md:p-2">
         <div className="relative my-auto aspect-square h-8 w-8">
           {athlete.photo ? (
             <Image
@@ -72,7 +72,7 @@ const GroupAttendanceFormItem: ({
           )}
         </div>
         <div className="flex items-center">
-          <div className="text-base font-bold text-dark-500">
+          <div className="text-xs font-bold text-dark-500 md:text-base">
             {athlete.firstName} {athlete.lastName}
           </div>
         </div>
@@ -86,7 +86,7 @@ const GroupAttendanceFormItem: ({
           className="dark:focus:ring-setext-secondary-500 h-6 w-6 cursor-pointer rounded border-gray-300 bg-gray-100 text-secondary-500 focus:ring-2 focus:ring-secondary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800"
         />
       </div>
-      <div className="flex w-full items-center  bg-white p-2 hover:bg-gray-100">
+      <div className="flex w-1/2 items-center bg-white px-0.5 py-2 hover:bg-gray-100 md:p-2">
         <div className="relative z-0 w-full">
           <input
             type="text"

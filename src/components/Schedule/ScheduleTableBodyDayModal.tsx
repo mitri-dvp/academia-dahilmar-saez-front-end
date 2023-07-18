@@ -23,7 +23,7 @@ const ScheduleTableBodyDayModal: ({
               <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
             </button>
           </div>
-          <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+          <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
             {derivedSchedule.group.name}
           </div>
           <div className="mx-auto space-y-8 md:w-96">

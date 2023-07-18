@@ -33,7 +33,7 @@ const DashboardChatSummary = () => {
           href={"/dashboard/chats"}
           className="ml-auto text-xs md:text-base"
         >
-          <Button>Ver Mensajes</Button>
+          <Button styles="px-2 md:px-8">Ver Mensajes</Button>
         </Link>
       </header>
       <div className="flex h-full gap-4 overflow-y-auto">

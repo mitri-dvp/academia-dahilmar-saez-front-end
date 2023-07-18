@@ -23,12 +23,12 @@ const GroupScheduleModalEditContent: ({
         </button>
       </div>
       <div>
-        <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+        <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
           Editar Horarios {group.name}
         </div>
 
         <div className="mx-auto space-y-8 md:w-96">
-          <div className="text-base font-semibold">Horarios</div>
+          <div className="text-sm font-semibold md:text-base">Horarios</div>
           {group.schedules.length ? (
             group.schedules.map((schedule) => (
               <GroupScheduleModalEditContentItem

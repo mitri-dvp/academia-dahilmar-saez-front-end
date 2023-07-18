@@ -72,7 +72,7 @@ const DashboardNextSchedule = () => {
           href={"/dashboard/schedule/athlete"}
           className="ml-auto text-xs md:text-base"
         >
-          <Button>Ver Horarios</Button>
+          <Button styles="px-2 md:px-8">Ver Horarios</Button>
         </Link>
       </header>
       <div className="flex gap-4 md:h-full">

@@ -46,7 +46,7 @@ const GroupScheduleModalViewContent: ({
     validationSchema: toFormikValidationSchema(
       z.object({
         day: z.date({
-          errorMap: () => ({ message: "Ingrese el dia" }),
+          errorMap: () => ({ message: "Ingrese el día" }),
         }),
         time: z.date({
           errorMap: () => ({ message: "Ingrese la hora" }),
@@ -99,26 +99,26 @@ const GroupScheduleModalViewContent: ({
         </button>
       </div>
       <div>
-        <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+        <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
           Horarios {group.name}
         </div>
 
         <div className="mx-auto space-y-8 md:w-96">
-          <div className="text-base font-semibold">Horarios</div>
+          <div className="text-sm font-semibold md:text-base">Horarios</div>
           {group.schedules.length ? (
             group.schedules.map((schedule) => (
               <React.Fragment key={schedule.id}>
                 <div className="flex gap-4">
                   <div className="w-1/2">
                     <h1 className="text-sm font-bold text-dark-500">Día</h1>
-                    <div className="mb-2 w-full capitalize text-dark-500">
+                    <div className="mb-2 w-full text-sm capitalize text-dark-500 md:text-base">
                       {dayjs(schedule.datetime).format("dddd")}
                     </div>
                   </div>
 
                   <div className="w-1/2">
                     <h1 className="text-sm font-bold text-dark-500">Hora</h1>
-                    <div className="mb-2 w-full text-dark-500">
+                    <div className="mb-2 w-full text-sm text-dark-500 md:text-base">
                       {dayjs(schedule.datetime).format("hh:mm a")}
                     </div>
                   </div>
@@ -131,7 +131,9 @@ const GroupScheduleModalViewContent: ({
             </h1>
           )}
           <form className="space-y-8" onSubmit={formik.handleSubmit}>
-            <div className="text-base font-semibold">Selecciona Día y Hora</div>
+            <div className="text-sm font-semibold md:text-base">
+              Selecciona Día y Hora
+            </div>
 
             <div className="flex gap-4">
               <div className="w-1/2">
@@ -179,7 +181,7 @@ const GroupScheduleModalViewContent: ({
                   />
                   <label
                     htmlFor="day"
-                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                   >
                     Día
                   </label>
@@ -266,7 +268,7 @@ const GroupScheduleModalViewContent: ({
                   />
                   <label
                     htmlFor="time"
-                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                   >
                     Hora
                   </label>
@@ -300,7 +302,7 @@ const GroupScheduleModalViewContent: ({
                 </p>
               </div>
             </div>
-            <Button styles="mx-auto">Agregar Horario</Button>
+            <Button styles="w-full md:w-1/2 mx-auto">Agregar Horario</Button>
           </form>
         </div>
       </div>

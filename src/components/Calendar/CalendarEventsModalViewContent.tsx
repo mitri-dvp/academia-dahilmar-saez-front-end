@@ -36,7 +36,7 @@ const CalendarEventsModalViewContent: ({
           <CrossSVG className="h-6 w-6 text-dark-500 transition-all hover:text-secondary-500" />
         </button>
       </div>
-      <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+      <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
         Eventos
       </div>
       {events.length === 0 ? (
@@ -65,7 +65,7 @@ const CalendarEventsModalViewContent: ({
         </div>
       ))}
       {userStore.user.role.type === USER_ROLES.TRAINER ? (
-        <Button onClick={toggleAdding} styles={"mx-auto mt-6"}>
+        <Button onClick={toggleAdding} styles="mx-auto mt-6 w-full md:w-1/2">
           Agregar Evento
         </Button>
       ) : null}

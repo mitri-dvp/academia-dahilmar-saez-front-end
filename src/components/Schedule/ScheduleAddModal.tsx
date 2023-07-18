@@ -20,7 +20,7 @@ const ScheduleAddModal: ({
             </button>
           </div>
           <div>
-            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+            <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
               Crear Grupo
             </div>
           </div>

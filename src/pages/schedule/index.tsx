@@ -31,7 +31,7 @@ const Schedule: NextPage = () => {
       <section className="mx-auto w-full max-w-screen-xl py-8 px-8 md:py-16">
         <div className="grid grid-cols-1 gap-8 md:my-16 md:grid-cols-2 md:gap-16">
           <div className="mx-auto w-full max-w-lg pb-24">
-            <div className="card-gradient mx-auto max-w-md pt-24">
+            <div className="card-gradient mx-auto max-w-md px-4 pt-12 md:pt-16">
               <Image
                 className="mx-auto aspect-square h-80 w-80 object-cover"
                 src="/img/schedule/clase-de-tenis.jpg"
@@ -56,7 +56,7 @@ const Schedule: NextPage = () => {
           </div>
 
           <div className="mx-auto w-full max-w-lg pb-24">
-            <div className="card-gradient mx-auto max-w-md pt-24">
+            <div className="card-gradient mx-auto max-w-md px-4 pt-12 md:pt-16">
               <Image
                 className="mx-auto aspect-square h-80 w-80 object-cover"
                 src="/img/schedule/clase-de-tenis.jpg"
@@ -81,7 +81,7 @@ const Schedule: NextPage = () => {
           </div>
 
           <div className="mx-auto w-full max-w-lg pb-24">
-            <div className="card-gradient mx-auto max-w-md pt-24">
+            <div className="card-gradient mx-auto max-w-md px-4 pt-12 md:pt-16">
               <Image
                 className="mx-auto aspect-square h-80 w-80 object-cover"
                 src="/img/schedule/clase-de-tenis.jpg"
@@ -106,7 +106,7 @@ const Schedule: NextPage = () => {
           </div>
 
           <div className="mx-auto w-full max-w-lg pb-24">
-            <div className="card-gradient mx-auto max-w-md pt-24">
+            <div className="card-gradient mx-auto max-w-md px-4 pt-12 md:pt-16">
               <Image
                 className="mx-auto aspect-square h-80 w-80 object-cover"
                 src="/img/schedule/clase-de-tenis.jpg"
@@ -131,7 +131,7 @@ const Schedule: NextPage = () => {
           </div>
 
           <div className="mx-auto w-full max-w-lg pb-24">
-            <div className="card-gradient mx-auto max-w-md pt-24">
+            <div className="card-gradient mx-auto max-w-md px-4 pt-12 md:pt-16">
               <Image
                 className="mx-auto aspect-square h-80 w-80 object-cover"
                 src="/img/schedule/clase-de-tenis.jpg"
@@ -145,7 +145,7 @@ const Schedule: NextPage = () => {
               Clases de Tenis Privada
             </h1>
             <Link href="/contact">
-              <p className="mt-4 text-center font-display text-lg font-semibold uppercase text-gray-500 hover:underline md:mt-8  md:text-2xl">
+              <p className="mt-2 text-center font-display text-lg font-semibold uppercase text-gray-500 hover:underline md:text-2xl">
                 Contáctanos
               </p>
             </Link>

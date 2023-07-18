@@ -34,12 +34,12 @@ const GroupModalViewContent: ({
         </button>
       </div>
       <div>
-        <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+        <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl">
           {group.name}
         </div>
         <div className="mx-auto space-y-8 md:w-96">
-          <div className="text-base">{group.description}</div>
-          <div className="text-base font-semibold">Integrantes</div>
+          <div className="text-sm md:text-base">{group.description}</div>
+          <div className="text-sm font-semibold md:text-base">Integrantes</div>
 
           <div className="relative z-0">
             <input
@@ -80,7 +80,7 @@ const GroupModalViewContent: ({
                       )}
                     </div>
                     <div className="flex items-center">
-                      <h1 className="text-base font-bold text-dark-500">
+                      <h1 className="text-sm font-bold text-dark-500 md:text-base">
                         {user.firstName} {user.lastName}
                       </h1>
                     </div>

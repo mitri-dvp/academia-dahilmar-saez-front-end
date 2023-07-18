@@ -73,7 +73,7 @@ const DashboardWeeklyAttendance = () => {
           href={"/dashboard/attendance/athlete"}
           className="ml-auto text-xs md:text-base"
         >
-          <Button>Ver Asistencias</Button>
+          <Button styles="px-2 md:px-8">Ver Asistencias</Button>
         </Link>
       </header>
       <div className="flex h-full flex-col gap-4">
@@ -100,7 +100,10 @@ const DashboardWeeklyAttendance = () => {
                       return dayjs(attendance.datetime).get("day") === index;
                     });
                     return (
-                      <div key={day} className="flex justify-center">
+                      <div
+                        key={day}
+                        className="flex h-16 justify-center md:h-full"
+                      >
                         <div
                           className={`mt-auto ${
                             match ? "h-full" : "h-0.5"

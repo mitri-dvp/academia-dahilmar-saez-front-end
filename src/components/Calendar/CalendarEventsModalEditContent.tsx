@@ -95,7 +95,7 @@ const CalendarEventsModalEditContent: ({
         </button>
       </div>
       <div>
-        <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+        <div className="mb-6 text-center font-display text-lg font-semibold  uppercase md:text-2xl">
           Editar Evento
         </div>
         <form
@@ -116,7 +116,7 @@ const CalendarEventsModalEditContent: ({
                 />
                 <label
                   htmlFor="name"
-                  className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                  className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                 >
                   Nombre
                 </label>
@@ -141,7 +141,7 @@ const CalendarEventsModalEditContent: ({
                 />
                 <label
                   htmlFor="description"
-                  className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                  className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                 >
                   Descripción
                 </label>
@@ -185,7 +185,7 @@ const CalendarEventsModalEditContent: ({
                   />
                   <label
                     htmlFor="date"
-                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                    className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                   >
                     Fecha
                   </label>
@@ -228,7 +228,7 @@ const CalendarEventsModalEditContent: ({
           </div>
 
           <Button
-            styles="mx-auto"
+            styles="mx-auto w-full md:w-1/2"
             loading={formik.isSubmitting}
             disabled={formik.isSubmitting}
           >

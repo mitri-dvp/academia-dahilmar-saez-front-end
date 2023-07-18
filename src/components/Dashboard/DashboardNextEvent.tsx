@@ -49,7 +49,7 @@ const DashboardNextEvent = () => {
           href={"/dashboard/calendar"}
           className="ml-auto text-xs md:text-base"
         >
-          <Button>Ver Eventos</Button>
+          <Button styles="px-2 md:px-8">Ver Eventos</Button>
         </Link>
       </header>
       <div className="flex gap-4 md:h-full">

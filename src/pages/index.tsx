@@ -18,7 +18,7 @@ const Home: NextPage = () => {
       <section id="hero" className="relative bg-primary-700">
         <div className="absolute h-full w-full bg-gradient-to-t from-black to-transparent md:via-transparent " />
         <Image
-          className="mx-auto max-h-screen min-h-screen w-full object-cover pt-20 md:pt-20 md:pt-28"
+          className="mx-auto max-h-screen min-h-screen w-full object-cover pt-20 md:pt-28"
           src="/img/hero-bg-main.jpg"
           alt="academia-dahilmar-saez-hero"
           width={960}

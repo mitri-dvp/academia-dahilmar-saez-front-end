@@ -48,7 +48,7 @@ const GroupScheduleModalEditContentItem: ({
     validationSchema: toFormikValidationSchema(
       z.object({
         day: z.date({
-          errorMap: () => ({ message: "Ingrese el dia" }),
+          errorMap: () => ({ message: "Ingrese el día" }),
         }),
         time: z.date({
           errorMap: () => ({ message: "Ingrese la hora" }),
@@ -134,7 +134,7 @@ const GroupScheduleModalEditContentItem: ({
             />
             <label
               htmlFor="day"
-              className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+              className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
             >
               Día
             </label>
@@ -213,7 +213,7 @@ const GroupScheduleModalEditContentItem: ({
             />
             <label
               htmlFor="time"
-              className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+              className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
             >
               Hora
             </label>

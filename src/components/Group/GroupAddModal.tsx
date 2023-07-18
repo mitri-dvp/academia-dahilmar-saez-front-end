@@ -107,14 +107,14 @@ const GroupAddModal: ({
             </button>
           </div>
           <div>
-            <div className="mb-6 text-center font-display text-2xl font-semibold uppercase">
+            <div className="mb-6 text-center font-display text-lg font-semibold uppercase md:text-2xl ">
               Crear Grupo
             </div>
             <form
               onSubmit={formik.handleSubmit}
               className="mx-auto space-y-8 md:w-96"
             >
-              <div className="text-base font-semibold">
+              <div className="text-sm font-semibold md:text-base ">
                 Introduzca la Información
               </div>
 
@@ -132,7 +132,7 @@ const GroupAddModal: ({
                     />
                     <label
                       htmlFor="name"
-                      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                     >
                       Nombre
                     </label>
@@ -157,7 +157,7 @@ const GroupAddModal: ({
                     />
                     <label
                       htmlFor="description"
-                      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-base text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500"
+                      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-dark-500 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-secondary-500 dark:text-dark-500 md:text-base"
                     >
                       Descripción
                     </label>
@@ -171,7 +171,7 @@ const GroupAddModal: ({
                 </div>
               </div>
 
-              <div className="text-base font-semibold">
+              <div className="text-sm font-semibold md:text-base">
                 Selecciona los Integrantes
               </div>
 
@@ -179,7 +179,7 @@ const GroupAddModal: ({
                 <input
                   type="text"
                   id="users"
-                  className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white"
+                  className="dark:focus:border-sering-secondary-300 peer block w-full appearance-none border-0 border-b-2 border-dark-500 bg-transparent py-2.5 px-0 text-sm text-dark-500 focus:border-secondary-500 focus:outline-none focus:ring-0 dark:border-dark-500 dark:text-white md:text-base"
                   placeholder="Buscar"
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
@@ -219,7 +219,7 @@ const GroupAddModal: ({
                           )}
                         </div>
                         <div className="flex items-center">
-                          <h1 className="text-base font-bold text-dark-500">
+                          <h1 className="text-sm font-bold text-dark-500 md:text-base">
                             {athlete.firstName} {athlete.lastName}
                           </h1>
                         </div>
@@ -270,7 +270,7 @@ const GroupAddModal: ({
 
               <div className="flex justify-center gap-4">
                 <Button
-                  styles="w-1/2"
+                  styles="w-full md:w-1/2"
                   loading={formik.isSubmitting}
                   disabled={formik.isSubmitting}
                 >

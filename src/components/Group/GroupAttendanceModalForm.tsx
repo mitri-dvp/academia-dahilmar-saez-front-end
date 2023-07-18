@@ -97,13 +97,13 @@ const GroupAttendanceModalForm: ({
     <div className="flex min-h-[24rem] flex-col justify-between space-y-8">
       <div>
         <div className="flex">
-          <div className="flex w-full select-none gap-4 bg-white p-2 hover:bg-gray-100">
+          <div className="flex w-1/2 select-none bg-white px-0.5 py-2 hover:bg-gray-100 md:p-2">
             <h1 className="text-sm font-bold text-dark-500">Nombre</h1>
           </div>
-          <div className="flex w-1/3 select-none items-center justify-center gap-4 bg-white p-0 hover:bg-gray-100">
+          <div className="flex w-1/3 select-none items-center justify-center bg-white p-0 hover:bg-gray-100">
             <h1 className="text-sm font-bold text-dark-500">Asistencia</h1>
           </div>
-          <div className="flex w-full items-center  bg-white p-2 hover:bg-gray-100">
+          <div className="flex w-1/2 items-center  bg-white px-0.5 py-2 hover:bg-gray-100 md:p-2">
             <h1 className="text-sm font-bold text-dark-500">Observaciones</h1>
           </div>
         </div>
@@ -119,7 +119,7 @@ const GroupAttendanceModalForm: ({
         </div>
       </div>
 
-      <form onClick={formik.handleSubmit} className="mx-auto w-1/2">
+      <form onClick={formik.handleSubmit} className="mx-auto w-full md:w-1/2">
         <Button
           loading={formik.isSubmitting}
           disabled={formik.isSubmitting}

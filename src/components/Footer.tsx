@@ -14,7 +14,7 @@ const Footer: FC = () => {
         <div className="flex flex-col items-center pb-6 md:flex-row">
           <Link href="/" className="mx-auto flex items-center md:mx-0">
             <Image
-              className="z-50 h-12 w-auto"
+              className="h-12 w-auto"
               src="/logo.png"
               alt="academia-dahilmar-saez-logo"
               width={300}

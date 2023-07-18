@@ -17,7 +17,7 @@ const Dashboard: NextPage = () => {
       />
 
       <section className="min-h-screen w-full bg-white p-4 py-8 md:py-14 md:px-10">
-        <h1 className="font-display text-4xl font-semibold uppercase md:text-6xl ">
+        <h1 className="font-display text-2xl font-semibold uppercase md:text-6xl ">
           Bienvenido, {user.firstName} {user.lastName}
         </h1>
 

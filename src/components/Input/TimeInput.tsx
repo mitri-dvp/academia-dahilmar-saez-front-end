@@ -33,7 +33,7 @@ const TimeInput: ({
     }
   };
   const handleMinutesDecrement = () => {
-    if (minutes - 1 > 0) {
+    if (minutes - 1 > -1) {
       setMinutes(minutes - 1);
     }
   };
