@@ -120,7 +120,7 @@ const DashboardWeeklyAttendance = () => {
                 </div>
               </>
             ) : (
-              <div className="md:text-2xlfont-semibold flex h-full w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-lg uppercase">
+              <div className="flex h-full w-full items-center justify-center rounded-md border px-2 py-5 text-center font-display text-lg font-semibold uppercase md:text-2xl">
                 Asistencias no encontradas
               </div>
             )}
